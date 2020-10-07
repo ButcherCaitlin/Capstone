@@ -8,7 +8,8 @@ namespace CapstoneXamarin.ViewModels
 {
     class BaseViewModel : INotifyPropertyChanged
     {
-        //this is the base view model for all view models. This will connect to our database and backend services.
+        //this is the base view model for all view models. 
+        //This will connect to our database and backend services.
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
