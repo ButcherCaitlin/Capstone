@@ -22,5 +22,6 @@ namespace CapstoneXamarin.Models
          */
         public string address { get; set; }
         public double price { get; set; }
+        public int id { get; set; }
     }
 }
