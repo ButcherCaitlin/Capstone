@@ -4,10 +4,12 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:converter="clr-namespace:Capstone.Converter"
              x:Class="Capstone.App">
 
     <Application.Resources>
         <!--This is where we will be declaring our styles, colors, data templates, and converters-->
+        <converter:ItemTappedConverter x:Key="LocalItemTappedConverter"/>
     </Application.Resources>
     
 </Application>
