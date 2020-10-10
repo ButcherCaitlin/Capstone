@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using CapstoneXamarin.Views;
+using Capstone.Views;
 
 namespace Capstone
 {
