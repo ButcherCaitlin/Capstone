@@ -16,6 +16,9 @@ namespace Capstone
         public MainPage()
         {
             InitializeComponent();
+
+
         }
     }
 }
+
