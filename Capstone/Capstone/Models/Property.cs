@@ -20,5 +20,7 @@ namespace CapstoneXamarin.Models
          * Floors,
          * Build Date,
          */
+        public string address { get; set; }
+        public double price { get; set; }
     }
 }
