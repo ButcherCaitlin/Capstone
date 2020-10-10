@@ -4,12 +4,53 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="CapstoneXamarin.Views.PropertyExplorer">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="CapstoneXamarin.Views.PropertyExplorer"
+             xmlns:viewModels="clr-namespace:CapstoneXamarin.ViewModels"
+             xmlns:behaviors="clr-namespace:capstone.Behaviors"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Command="{Binding AddCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListView x:Name="PropertiesListView" CachingStrategy="RecycleElement" ItemsSource="{Binding Properties}"
+                  RefreshCommand="{Binding RefreshList}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+            
+            
+            
+            <ListView.ItemTemplate> <!--This should be defined in the app resources.-->
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid HeightRequest="100" Margin="5" BackgroundColor="LightGray" RowSpacing="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" HeightRequest="100" VerticalOptions="Center" 
+                                   Margin="3" Text="{Binding address}" FontSize="Large"/>
+                            <!--This should reference a static style.-->
+                            <Label Grid.Column="1" HeightRequest="100" VerticalOptions="Center" 
+                                   Margin="3" Text="{Binding price}" FontSize="Medium"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+
+    </Grid>
+    
 </ContentPage>

@@ -5,7 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Capstone.App">
-    <Application.Resources>
 
+    <Application.Resources>
+        <!--This is where we will be declaring our styles, colors, data templates, and converters-->
     </Application.Resources>
+    
 </Application>

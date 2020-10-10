@@ -2,6 +2,8 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using CapstoneXamarin.Views;
+
 namespace Capstone
 {
     public partial class App : Application
@@ -10,7 +12,8 @@ namespace Capstone
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            //MainPage = new MainPage(); REMOVE THIS AFTER TESTING
+            MainPage = new NavigationPage(new PropertyExplorer());
         }
 
         protected override void OnStart()

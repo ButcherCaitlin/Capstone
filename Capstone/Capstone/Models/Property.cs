@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CapstoneXamarin.Models
+namespace Capstone.Models
 {
     public class Property
     {

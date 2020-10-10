@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace BethanysPieShopStockApp.Behaviors
+namespace Capstone.Behaviors
 {
     public class BindableBehavior<T> : Behavior<T> where T : BindableObject
     {
