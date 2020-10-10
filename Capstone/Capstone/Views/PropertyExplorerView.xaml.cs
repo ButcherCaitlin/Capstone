@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace CapstoneXamarin.Views
+namespace Capstone.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PropertyExplorer : ContentPage
+    public partial class PropertyExplorerView : ContentPage
     {
-        public PropertyExplorer()
+        public PropertyExplorerView()
         {
             InitializeComponent();
             BindingContext = ViewModelLocator.PropertyExplorerViewModel;

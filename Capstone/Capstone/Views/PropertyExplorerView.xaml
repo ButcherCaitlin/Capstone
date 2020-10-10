@@ -4,9 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="CapstoneXamarin.Views.PropertyExplorer"
-             xmlns:viewModels="clr-namespace:CapstoneXamarin.ViewModels"
-             xmlns:behaviors="clr-namespace:capstone.Behaviors"
+             x:Class="Capstone.Views.PropertyExplorerView"
+             xmlns:viewModels="clr-namespace:Capstone.ViewModels"
+             xmlns:behaviors="clr-namespace:Capstone.Behaviors"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
@@ -24,8 +24,13 @@
 
         <ListView x:Name="PropertiesListView" CachingStrategy="RecycleElement" ItemsSource="{Binding Properties}"
                   RefreshCommand="{Binding RefreshList}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
-            
-            
+
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior 
+                    EventName="ItemTapped" 
+                    Command="{Binding PropertySelected}"
+                    EventArgsConverter="{StaticResource LocalItemTappedConverter}"/>
+            </ListView.Behaviors>
             
             <ListView.ItemTemplate> <!--This should be defined in the app resources.-->
                 <DataTemplate>
