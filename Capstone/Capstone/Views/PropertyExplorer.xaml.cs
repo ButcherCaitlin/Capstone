@@ -1,4 +1,5 @@
-﻿using CapstoneXamarin.ViewModels;
+﻿using Capstone.Utility;
+using Capstone.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,10 @@ namespace CapstoneXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PropertyExplorer : ContentPage
     {
-        PropertyExplorerViewModel viewModel;
         public PropertyExplorer()
         {
             InitializeComponent();
-            BindingContext = viewModel = new PropertyExplorerViewModel();
+            BindingContext = ViewModelLocator.PropertyExplorerViewModel;
         }
     }
 }

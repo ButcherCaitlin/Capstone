@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace BethanysPieShopStockApp.Behaviors
+namespace Capstone.Behaviors
 {
     public class EventToCommandBehavior : BindableBehavior<View>
     {
