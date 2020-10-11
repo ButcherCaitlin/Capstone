@@ -4,13 +4,13 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Text;
+using Capstone.Utility;
 
 namespace Capstone.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : BaseViewModel
     {
         public Action DisplayInvalidLoginPrompt;
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private string email;
         public string Email
         {
@@ -18,7 +18,7 @@ namespace Capstone.ViewModels
             set
             {
                 email = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Email"));
+                OnPropertyChanged();
             }
         }
         private string password;
@@ -28,13 +28,14 @@ namespace Capstone.ViewModels
             set
             {
                 password = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Password"));
+                OnPropertyChanged();
             }
         }
         public ICommand SubmitCommand { protected set; get; }
         public LoginViewModel()
         {
             SubmitCommand = new Command(OnSubmit);
+            DisplayInvalidLoginPrompt += () => Application.Current.MainPage.DisplayAlert("Error", "Invalid Login, try again", "OK");
         }
         public void OnSubmit()
         {
@@ -42,6 +43,7 @@ namespace Capstone.ViewModels
             //{
             //    DisplayInvalidLoginPrompt();
             //}
+            App.NavigationService.NavigateTo(ViewNames.PropertyExplorerView);
         }
     }
 }

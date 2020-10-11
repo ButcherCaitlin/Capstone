@@ -7,5 +7,6 @@ namespace Capstone.Utility
     class ViewNames
     {
         public const string PropertyExplorerView = "PropertyExplorerView";
+        public const string LoginView = "LoginView";
     }
 }

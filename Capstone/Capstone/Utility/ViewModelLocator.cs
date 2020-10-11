@@ -9,5 +9,7 @@ namespace Capstone.Utility
     {
         public static PropertyExplorerViewModel PropertyExplorerViewModel { get; set; }
         = new PropertyExplorerViewModel();
+        public static LoginViewModel LoginViewModel { get; set; }
+        = new LoginViewModel();
     }
 }

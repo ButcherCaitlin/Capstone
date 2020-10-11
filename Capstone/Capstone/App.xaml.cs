@@ -16,8 +16,12 @@ namespace Capstone
             InitializeComponent();
 
             NavigationService.Configure(ViewNames.PropertyExplorerView, typeof(PropertyExplorerView));
-            MainPage = new NavigationPage(new PropertyExplorerView()); //this will need to be changed after we integrate the other pages.
+            NavigationService.Configure(ViewNames.LoginView, typeof(LoginView));
+
+            //MainPage = new NavigationPage(new PropertyExplorerView());
+            MainPage = new NavigationPage(new LoginView());
         }
+
 
         protected override void OnStart()
         {
