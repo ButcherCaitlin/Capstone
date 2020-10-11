@@ -8,6 +8,11 @@
              x:Class="Capstone.App">
 
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
         <!--This is where we will be declaring our styles, colors, data templates, and converters-->
         <converter:ItemTappedConverter x:Key="LocalItemTappedConverter"/>
     </Application.Resources>
