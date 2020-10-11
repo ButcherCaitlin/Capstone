@@ -8,5 +8,6 @@ namespace Capstone.Utility
     {
         public const string PropertyExplorerView = "PropertyExplorerView";
         public const string LoginView = "LoginView";
+        public const string IndividualPropertyView = "IndividualPropertyView";
     }
 }

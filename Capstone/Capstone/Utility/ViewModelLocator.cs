@@ -11,5 +11,7 @@ namespace Capstone.Utility
         = new PropertyExplorerViewModel();
         public static LoginViewModel LoginViewModel { get; set; }
         = new LoginViewModel();
+        public static IndividualPropertyViewModel IndividualPropertyViewModel { get; set; }
+        = new IndividualPropertyViewModel();
     }
 }

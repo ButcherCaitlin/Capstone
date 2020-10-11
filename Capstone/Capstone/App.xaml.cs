@@ -17,6 +17,7 @@ namespace Capstone
 
             NavigationService.Configure(ViewNames.PropertyExplorerView, typeof(PropertyExplorerView));
             NavigationService.Configure(ViewNames.LoginView, typeof(LoginView));
+            NavigationService.Configure(ViewNames.IndividualPropertyView, typeof(IndividualPropertyView));
 
             //MainPage = new NavigationPage(new PropertyExplorerView());
             MainPage = new NavigationPage(new LoginView());

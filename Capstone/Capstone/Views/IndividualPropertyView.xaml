@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Capstone.Views.IndividualPropertyView">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame BorderColor="Black" BackgroundColor="#a1c3cc">
+                <Label FontSize="Large" TextColor="black" >
+                    <!--Placeholder for logo if wanted-->
+                    RealtorApp
+                </Label>
+            </Frame>
+            <Image Source="{Binding imageSrc, TargetNullValue={StaticResource fallbackImageUrl}}"
+                   HeightRequest="200"
+                   WidthRequest="200" />
+            <!--Grid - holds multiple frames as circles,
+            to show details such as beds/baths, as shown
+            in Tanner's wireframe-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--row0col0-->
+                <Frame 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                   Margin="10"
+                   BorderColor="Black"
+                   CornerRadius="50"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   HasShadow="False"
+                   >
+                    <Label Text="Br"
+                           Grid.Row="0"
+                    Grid.Column="0"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="{Binding numBedrooms, TargetNullValue={StaticResource unknown}}"/>
+                <!--row0col1-->
+                <Frame 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                   BackgroundColor="White"
+                   Margin="10"
+                   BorderColor="Black"
+                   CornerRadius="50"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   HasShadow="False"
+                   >
+                    <Label Text="Sq"
+                           Grid.Row="0"
+                    Grid.Column="1"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="{Binding sqFootage, TargetNullValue={StaticResource unknown}}"/>
+                <!--row0col2-->
+                <Frame 
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    BackgroundColor="White"
+                   Margin="10"
+                   BorderColor="Black"
+                   CornerRadius="50"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   HasShadow="False"
+                   >
+                    <Label Text="$"
+                           Grid.Row="0"
+                    Grid.Column="2"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="{Binding askingPrice, TargetNullValue={StaticResource unknown}}"/>
+                <!--row1col0-->
+                <Frame 
+                    Grid.Row="1"
+                    Grid.Column="0"
+                   BackgroundColor="White"
+                   Margin="10"
+                   BorderColor="Black"
+                   CornerRadius="50"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   HasShadow="False"
+                   >
+                    <Label Text="Ba"
+                           Grid.Row="1"
+                    Grid.Column="0"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="{Binding numBathrooms, TargetNullValue={StaticResource unknown}}"/>
+                <!--row1col1-->
+                <Frame 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                   Margin="10"
+                   BorderColor="Black"
+                   CornerRadius="50"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   HasShadow="False"
+                   >
+                    <Label Text="Ac"
+                           Grid.Row="1"
+                    Grid.Column="1"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="{Binding acres, TargetNullValue={StaticResource unknown}}"/>
+                <!--row1col2-->
+                <Frame 
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    BackgroundColor="White"
+                   Margin="10"
+                   BorderColor="Black"
+                   CornerRadius="50"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   HasShadow="False"
+                   >
+                    <Label Text="D"
+                           Grid.Row="1"
+                    Grid.Column="2"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+                </Frame>
+                <Label Text="{Binding buildDate, TargetNullValue={StaticResource unknown}}"/>
+            </Grid>
+            <Label Text="{Binding address, TargetNullValue={StaticResource addressUnknown}}"
+                FontSize="Medium" 
+                   TextColor="Black">
+            </Label>
+            <!--buttons for show now or appt-->
+            <Button 
+            TextColor="black" 
+            HorizontalOptions="Center"
+            Text="See this home today"
+            Clicked="OnSeeHomeButtonClicked"
+            CornerRadius="3">
+                <!--visual states make the buttons smaller when clicked, can be removed-->
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                                    Value="1"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                                    Value="0.7"/>
+
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+
+            <Button 
+            TextColor="black" 
+            Text="Schedule a Viewing " 
+            HorizontalOptions="Center"
+            Clicked="OnScheduleViewingButtonClicked"
+            CornerRadius="3">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                                    Value="1"/>
+
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                                    Value="0.7"/>
+
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
