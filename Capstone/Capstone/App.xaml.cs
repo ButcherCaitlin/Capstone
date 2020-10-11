@@ -10,9 +10,7 @@ namespace Capstone
 {
     public partial class App : Application
     {
-        //public static MockPropertDataStore dataService { get; } = new MockPropertDataStore();
-        public static NavigationService NavigationService => DependencyService.Get<NavigationService>() ?? new NavigationService();
-
+        public static NavigationService NavigationService { get; } = new NavigationService();
         public App()
         {
             InitializeComponent();
