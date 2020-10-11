@@ -45,10 +45,10 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Column="0" HeightRequest="100" VerticalOptions="Center" 
-                                   Margin="3" Text="{Binding address}" FontSize="Large"/>
+                                   Margin="3" Text="{Binding Address}" FontSize="Large"/>
                             <!--This should reference a static style.-->
                             <Label Grid.Column="1" HeightRequest="100" VerticalOptions="Center" 
-                                   Margin="3" Text="{Binding price}" FontSize="Medium"/>
+                                   Margin="3" Text="{Binding Price}" FontSize="Medium"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

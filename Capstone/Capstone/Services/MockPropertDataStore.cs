@@ -26,14 +26,14 @@ namespace Capstone.Services
 
             mockProperties = new List<Property>
             {
-                new Property(){id=1,address="14329 South Classic Cove",price=1000000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=100000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=142000000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=2000000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=3000000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=1000000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=3670000.00},
-                new Property(){id=1,address="14329 South Classic Cove",price=100000.00}
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=1000000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=100000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=142000000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=2000000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=3000000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=1000000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=3670000.00},
+                new Property(){ID=1,Address="14329 South Classic Cove",Price=100000.00}
             };
 
             nextPropertyID = mockProperties.Count;
@@ -50,21 +50,21 @@ namespace Capstone.Services
         {
             lock (this)
             {
-                toBeAdded.id = nextPropertyID;
+                toBeAdded.ID = nextPropertyID;
                 mockProperties.Add(toBeAdded);
                 nextPropertyID++;
             }
-            return await Task.FromResult(toBeAdded.id.ToString());
+            return await Task.FromResult(toBeAdded.ID.ToString());
         }
 
         public async Task<bool> UpdatePropertyAsync(Property toBeUpdated)
         {
-            int index = mockProperties.FindIndex((Property toBeFound) => toBeFound.id == toBeUpdated.id);
+            int index = mockProperties.FindIndex((Property toBeFound) => toBeFound.ID == toBeUpdated.ID);
             bool propertyFound = (index != -1);
             if (propertyFound)
             {
-                mockProperties[index].address = toBeUpdated.address;
-                mockProperties[index].price = toBeUpdated.price;
+                mockProperties[index].Address = toBeUpdated.Address;
+                mockProperties[index].Price = toBeUpdated.Price;
             }
             return await Task.FromResult(propertyFound);
         }
@@ -72,7 +72,7 @@ namespace Capstone.Services
         public async Task<Property> GetPropertyAsync(string id)
         {
 
-            Property toBeFound = mockProperties.FirstOrDefault(property => property.id.ToString() == id);
+            Property toBeFound = mockProperties.FirstOrDefault(property => property.ID.ToString() == id);
 
             // Make a copy of the note to simulate reading from an external datastore
             Property toBeReturned = CopyProperty(toBeFound);
@@ -95,7 +95,7 @@ namespace Capstone.Services
 
         private static Property CopyProperty(Property toBeCopied)
         {
-            return new Property { id = toBeCopied.id, address = toBeCopied.address, price = toBeCopied.price };
+            return new Property { ID = toBeCopied.ID, Address = toBeCopied.Address, Price = toBeCopied.Price };
         }
     }
 }
