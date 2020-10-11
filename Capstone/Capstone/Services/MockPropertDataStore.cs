@@ -83,10 +83,7 @@ namespace Capstone.Services
                 }
 
             };
-
             nextPropertyID = mockProperties.Count;
-
-
         }
 
         public MockPropertDataStore()
