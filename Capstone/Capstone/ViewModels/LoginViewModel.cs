@@ -45,5 +45,9 @@ namespace Capstone.ViewModels
             //}
             App.NavigationService.NavigateTo(ViewNames.PropertyExplorerView);
         }
+
+        public override void Initialize(object parameter)
+        {
+        }
     }
 }

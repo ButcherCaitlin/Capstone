@@ -30,11 +30,7 @@ namespace Capstone.ViewModels
             set { SetProperty(ref title, value); }
         }
 
-        public virtual void Initialize(object parameter)
-        {
-            //this mehtod will be overridden in any viewmodels that accept data parameters from the navigation service.
-            //
-        }
+        public abstract void Initialize(object parameter);
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",

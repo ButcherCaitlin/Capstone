@@ -20,7 +20,14 @@ namespace Capstone.Services
         {
             if (pages.TryGetValue(pageKey, out Type pageType))
             {
-                var page = (Page)Activator.CreateInstance(pageType);
+                Page page = null;
+                try
+                {
+                    page = (Page)Activator.CreateInstance(pageType);
+                } catch (Exception e)
+                {
+                    var error = e.Message;
+                }
                 page.SetNavigationArgs(parameter);
 
                 MainPage.Navigation.PushAsync(page);

@@ -21,6 +21,7 @@ namespace Capstone
 
             //MainPage = new NavigationPage(new PropertyExplorerView());
             MainPage = new NavigationPage(new LoginView());
+            //MainPage = new IndividualPropertyView();
         }
 
 

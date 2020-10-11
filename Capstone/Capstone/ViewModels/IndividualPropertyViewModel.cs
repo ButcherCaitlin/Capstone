@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using Capstone.Models;
+using Xamarin.Forms;
 
 namespace Capstone.ViewModels
 {
@@ -17,11 +19,26 @@ namespace Capstone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public void Initialize(object parameter)
+        public ICommand SeeHomeClicked { get; }
+        public IndividualPropertyViewModel()
+        {
+            Title = "Property";
+            property = new Property();
+
+            SeeHomeClicked = new Command(OnSeeHomeClickedCommand);
+            //commands and initializers in here.
+        }
+
+        public void OnSeeHomeClickedCommand()
+        {
+            Application.Current.MainPage.DisplayAlert("Button Clicked", "See home button was clicked.", "OK");
+        }
+
+        public override void Initialize(object parameter)
         {
             property = parameter as Property;
             //this mehtod will be overridden in any viewmodels that accept data parameters from the navigation service.
-            //
+            //        }
         }
     }
 }

@@ -42,7 +42,7 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-
+                            <!--add a field for the picture-->
                             <Label Grid.Column="0" HeightRequest="100" VerticalOptions="Center" 
                                    Margin="3" Text="{Binding Address}" FontSize="Large"/>
                             <!--This should reference a static style.-->

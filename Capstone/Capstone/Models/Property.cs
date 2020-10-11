@@ -23,8 +23,10 @@ namespace Capstone.Models
          * Build Date,
          */
         private string address;
-        private double price;
-        private int id;
+        private double price, bathrooms, acres;
+        private int id, bedrooms, sqFootage, buildYear;
+        private string description;
+
         public string Address { 
             get => address;
             set
@@ -41,6 +43,24 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
+        public double Bathrooms
+        {
+            get => bathrooms;
+            set
+            {
+                bathrooms = value;
+                RaisePropertyChanged();
+            }
+        }
+        public double Acres
+        {
+            get => acres;
+            set
+            {
+                acres = value;
+                RaisePropertyChanged();
+            }
+        }
         public int ID {
             get => id;
             set
@@ -49,6 +69,43 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
+        public int Bedrooms
+        {
+            get => bedrooms;
+            set
+            {
+                bedrooms = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int SqFootage
+        {
+            get => sqFootage;
+            set
+            {
+                sqFootage = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int BuildYear
+        {
+            get => buildYear;
+            set
+            {
+                buildYear = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

@@ -64,17 +64,11 @@ namespace Capstone.ViewModels
 
         public async void OnAddCommand()
         {
-            await Application.Current.MainPage.DisplayAlert("Whoops!", "This button has not been implimented yet.", "Close");
-            //this is where the code goes to launch the screen that caitlin is building. 
-            //this method must also be async since disaply alet must be awaited.
-            App.NavigationService.NavigateTo(ViewNames.PropertyExplorerView);
+            App.NavigationService.NavigateTo(ViewNames.IndividualPropertyView);
         }
 
         public async void OnPropertySelectedCommand(Property selected)
         {
-            await Application.Current.MainPage.DisplayAlert("Whoops!", "This button has not been implimented yet.", "Close");
-            //this is where the code goes to launch the screen that caitlin is building. 
-            //this method must also be async since disaply alet must be awaited.
             App.NavigationService.NavigateTo(ViewNames.IndividualPropertyView, selected);
         }
 
@@ -88,6 +82,10 @@ namespace Capstone.ViewModels
                 Properties.Add(property);
             }
             IsBusy = false;
+        }
+
+        public override void Initialize(object parameter)
+        {
         }
     }
 }

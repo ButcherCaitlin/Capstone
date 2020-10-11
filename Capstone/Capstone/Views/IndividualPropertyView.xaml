@@ -11,9 +11,9 @@
                     RealtorApp
                 </Label>
             </Frame>
-            <Image Source="{Binding imageSrc, TargetNullValue={StaticResource fallbackImageUrl}}"
+            <!--<Image Source="{Binding imageSrc, TargetNullValue={StaticResource fallbackImageUrl}}"
                    HeightRequest="200"
-                   WidthRequest="200" />
+                   WidthRequest="200" />-->
             <!--Grid - holds multiple frames as circles,
             to show details such as beds/baths, as shown
             in Tanner's wireframe-->
@@ -49,7 +49,7 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding numBedrooms, TargetNullValue={StaticResource unknown}}"/>
+                <Label Text="{Binding Property.Bedrooms}"/><!--set fallback here.-->
                 <!--row0col1-->
                 <Frame 
                     Grid.Row="0"
@@ -72,7 +72,7 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding sqFootage, TargetNullValue={StaticResource unknown}}"/>
+                <Label Text="{Binding Property.SqFootage}"/><!--set fallback here.-->
                 <!--row0col2-->
                 <Frame 
                     Grid.Row="0"
@@ -95,7 +95,7 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding askingPrice, TargetNullValue={StaticResource unknown}}"/>
+                <Label Text="{Binding Property.Price}"/><!--set fallback here.-->
                 <!--row1col0-->
                 <Frame 
                     Grid.Row="1"
@@ -118,7 +118,7 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding numBathrooms, TargetNullValue={StaticResource unknown}}"/>
+                <Label Text="{Binding Property.Bathrooms}"/><!--set fallback here.-->
                 <!--row1col1-->
                 <Frame 
                     Grid.Row="1"
@@ -141,7 +141,7 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding acres, TargetNullValue={StaticResource unknown}}"/>
+                <Label Text="{Binding Property.Acres}"/><!--set fallback here.-->
                 <!--row1col2-->
                 <Frame 
                     Grid.Row="1"
@@ -164,19 +164,21 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding buildDate, TargetNullValue={StaticResource unknown}}"/>
+                <Label Text="{Binding Property.BuildYear}"/><!--set fallback here.-->
             </Grid>
-            <Label Text="{Binding address, TargetNullValue={StaticResource addressUnknown}}"
-                FontSize="Medium" 
-                   TextColor="Black">
-            </Label>
+            <Label Text="{Binding Property.Address}"
+                    FontSize="Medium" 
+                   TextColor="Black"/> <!--set fallback here.-->
+            
+
             <!--buttons for show now or appt-->
             <Button 
             TextColor="black" 
             HorizontalOptions="Center"
             Text="See this home today"
-            Clicked="OnSeeHomeButtonClicked"
+            Command="{Binding SeeHomeClicked}"
             CornerRadius="3">
+                
                 <!--visual states make the buttons smaller when clicked, can be removed-->
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
@@ -201,8 +203,8 @@
             TextColor="black" 
             Text="Schedule a Viewing " 
             HorizontalOptions="Center"
-            Clicked="OnScheduleViewingButtonClicked"
             CornerRadius="3">
+                <!--Command="{Binding OnScheduleViewingClickCommand}"-->
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">

@@ -26,14 +26,62 @@ namespace Capstone.Services
 
             mockProperties = new List<Property>
             {
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=1000000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=100000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=142000000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=2000000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=3000000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=1000000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=3670000.00},
-                new Property(){ID=1,Address="14329 South Classic Cove",Price=100000.00}
+                new Property(){
+                    ID = 1,
+                    Address = "14329 South Classic Cove",
+                    Price = 1000000.00,
+                    Bathrooms = 5.5,
+                    Bedrooms = 4,
+                    Acres = 2,
+                    SqFootage = 3000,
+                    BuildYear = 2000,
+                    Description = "A cute rambler.",
+                },
+                new Property(){
+                    ID = 1,
+                    Address = "14329 South Classic Cove",
+                    Price = 1000000.00,
+                    Bathrooms = 5.5,
+                    Bedrooms = 4,
+                    Acres = 2,
+                    SqFootage = 3000,
+                    BuildYear = 2000,
+                    Description = "A cute rambler.",
+                },
+                new Property(){
+                    ID = 1,
+                    Address = "14329 South Classic Cove",
+                    Price = 1000000.00,
+                    Bathrooms = 5.5,
+                    Bedrooms = 4,
+                    Acres = 2,
+                    SqFootage = 3000,
+                    BuildYear = 2000,
+                    Description = "A cute rambler.",
+                },
+                new Property(){
+                    ID = 1,
+                    Address = "14329 South Classic Cove",
+                    Price = 1000000.00,
+                    Bathrooms = 5.5,
+                    Bedrooms = 4,
+                    Acres = 2,
+                    SqFootage = 3000,
+                    BuildYear = 2000,
+                    Description = "A cute rambler.",
+                },
+                new Property(){
+                    ID = 1,
+                    Address = "14329 South Classic Cove",
+                    Price = 1000000.00,
+                    Bathrooms = 5.5,
+                    Bedrooms = 4,
+                    Acres = 2,
+                    SqFootage = 3000,
+                    BuildYear = 2000,
+                    Description = "A cute rambler.",
+                }
+
             };
 
             nextPropertyID = mockProperties.Count;
