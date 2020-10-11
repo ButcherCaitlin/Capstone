@@ -41,16 +41,27 @@ namespace Capstone.ViewModels
             Title = "Property Explorer";
             SelectedProperty = new Property();
             Properties = new ObservableCollection<Property>();
+
             RefreshList = new Command(OnRefreshListCommand);
             AddCommand = new Command(OnAddCommand);
             PropertySelected = new Command<Property>(OnPropertySelectedCommand);
+
+            //MessagingCenter.Subscribe<CaitlinsViewModel, Property>
+            //    (this, MessageNames.PropertyChangedMessage, MessagePropertyChanged);
+
             ExecuteLoadData();
         }
+
+        //public void MessagePropertyChanged(CaitlinsViewModel sender, Property property)
+        //{
+        //    ExecuteLoadData();
+        //}
 
         public void OnRefreshListCommand()
         {
             ExecuteLoadData();
         }
+
         public async void OnAddCommand()
         {
             await Application.Current.MainPage.DisplayAlert("Whoops!", "This button has not been implimented yet.", "Close");
@@ -58,6 +69,7 @@ namespace Capstone.ViewModels
             //this method must also be async since disaply alet must be awaited.
             App.NavigationService.NavigateTo(ViewNames.PropertyExplorerView);
         }
+
         public async void OnPropertySelectedCommand(Property selected)
         {
             await Application.Current.MainPage.DisplayAlert("Whoops!", "This button has not been implimented yet.", "Close");
