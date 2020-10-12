@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Capstone.Views.IndividualPropertyView">
-    
+
     <ContentPage.Content>
         <StackLayout>
             <Frame BorderColor="Black" BackgroundColor="#a1c3cc">
@@ -21,6 +21,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -37,9 +39,10 @@
                    CornerRadius="50"
                    HeightRequest="25"
                    WidthRequest="25"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
                    IsClippedToBounds="True"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
+                  
                    Padding="0"
                    HasShadow="False"
                    >
@@ -49,7 +52,12 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding Property.Bedrooms}"/><!--set fallback here.-->
+                <Label Text="{Binding Property.Bedrooms}"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                <!--set fallback here.-->
                 <!--row0col1-->
                 <Frame 
                     Grid.Row="0"
@@ -61,8 +69,8 @@
                    HeightRequest="25"
                    WidthRequest="25"
                    IsClippedToBounds="True"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
                    Padding="0"
                    HasShadow="False"
                    >
@@ -72,7 +80,12 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding Property.SqFootage}"/><!--set fallback here.-->
+                <Label Text="{Binding Property.SqFootage}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Grid.Row="0"
+                       Grid.Column="1"/>
+                <!--set fallback here.-->
                 <!--row0col2-->
                 <Frame 
                     Grid.Row="0"
@@ -84,8 +97,8 @@
                    HeightRequest="25"
                    WidthRequest="25"
                    IsClippedToBounds="True"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
                    Padding="0"
                    HasShadow="False"
                    >
@@ -95,7 +108,12 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding Property.Price}"/><!--set fallback here.-->
+                <Label Text="{Binding Property.Price}"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                <!--set fallback here.-->
                 <!--row1col0-->
                 <Frame 
                     Grid.Row="1"
@@ -107,8 +125,8 @@
                    HeightRequest="25"
                    WidthRequest="25"
                    IsClippedToBounds="True"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
                    Padding="0"
                    HasShadow="False"
                    >
@@ -118,7 +136,12 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding Property.Bathrooms}"/><!--set fallback here.-->
+                <Label Text="{Binding Property.Bathrooms}"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                <!--set fallback here.-->
                 <!--row1col1-->
                 <Frame 
                     Grid.Row="1"
@@ -130,8 +153,8 @@
                    HeightRequest="25"
                    WidthRequest="25"
                    IsClippedToBounds="True"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
                    Padding="0"
                    HasShadow="False"
                    >
@@ -141,7 +164,12 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding Property.Acres}"/><!--set fallback here.-->
+                <Label Text="{Binding Property.Acres}"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                <!--set fallback here.-->
                 <!--row1col2-->
                 <Frame 
                     Grid.Row="1"
@@ -153,8 +181,8 @@
                    HeightRequest="25"
                    WidthRequest="25"
                    IsClippedToBounds="True"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
                    Padding="0"
                    HasShadow="False"
                    >
@@ -164,66 +192,50 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"/>
                 </Frame>
-                <Label Text="{Binding Property.BuildYear}"/><!--set fallback here.-->
-            </Grid>
-            <Label Text="{Binding Property.Address}"
-                    FontSize="Medium" 
-                   TextColor="Black"/> <!--set fallback here.-->
-            
+                <Label Text="{Binding Property.BuildYear}"
+                       Grid.Row="1"
+                       Grid.Column="2"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                <!--set fallback here.-->
 
-            <!--buttons for show now or appt-->
-            <Button 
+                <Label Text="{Binding Property.Address}"
+                   Grid.Row="2"
+                    FontSize="Medium" 
+                   TextColor="Black"/>
+                <!--set fallback here.-->
+
+
+                <!--buttons for show now or appt-->
+                <Button 
             TextColor="black" 
+            Grid.Row="3"
             HorizontalOptions="Center"
+            VerticalOptions="Center"
             Text="See this home today"
             Command="{Binding SeeHomeClicked}"
             CornerRadius="3">
-                
-                <!--visual states make the buttons smaller when clicked, can be removed-->
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
+
+                    <!--visual states make the buttons smaller when clicked, can be removed-->
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale"
                                     Value="1"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale"
                                     Value="0.7"/>
 
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-
-            <Button 
-            TextColor="black" 
-            Text="Schedule a Viewing " 
-            HorizontalOptions="Center"
-            CornerRadius="3">
-                <!--Command="{Binding OnScheduleViewingClickCommand}"-->
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
-                                    Value="1"/>
-
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale"
-                                    Value="0.7"/>
-
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-        </StackLayout>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+            </Grid>
+            </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -38,7 +38,18 @@ namespace Capstone.Services
                     Description = "A cute rambler.",
                 },
                 new Property(){
-                    ID = 1,
+                    ID = 2,
+                    Address = "14329 South Classic Cove",
+                    Price = 1000000.00,
+                    Bathrooms = 6,
+                    Bedrooms = 3,
+                    Acres = 5,
+                    SqFootage = 1000,
+                    BuildYear = 2001,
+                    Description = "A cute rambler.",
+                },
+                new Property(){
+                    ID = 3,
                     Address = "14329 South Classic Cove",
                     Price = 1000000.00,
                     Bathrooms = 5.5,
@@ -49,7 +60,7 @@ namespace Capstone.Services
                     Description = "A cute rambler.",
                 },
                 new Property(){
-                    ID = 1,
+                    ID = 4,
                     Address = "14329 South Classic Cove",
                     Price = 1000000.00,
                     Bathrooms = 5.5,
@@ -60,18 +71,7 @@ namespace Capstone.Services
                     Description = "A cute rambler.",
                 },
                 new Property(){
-                    ID = 1,
-                    Address = "14329 South Classic Cove",
-                    Price = 1000000.00,
-                    Bathrooms = 5.5,
-                    Bedrooms = 4,
-                    Acres = 2,
-                    SqFootage = 3000,
-                    BuildYear = 2000,
-                    Description = "A cute rambler.",
-                },
-                new Property(){
-                    ID = 1,
+                    ID = 5,
                     Address = "14329 South Classic Cove",
                     Price = 1000000.00,
                     Bathrooms = 5.5,
@@ -108,6 +108,10 @@ namespace Capstone.Services
             bool propertyFound = (index != -1);
             if (propertyFound)
             {
+                mockProperties[index].BuildYear = toBeUpdated.BuildYear;
+                mockProperties[index].Bedrooms = toBeUpdated.Bedrooms;
+                mockProperties[index].Bathrooms = toBeUpdated.Bathrooms;
+                mockProperties[index].SqFootage = toBeUpdated.SqFootage;
                 mockProperties[index].Address = toBeUpdated.Address;
                 mockProperties[index].Price = toBeUpdated.Price;
             }
@@ -140,7 +144,8 @@ namespace Capstone.Services
 
         private static Property CopyProperty(Property toBeCopied)
         {
-            return new Property { ID = toBeCopied.ID, Address = toBeCopied.Address, Price = toBeCopied.Price };
+            return new Property { ID = toBeCopied.ID, Address = toBeCopied.Address, Price = toBeCopied.Price, BuildYear = toBeCopied.BuildYear,
+            Bathrooms = toBeCopied.Bathrooms, Bedrooms = toBeCopied.Bedrooms, SqFootage = toBeCopied.SqFootage, Acres = toBeCopied.Acres};
         }
     }
 }
