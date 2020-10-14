@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Capstone.Views.TimepickerPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Pick a Date:"
+                   TextColor="Black" 
+                   FontSize="Medium"
+                   HorizontalTextAlignment="Center"/>
+            <DatePicker x:Name="tourHomeDatePicker"
+                        Format="D"
+                        HorizontalOptions="Center"
+                        TextColor="#088da5"
+                        
+                        />
+
+            <Label Text="Pick a Time:"
+                   TextColor="Black"
+                   FontSize="Medium"
+                   HorizontalTextAlignment="Center"/>
+            <TimePicker x:Name="tourHomeTimePicker"
+                        Format="T"
+                        HorizontalOptions="Center"
+                        TextColor="#088da5"
+                       />
+            
+            <Button 
+                Clicked="ConfirmDateTimeClicked"
+                TextColor="black" 
+                WidthRequest="245"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"  
+                Margin="10"
+                Padding="10"
+                Text="Confirm Tour"
+                BackgroundColor="#088da5"
+                CornerRadius="6"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

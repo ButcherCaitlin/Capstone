@@ -35,7 +35,12 @@ namespace Capstone.Services
                     Acres = 2,
                     SqFootage = 3000,
                     BuildYear = 2000,
-                    Description = "A cute rambler.",
+                    Description = "A cute rambler. Lots of light. Big Garage. Newly renovated kitchen and bathroom, " +
+                    "small garden in the backyard as well as a patio and small greenhouse. Quiet neighborhood with " +
+                    " elementary school 3 blocks away. No HOA." +
+                    " This description is really long to show the way the scroll view works." +
+                    " Beautiful bay windows and built-in shelving. Home theatre is " +
+                    "big and comforable and includes a large projector and reclining seats.",
                 },
                 new Property(){
                     ID = 2,
@@ -46,7 +51,7 @@ namespace Capstone.Services
                     Acres = 5,
                     SqFootage = 1000,
                     BuildYear = 2001,
-                    Description = "A cute rambler.",
+                    Description = "A cute rambler with lots of light. Big, fenced in yard with a small garden.",
                 },
                 new Property(){
                     ID = 3,
@@ -114,6 +119,7 @@ namespace Capstone.Services
                 mockProperties[index].SqFootage = toBeUpdated.SqFootage;
                 mockProperties[index].Address = toBeUpdated.Address;
                 mockProperties[index].Price = toBeUpdated.Price;
+                mockProperties[index].Description = toBeUpdated.Description;
             }
             return await Task.FromResult(propertyFound);
         }
@@ -145,7 +151,8 @@ namespace Capstone.Services
         private static Property CopyProperty(Property toBeCopied)
         {
             return new Property { ID = toBeCopied.ID, Address = toBeCopied.Address, Price = toBeCopied.Price, BuildYear = toBeCopied.BuildYear,
-            Bathrooms = toBeCopied.Bathrooms, Bedrooms = toBeCopied.Bedrooms, SqFootage = toBeCopied.SqFootage, Acres = toBeCopied.Acres};
+            Bathrooms = toBeCopied.Bathrooms, Bedrooms = toBeCopied.Bedrooms, SqFootage = toBeCopied.SqFootage, Acres = toBeCopied.Acres,
+            Description = toBeCopied.Description};
         }
     }
 }
