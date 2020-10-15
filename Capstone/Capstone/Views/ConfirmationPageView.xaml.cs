@@ -5,12 +5,12 @@ using Capstone.Utility;
 namespace Capstone.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PropertyExplorerView : ContentPage
+    public partial class ConfirmationPageView : ContentPage
     {
-        public PropertyExplorerView()
+        public ConfirmationPageView()
         {
             InitializeComponent();
-            BindingContext = ViewModelLocator.PropertyExplorerViewModel;
+            BindingContext = ViewModelLocator.ConfirmationPageViewModel;
         }
     }
 }

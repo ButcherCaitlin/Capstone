@@ -32,179 +32,75 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <!--row0col0-->
-                    <Frame 
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    BackgroundColor="White"
-                   Margin="10"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   IsClippedToBounds="True"
-                  
-                   Padding="0"
-                   HasShadow="False"
-                   >
-                        <Label Text="Br"
-                           Grid.Row="0"
-                    Grid.Column="0"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                    <Frame Grid.Row="0" Grid.Column="0" Style="{StaticResource StatFrame}">
+                        <Label Text="Br" Grid.Row="0" Grid.Column="0"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     </Frame>
                     <Label Text="{Binding Property.Bedrooms}"
-                       Grid.Row="0"
-                       Grid.Column="0"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-                    <!--set fallback here.-->
-                    <!--row0col1-->
-                    <Frame 
-                    Grid.Row="0"
-                    Grid.Column="1"
-                   BackgroundColor="White"
-                   Margin="10"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   IsClippedToBounds="True"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   Padding="0"
-                   HasShadow="False"
-                   >
-                        <Label Text="Sq"
                            Grid.Row="0"
-                    Grid.Column="1"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                           Grid.Column="0"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+                    <!--row0col1-->
+                    <Frame Grid.Row="0" Grid.Column="1" Style="{StaticResource StatFrame}">
+                        <Label Text="Sq" Grid.Row="0" Grid.Column="1"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     </Frame>
                     <Label Text="{Binding Property.SqFootage}"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       Grid.Row="0"
-                       Grid.Column="1"/>
-                    <!--set fallback here.-->
-                    <!--row0col2-->
-                    <Frame 
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    BackgroundColor="White"
-                   Margin="10"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   IsClippedToBounds="True"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   Padding="0"
-                   HasShadow="False"
-                   >
-                        <Label Text="$"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
                            Grid.Row="0"
-                    Grid.Column="2"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                           Grid.Column="1"/>
+
+                    <!--row0col2-->
+                    <Frame Grid.Row="0" Grid.Column="2" Style="{StaticResource StatFrame}">
+                        <Label Text="$" Grid.Row="0" Grid.Column="2"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     </Frame>
                     <Label Text="{Binding Property.Price}"
-                       Grid.Row="0"
-                       Grid.Column="2"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-                    <!--set fallback here.-->
+                           Grid.Row="0"
+                           Grid.Column="2"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
                     <!--row1col0-->
-                    <Frame 
-                    Grid.Row="1"
-                    Grid.Column="0"
-                   BackgroundColor="White"
-                   Margin="10"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   IsClippedToBounds="True"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   Padding="0"
-                   HasShadow="False"
-                   >
-                        <Label Text="Ba"
-                           Grid.Row="1"
-                    Grid.Column="0"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                    <Frame Grid.Row="1" Grid.Column="0" Style="{StaticResource StatFrame}">
+                        <Label Text="Ba" Grid.Row="1" Grid.Column="0"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     </Frame>
                     <Label Text="{Binding Property.Bathrooms}"
-                       Grid.Row="1"
-                       Grid.Column="0"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-                    <!--set fallback here.-->
-                    <!--row1col1-->
-                    <Frame 
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    BackgroundColor="White"
-                   Margin="10"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   IsClippedToBounds="True"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   Padding="0"
-                   HasShadow="False"
-                   >
-                        <Label Text="Ac"
                            Grid.Row="1"
-                    Grid.Column="1"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                           Grid.Column="0"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+                    <!--row1col1-->
+                    <Frame Grid.Row="1" Grid.Column="1" Style="{StaticResource StatFrame}">
+                        <Label Text="Ac" Grid.Row="1" Grid.Column="1"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     </Frame>
                     <Label Text="{Binding Property.Acres}"
-                       Grid.Row="1"
-                       Grid.Column="1"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-                    <!--set fallback here.-->
-                    <!--row1col2-->
-                    <Frame 
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    BackgroundColor="White"
-                   Margin="10"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   IsClippedToBounds="True"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Start"
-                   Padding="0"
-                   HasShadow="False"
-                   >
-                        <Label Text="D"
                            Grid.Row="1"
-                    Grid.Column="2"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
-                    </Frame>
+                           Grid.Column="1"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
 
+                    <!--row1col2-->
+                    <Frame Grid.Row="1" Grid.Column="2" Style="{StaticResource StatFrame}">
+                    <Label Text="D" Grid.Row="1" Grid.Column="2"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Frame>
                     <Label Text="{Binding Property.BuildYear}"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-                    <!--set fallback here.-->
+                           Grid.Row="1"
+                           Grid.Column="2"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
                 </Grid>
-                <Frame BorderColor="Black"
-                   >
+                
+                <Frame BorderColor="Black">
                     <StackLayout>
                         <Label Text="{Binding Property.Address}"
                        FontSize="Medium" 
@@ -224,18 +120,7 @@
                 </Frame>
                 <!--buttons for show now or appt-->
 
-                <Button 
-                  TextColor="black" 
-                  WidthRequest="245"
-                  HorizontalOptions="Center"
-                  VerticalOptions="Center"  
-                  Margin="10"
-                  Padding="10"
-                  Text="Tour this home"
-                  Command="{Binding SeeHomeClicked}"
-                  Clicked="OnTourHomeClicked"
-                  BackgroundColor="#088da5"
-                  CornerRadius="6"/>
+                <Button Text="Schedule Showing" Command="{Binding SeeHomeClicked}"/>
 
 
                 <!--visual states make the buttons smaller when clicked, can be removed-->
