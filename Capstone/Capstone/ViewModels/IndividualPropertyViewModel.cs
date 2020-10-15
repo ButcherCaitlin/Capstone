@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Capstone.Models;
+using Capstone.Utility;
 using Xamarin.Forms;
 
 namespace Capstone.ViewModels
@@ -31,7 +32,8 @@ namespace Capstone.ViewModels
 
         public void OnSeeHomeClickedCommand()
         {
-            Application.Current.MainPage.DisplayAlert("Button Clicked", "See home button was clicked.", "OK");
+            
+           
         }
 
         public override void Initialize(object parameter)
