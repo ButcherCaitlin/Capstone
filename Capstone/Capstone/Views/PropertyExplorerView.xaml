@@ -30,29 +30,53 @@
                     Command="{Binding PropertySelected}"
                     EventArgsConverter="{StaticResource LocalItemTappedConverter}"/>
             </ListView.Behaviors>
-            
-            <ListView.ItemTemplate> <!--This should be defined in the app resources.-->
+
+            <ListView.ItemTemplate>
+                <!--This should be defined in the app resources.-->
+
                 <DataTemplate>
-                    <ViewCell>
-                        <Grid HeightRequest="100" Margin="5" BackgroundColor="LightGray" RowSpacing="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <ViewCell Height="100" >
+
+                        <ViewCell.ContextActions>
+                            <!--this is also where you could add a context action.-->
+                            <MenuItem Text="Favorite" 
+                                      Command="{Binding Favorited}"
+                                      CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+
+                        <Grid Margin="4" BackgroundColor="{StaticResource PrimaryColor}"
+                              HeightRequest="100" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <!--add a field for the picture-->
-                            <Label Grid.Column="0" HeightRequest="100" VerticalOptions="Center" 
-                                   Margin="3" Text="{Binding Address}" FontSize="Large"/>
-                            <!--This should reference a static style.-->
-                            <Label Grid.Column="1" HeightRequest="100" VerticalOptions="Center" 
-                                   Margin="3" Text="{Binding Price}" FontSize="Medium"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Column="0" Grid.RowSpan="2" HeightRequest="100" WidthRequest="100" 
+                                   VerticalOptions="Center" Margin="5" Source="home.jpg" />
+
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   HeightRequest="50" VerticalTextAlignment="End"
+                                   Margin="1" Text="{Binding Address}" FontSize="Large"
+                                   TextColor="{StaticResource PrimaryTextColor}"/>
+
+                            <Label Grid.Row="1" Grid.Column="1"
+                                   HeightRequest="50" VerticalTextAlignment="Start"
+                                   Margin="1" Text="{Binding Price}" FontSize="Medium"
+                                   TextColor="Gold"/>
+
                         </Grid>
+
+
                     </ViewCell>
                 </DataTemplate>
+
             </ListView.ItemTemplate>
-            
+
         </ListView>
 
     </Grid>
