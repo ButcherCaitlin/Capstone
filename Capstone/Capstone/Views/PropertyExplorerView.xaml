@@ -63,12 +63,12 @@
                             <Label Grid.Row="0" Grid.Column="1"
                                    HeightRequest="50" VerticalTextAlignment="End"
                                    Margin="1" Text="{Binding Address}" FontSize="Large"
-                                   TextColor="White"/>
+                                   TextColor="{StaticResource TextPrimary}"/>
 
                             <Label Grid.Row="1" Grid.Column="1"
                                    HeightRequest="50" VerticalTextAlignment="Start"
                                    Margin="1" Text="{Binding Price}" FontSize="Medium"
-                                   TextColor="Gold"/>
+                                   TextColor="{StaticResource TextAccent}"/>
 
                         </Grid>
 

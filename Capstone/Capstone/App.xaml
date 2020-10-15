@@ -8,11 +8,26 @@
              x:Class="Capstone.App">
 
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        
+        <!--if this gets too long we can worry about moving
+        them to merged dictionaries.-->
+
+        <Color x:Key="TextPrimary">White</Color>
+        <Color x:Key="TextAccent">Gold</Color>
+        <Color x:Key="PrimaryItem">#BF043055</Color>
+        <Color x:Key="AccentItem">#088da5</Color>
+
+        <Style TargetType="Entry">
+            <Setter Property="PlaceholderColor" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource AccentItem}"/>
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
         <!--This is where we will be declaring our styles, colors, data templates, and converters-->
         <converter:ItemTappedConverter x:Key="LocalItemTappedConverter"/>
     </Application.Resources>
