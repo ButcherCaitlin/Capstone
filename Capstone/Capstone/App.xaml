@@ -26,6 +26,25 @@
             <Setter Property="BackgroundColor" Value="{StaticResource AccentItem}"/>
             <Setter Property="TextColor" Value="{StaticResource TextPrimary}"/>
             <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="WidthRequest" Value="245"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+
+        <Style x:Key="StatFrame" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderColor" Value="Black"/>
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="WidthRequest" Value="25"/>
+            <Setter Property="IsClippedToBounds" Value="True"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="HasShadow" Value="False"/>
         </Style>
 
         <!--This is where we will be declaring our styles, colors, data templates, and converters-->

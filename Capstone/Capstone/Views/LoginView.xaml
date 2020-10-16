@@ -16,7 +16,7 @@
                 </StackLayout>
             </Frame>
             <Button Command="{Binding SubmitCommand}" Text="Login"  
-                    FontAttributes="Bold" FontSize="Large" HorizontalOptions="FillAndExpand"/>
+                    FontAttributes="Bold" FontSize="Large"/>
         </StackLayout>
     </ContentPage.Content>
     

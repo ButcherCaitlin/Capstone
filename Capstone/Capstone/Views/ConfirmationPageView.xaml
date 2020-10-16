@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Capstone.Views.TimepickerPage">
+             x:Class="Capstone.Views.ConfirmationPageView">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Pick a Date:"
@@ -11,7 +11,7 @@
             <DatePicker x:Name="tourHomeDatePicker"
                         Format="D"
                         HorizontalOptions="Center"
-                        TextColor="#088da5"
+                        TextColor="{StaticResource AccentItem}"
                         
                         />
 
@@ -22,20 +22,11 @@
             <TimePicker x:Name="tourHomeTimePicker"
                         Format="T"
                         HorizontalOptions="Center"
-                        TextColor="#088da5"
+                        TextColor="{StaticResource AccentItem}"
                        />
             
             <Button 
-                Clicked="ConfirmDateTimeClicked"
-                TextColor="black" 
-                WidthRequest="245"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"  
-                Margin="10"
-                Padding="10"
-                Text="Confirm Tour"
-                BackgroundColor="#088da5"
-                CornerRadius="6"/>
+                Command="{Binding ConfirmClicked}" Text="Confirm Tour"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
