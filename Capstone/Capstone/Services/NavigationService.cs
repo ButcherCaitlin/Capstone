@@ -39,6 +39,33 @@ namespace Capstone.Services
                 throw new ArgumentException($"This page doesn't exist: {pageKey}.", nameof(pageKey));
             }
         }
+
+        public void GoBackModal() => MainPage.Navigation.PopModalAsync();
+
+        public void NavigateToModal(string pageKey, object parameter = null)
+        {
+            if (pages.TryGetValue(pageKey, out Type pageType))
+            {
+                Page page = null;
+                try
+                {
+                    page = (Page)Activator.CreateInstance(pageType);
+                }
+                catch (Exception e)
+                {
+                    var error = e.Message;
+                }
+                page.SetNavigationArgs(parameter);
+
+                MainPage.Navigation.PushModalAsync(page);
+
+                (page.BindingContext as BaseViewModel).Initialize(parameter);
+            }
+            else
+            {
+                throw new ArgumentException($"This page doesn't exist: {pageKey}.", nameof(pageKey));
+            }
+        }
     }
 
     public static class NavigationExtensions

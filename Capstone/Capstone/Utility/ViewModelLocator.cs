@@ -13,5 +13,7 @@ namespace Capstone.Utility
         = new LoginViewModel();
         public static IndividualPropertyViewModel IndividualPropertyViewModel { get; set; }
         = new IndividualPropertyViewModel();
+        public static ConfirmationPageViewModel ConfirmationPageViewModel { get; set; }
+        = new ConfirmationPageViewModel();
     }
 }

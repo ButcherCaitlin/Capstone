@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Capstone.Models;
+using Capstone.Services;
 using Capstone.Utility;
 using Xamarin.Forms;
 
@@ -32,15 +33,12 @@ namespace Capstone.ViewModels
 
         public void OnSeeHomeClickedCommand()
         {
-            
-           
+            App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView);
         }
 
         public override void Initialize(object parameter)
         {
             property = parameter as Property;
-            //this mehtod will be overridden in any viewmodels that accept data parameters from the navigation service.
-            //        }
         }
     }
 }
