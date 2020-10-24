@@ -19,44 +19,38 @@ namespace Capstone.API.Services
             _properties = database.GetCollection<Property>(settings.CapstonePropertyCollection);
         }
 
-        //Get all properties from the database.
-        public IEnumerable<Property> Get()
+        public IEnumerable<Property> GetAll()
         {
             return _properties.Find(property => true).ToEnumerable<Property>();
         }
-
-        //Get a single property with an ID.
         public Property Get(string id)
         {
             return _properties.Find<Property>(property => property.Id == id).FirstOrDefault();
         }
-
-        public Property Get(string userId, string propertyId)
+        public Property GetPropertyForUser(string userId, string propertyId)
         {
             return _properties.Find<Property>(property =>
             property.OwnerID == userId
             && property.Id == propertyId).FirstOrDefault();
         }
-
         public IEnumerable<Property> GetPropertiesForUser(string userId)
         {
             return _properties.Find<Property>(property => property.OwnerID == userId).ToEnumerable<Property>();
         }
-
-        //Create a new property in the database and gives it an ID. The property and new ID are returned.
-        public Property Create(Property property)
+        public Property CreateOne(Property property)
         {
             _properties.InsertOne(property);
             return property;
         }
-
-        //Update a property in the database with a new property object.
-        public void Update(string id, Property propertyIn)
+        public IEnumerable<Property> CreateMany(IEnumerable<Property> properties)
+        {
+            _properties.InsertMany(properties);
+            return properties;
+        }
+        public void UpdateOne(string id, Property propertyIn)
         {
             _properties.ReplaceOne(property => property.Id == id, propertyIn);
         }
-
-        //Remove a property using the object with an ID or the ID string.
         public void Remove(Property propertyIn)
         {
             _properties.DeleteOne(property => property.Id == propertyIn.Id);

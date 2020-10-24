@@ -31,14 +31,7 @@ namespace Capstone.API.Services
             return _showings.Find<Showing>(showing => showing.Id == id).FirstOrDefault();
         }
 
-        //Get a single property with an ID, and a user.
-        public Showing Get(string userId, string showingId)
-        {
-            return _showings.Find<Showing>(showing =>
-            (showing.RealtorID == userId || showing.ProspectID == userId) 
-            && showing.Id == showingId ).FirstOrDefault();
-        }
-
+        //Get a single showing with an ID
         public IEnumerable<Showing> GetShowingsForUser(string userId)
         {
             return _showings.Find<Showing>(showing => showing.RealtorID == userId || showing.ProspectID == userId).ToEnumerable<Showing>();

@@ -9,6 +9,7 @@ using Capstone.API.Services;
 using AutoMapper;
 using System;
 using Microsoft.AspNetCore.Http;
+using Capstone.API.Converters;
 
 namespace Capstone.API
 {
@@ -39,9 +40,11 @@ namespace Capstone.API
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
-                /*setupAction.OutputFormatters.Add(
-                    new XmlDataContractSerializerOutputFormatter());*/ // this is the old way to add an xml formatter
-            }).AddXmlDataContractSerializerFormatters();
+            })
+            .AddXmlDataContractSerializerFormatters()
+            .AddJsonOptions(options => {
+                options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,6 +6,7 @@ namespace Capstone.API.Profiles
     {
         public ShowingProfile()
         {
+            CreateMap<Models.ShowingDto, Entities.Showing>();
             CreateMap<Entities.Showing, Models.ShowingForRealtorDto>()
                 .ForMember(
                     dest => dest.CounterpartID,
