@@ -1,10 +1,8 @@
 ﻿using Capstone.API.Configuration;
-using Capstone.API.Models;
+using Capstone.API.Entities;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Capstone.API.Services
 {
@@ -31,6 +29,18 @@ namespace Capstone.API.Services
         public Property Get(string id)
         {
             return _properties.Find<Property>(property => property.Id == id).FirstOrDefault();
+        }
+
+        public Property Get(string userId, string propertyId)
+        {
+            return _properties.Find<Property>(property =>
+            property.OwnerID == userId
+            && property.Id == propertyId).FirstOrDefault();
+        }
+
+        public IEnumerable<Property> GetPropertiesForUser(string userId)
+        {
+            return _properties.Find<Property>(property => property.OwnerID == userId).ToEnumerable<Property>();
         }
 
         //Create a new property in the database and gives it an ID. The property and new ID are returned.

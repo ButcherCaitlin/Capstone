@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Capstone.API.Configuration;
 using Capstone.API.Services;
+using AutoMapper;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Capstone.API
 {
@@ -26,9 +29,19 @@ namespace Capstone.API
             services.AddSingleton<ICapstoneDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<CapstoneDatabaseSettings>>().Value);
 
-            services.AddSingleton<PropertyService>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddControllers();
+            //you need to add a service here for each additional collection.
+            services.AddSingleton<PropertyService>();
+            services.AddSingleton<UserService>();
+            services.AddSingleton<ShowingService>();
+
+            services.AddControllers(setupAction =>
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+                /*setupAction.OutputFormatters.Add(
+                    new XmlDataContractSerializerOutputFormatter());*/ // this is the old way to add an xml formatter
+            }).AddXmlDataContractSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +50,18 @@ namespace Capstone.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected server fault occured. Please try again later");
+                        //this is where you would log the fault.
+                    });
+                });
             }
 
             app.UseHttpsRedirection();

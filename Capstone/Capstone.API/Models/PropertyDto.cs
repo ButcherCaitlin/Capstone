@@ -1,18 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Capstone.API.Models
+﻿namespace Capstone.API.Models
 {
-    public class Property
+    public class PropertyDto
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string Address { get; set; }
+        public string OwnerID { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public float Bathrooms { get; set; }
@@ -20,5 +12,6 @@ namespace Capstone.API.Models
         public int Bedrooms { get; set; }
         public int SqFootage { get; set; }
         public int BuildYear { get; set; }
+        public string[] ScheduledShowings { get; set; }
     }
 }
