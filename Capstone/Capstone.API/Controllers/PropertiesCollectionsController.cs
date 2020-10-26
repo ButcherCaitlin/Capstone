@@ -4,7 +4,6 @@ using Capstone.API.Helpers;
 using Capstone.API.Models;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver.Core.Clusters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,13 +1,11 @@
 ﻿using Capstone.API.Configuration;
 using Capstone.API.Entities;
 using Capstone.API.ResourceParameters;
-using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Capstone.API.Services
 {

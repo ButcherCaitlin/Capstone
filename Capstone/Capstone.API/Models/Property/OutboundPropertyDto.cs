@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-namespace Capstone.API.Models
+﻿namespace Capstone.API.Models
 {
     public class OutboundPropertyDto
     {

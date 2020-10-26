@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Capstone.API.Models
+﻿namespace Capstone.API.Models
 {
     public class OutboundUserDto
     {

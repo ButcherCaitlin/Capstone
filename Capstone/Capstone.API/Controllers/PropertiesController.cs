@@ -6,7 +6,6 @@ using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Capstone.API.Controllers
 {

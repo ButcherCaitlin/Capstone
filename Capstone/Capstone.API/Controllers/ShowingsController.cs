@@ -4,11 +4,8 @@ using Capstone.API.Models.Showing;
 using Capstone.API.ResourceParameters;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Capstone.API.Controllers
 {

@@ -3,9 +3,7 @@ using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver.Core.Clusters;
 using System;
-using System.Collections.Generic;
 
 namespace Capstone.API.Controllers
 {

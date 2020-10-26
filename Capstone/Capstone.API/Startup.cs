@@ -10,6 +10,8 @@ using AutoMapper;
 using System;
 using Microsoft.AspNetCore.Http;
 using Capstone.API.Converters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Capstone.API
 {
@@ -42,8 +44,45 @@ namespace Capstone.API
                 setupAction.ReturnHttpNotAcceptable = true;
             })
             .AddXmlDataContractSerializerFormatters()
-            .AddJsonOptions(options => {
+            .AddJsonOptions(options =>
+            {
                 options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter());
+            })
+            .ConfigureApiBehaviorOptions(setupAction => 
+            {
+                setupAction.InvalidModelStateResponseFactory = context =>
+                {
+                    var problemDetailsFactory = context.HttpContext.RequestServices
+                        .GetRequiredService<ProblemDetailsFactory>();
+                    var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(
+                        context.HttpContext, context.ModelState);
+
+                    problemDetails.Detail = "See error field for details.";
+                    problemDetails.Instance = context.HttpContext.Request.Path;
+
+                    var actionExecutingContext = context as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+
+                    if((context.ModelState.ErrorCount > 0) &&
+                    (actionExecutingContext?.ActionArguments.Count ==
+                    context.ActionDescriptor.Parameters.Count))
+                    {
+                        problemDetails.Type = "Capstone/ModelValidationProblem";
+                        problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
+                        problemDetails.Title = "One or more validation errors occurred.";
+
+                        return new UnprocessableEntityObjectResult(problemDetails)
+                        {
+                            ContentTypes = { "application/problem+json" }
+                        };
+                    };
+
+                    problemDetails.Status = StatusCodes.Status400BadRequest;
+                    problemDetails.Title = "One or more input errors occured.";
+                    return new BadRequestObjectResult(problemDetails)
+                    {
+                        ContentTypes = { "application/problem+json" }
+                    };
+                };
             });
         }
 

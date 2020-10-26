@@ -1,5 +1,4 @@
 ﻿using Capstone.API.Models.Showing;
-using System;
 
 namespace Capstone.API.Models
 {
