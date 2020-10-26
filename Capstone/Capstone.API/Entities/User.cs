@@ -23,7 +23,5 @@ namespace Capstone.API.Entities
         public string Password { get; set; }
         [MaxLength(20)]
         public string Phone { get; set; }
-        public string[] Properties { get; set; }
-        public IEnumerable<Showing> ScheduledShowings { get; set; }
     }
 }

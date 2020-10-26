@@ -6,12 +6,13 @@ namespace Capstone.API.Profiles
     {
         public ShowingProfile()
         {
-            CreateMap<Models.ShowingDto, Entities.Showing>();
-            CreateMap<Entities.Showing, Models.ShowingForRealtorDto>()
+            CreateMap<Models.CreateShowingDto, Entities.Showing>();
+            CreateMap<Entities.Showing, Models.UnformattedShowingDto>();
+            CreateMap<Entities.Showing, Models.RealtorShowingDto>()
                 .ForMember(
                     dest => dest.CounterpartID,
                     opt => opt.MapFrom(src => src.ProspectID));
-            CreateMap<Entities.Showing, Models.ShowingForProspectDto>()
+            CreateMap<Entities.Showing, Models.ProspectShowingDto>()
                 .ForMember(
                     dest => dest.CounterpartID,
                     opt => opt.MapFrom(src => src.RealtorID));

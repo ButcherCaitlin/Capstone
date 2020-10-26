@@ -18,6 +18,5 @@ namespace Capstone.API.Entities
         public string ProspectID { get; set; }
         public DateTimeOffset StartTime { get; set; }
         public TimeSpan Duration { get; set; }
-
     }
 }

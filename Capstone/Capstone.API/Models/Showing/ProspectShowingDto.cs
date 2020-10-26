@@ -2,9 +2,9 @@
 
 namespace Capstone.API.Models
 {
-    public class ShowingForProspectDto : ShowingDto
+    public class ProspectShowingDto : CustomOutboundShowingDto
     {
-        public ShowingForProspectDto()
+        public ProspectShowingDto()
         {
             Host = false;
         }

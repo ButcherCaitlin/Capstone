@@ -1,10 +1,11 @@
 ﻿namespace Capstone.API.Models
 {
-    public class PropertyDto
+    public class CreatePropertyDto
     {
-        public string Id { get; set; }
+        //update should have its own dto
+        //requirements for creation go here
+        //this can also create child objects if you use a list of the sub type's dto.
         public string Address { get; set; }
-        public string OwnerID { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public float Bathrooms { get; set; }
@@ -12,6 +13,6 @@
         public int Bedrooms { get; set; }
         public int SqFootage { get; set; }
         public int BuildYear { get; set; }
-        public string[] ScheduledShowings { get; set; }
+        public string Type { get; set; }
     }
 }

@@ -1,20 +1,12 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Runtime.CompilerServices;
 
-namespace Capstone.API.Entities
+namespace Capstone.API.Models
 {
-    public class Property
+    public class OutboundPropertyDto
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [Required]
-        [MaxLength(50)]
         public string Address { get; set; }
-        [Required]
         public string OwnerID { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -22,7 +14,6 @@ namespace Capstone.API.Entities
         public float Acres { get; set; }
         public int Bedrooms { get; set; }
         public int SqFootage { get; set; }
-        [Required]
         public int BuildYear { get; set; }
         public string Type { get; set; }
     }

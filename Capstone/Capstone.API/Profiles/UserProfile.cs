@@ -12,8 +12,8 @@ namespace Capstone.API.Profiles
     {
         public UserProfile()
         {
-            CreateMap<Entities.User, Models.UserDto>();
-            CreateMap<Models.UserDto, Entities.User>();
+            CreateMap<Models.CreateUserDto, Entities.User>();
+            CreateMap<Entities.User, Models.OutboundUserDto>();
         }
     }
 }

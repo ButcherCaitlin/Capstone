@@ -1,8 +1,13 @@
 ﻿using Capstone.API.Configuration;
 using Capstone.API.Entities;
+using Capstone.API.ResourceParameters;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Capstone.API.Services
 {
@@ -10,28 +15,63 @@ namespace Capstone.API.Services
     {
         //This class could become a generic classs.
         private readonly IMongoCollection<Property> _properties;
+        private readonly IMongoDatabase _context;
 
         public PropertyService(ICapstoneDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            _context = client.GetDatabase(settings.DatabaseName);
 
-            _properties = database.GetCollection<Property>(settings.CapstonePropertyCollection);
+            _properties = _context.GetCollection<Property>(settings.CapstonePropertyCollection);
         }
 
         public IEnumerable<Property> GetAll()
         {
             return _properties.Find(property => true).ToEnumerable<Property>();
         }
+        public IEnumerable<Property> Get(PropertiesResourceParameters parameters)
+        {
+            if (parameters == null) throw new ArgumentNullException(nameof(parameters));
+
+            if (string.IsNullOrWhiteSpace(parameters.Type)
+                && string.IsNullOrWhiteSpace(parameters.OwnerID)
+                && string.IsNullOrWhiteSpace(parameters.SearchPhrase))
+            {
+                return GetAll();
+            }
+
+            var collection = _properties.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(parameters.Type))
+            {
+                var type = parameters.Type.Trim();
+                collection = collection.Where(a => a.Type == type);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.OwnerID))
+            {
+                var ownerId = parameters.OwnerID.Trim();
+                collection = collection.Where(a => a.OwnerID == ownerId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.SearchPhrase))
+            {
+                var searchPhrase = parameters.SearchPhrase.Trim();
+                collection = collection.Where(a => a.Address.Contains(searchPhrase) ||
+                    a.Description.Contains(searchPhrase));
+            }
+
+            return collection.ToList();
+        }
+        public IEnumerable<Property> Get(IEnumerable<string> propertyIdCollection)
+        {
+            var collection = _properties.AsQueryable();
+            collection = collection.Where(a => propertyIdCollection.Contains(a.Id));
+            return collection.ToList();
+        }
         public Property Get(string id)
         {
             return _properties.Find<Property>(property => property.Id == id).FirstOrDefault();
-        }
-        public Property GetPropertyForUser(string userId, string propertyId)
-        {
-            return _properties.Find<Property>(property =>
-            property.OwnerID == userId
-            && property.Id == propertyId).FirstOrDefault();
         }
         public IEnumerable<Property> GetPropertiesForUser(string userId)
         {

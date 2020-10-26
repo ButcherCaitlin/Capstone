@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Capstone.API.Models
+namespace Capstone.API.Models.Showing
 {
-    public class ShowingDto
+    public abstract class OutboundShowingDto
     {
         public string Id { get; set; }
         public string PropertyID { get; set; }
-        public string CounterpartID { get; set; }
         public DateTimeOffset StartTime { get; set; }
         public TimeSpan Duration { get; set; }
-        public bool Host { get; set; }
     }
 }
