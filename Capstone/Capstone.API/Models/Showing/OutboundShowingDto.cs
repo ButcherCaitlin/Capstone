@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Capstone.API.Models.Showing
+namespace Capstone.API.Models
 {
     public abstract class OutboundShowingDto
     {

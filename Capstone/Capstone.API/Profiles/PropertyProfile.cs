@@ -7,6 +7,7 @@ namespace Capstone.API.Profiles
         public PropertyProfile()
         {
             CreateMap<Models.CreatePropertyDto, Entities.Property>();
+            CreateMap<Models.UpdatePropertyDto, Entities.Property>();
             CreateMap<Entities.Property, Models.OutboundPropertyDto>();
         }
     }

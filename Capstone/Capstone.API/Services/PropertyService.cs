@@ -75,7 +75,7 @@ namespace Capstone.API.Services
         {
             return _properties.Find<Property>(property => property.OwnerID == userId).ToEnumerable<Property>();
         }
-        public Property CreateOne(Property property)
+        public Property Create(Property property)
         {
             _properties.InsertOne(property);
             return property;
@@ -85,7 +85,7 @@ namespace Capstone.API.Services
             _properties.InsertMany(properties);
             return properties;
         }
-        public void UpdateOne(string id, Property propertyIn)
+        public void Update(string id, Property propertyIn)
         {
             _properties.ReplaceOne(property => property.Id == id, propertyIn);
         }

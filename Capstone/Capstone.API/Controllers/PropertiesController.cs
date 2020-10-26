@@ -44,8 +44,8 @@ namespace Capstone.API.Controllers
         /// </summary>
         /// <param name="propertyId">The ID of the property to be found. Provided in the route.</param>
         /// <returns>The property object.</returns>
-        [HttpGet("{propertyId}", Name = "GetPropertyById")]
-        [HttpHead("{propertyId}")]
+        [HttpGet("{propertyId:length(24)}", Name = "GetPropertyById")]
+        [HttpHead("{propertyId:length(24)}")]
         public ActionResult<OutboundPropertyDto> GetPropertyById(string propertyId)
         {
             var propertyFromRepo = _propertyService.Get(propertyId);
@@ -66,10 +66,37 @@ namespace Capstone.API.Controllers
             var propertyToAdd = _mapper.Map<Property>(property);
             propertyToAdd.OwnerID = userId;
 
-            var createdProperty = _propertyService.CreateOne(propertyToAdd);
+            var createdProperty = _propertyService.Create(propertyToAdd);
             return CreatedAtRoute("GetPropertyById", 
                 new { propertyId = createdProperty.Id.ToString() },
                 _mapper.Map<OutboundPropertyDto>(createdProperty));
+        }
+
+        [HttpPut("{propertyId:length(24)}")]
+        public IActionResult UpdateProperty(string propertyId, UpdatePropertyDto property,
+            [FromHeader] string userId = null)
+        {
+            if (userId == null) return BadRequest("A UserID is required to Modify property records.");
+
+            var propertyFromRepo = _propertyService.Get(propertyId);
+            if (propertyFromRepo == null)
+            {
+                var propertyToAdd = _mapper.Map<Property>(property);
+                propertyToAdd.Id = propertyId;
+                propertyToAdd.OwnerID = userId;
+                _propertyService.Create(propertyToAdd);
+
+                return CreatedAtRoute("GetPropertyById",
+                    new { propertyId },
+                    _mapper.Map<OutboundPropertyDto>(propertyToAdd));
+            }
+
+            _mapper.Map(property, propertyFromRepo);
+            propertyFromRepo.OwnerID = userId;
+
+            _propertyService.Update(propertyFromRepo.Id, propertyFromRepo);
+
+            return NoContent();
         }
 
         [HttpOptions]

@@ -41,7 +41,7 @@ namespace Capstone.API.Controllers
             return Ok(_mapper.Map<IEnumerable<OutboundUserDto>>(usersFromRepo));
         }
         //this will get a specific user
-        [HttpGet("{userId:length(24)}", Name = "GetUser")]
+        [HttpGet("{userId:length(24)}", Name = "GetUserById")]
         [HttpHead("{userId:length(24)}")]
         public ActionResult<OutboundUserDto> GetUser(string userId)
         {
@@ -55,6 +55,28 @@ namespace Capstone.API.Controllers
         {
             var createdUser = _userService.Create(_mapper.Map<User>(user));
             return CreatedAtRoute("GetUser", new { userId = createdUser.Id.ToString() }, _mapper.Map<OutboundUserDto>(createdUser));
+        }
+
+        [HttpPut("{userId:length(24)}")]
+        public IActionResult UpdateUser(string userId, UpdateUserDto user)
+        {
+            var userFromRepo = _userService.Get(userId);
+            if (userFromRepo == null)
+            {//implement upsert
+                var userToAdd = _mapper.Map<User>(user);
+                userToAdd.Id = userId;
+                _userService.Create(userToAdd);
+
+                return CreatedAtRoute("GetUserById",
+                    new { userId },
+                    _mapper.Map<OutboundUserDto>(userToAdd));
+            }
+
+            _mapper.Map(user, userFromRepo);
+
+            _userService.Update(userFromRepo.Id, userFromRepo);
+
+            return NoContent();
         }
 
         [HttpOptions]

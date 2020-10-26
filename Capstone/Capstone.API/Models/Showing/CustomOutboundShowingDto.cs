@@ -1,6 +1,4 @@
-﻿using Capstone.API.Models.Showing;
-
-namespace Capstone.API.Models
+﻿namespace Capstone.API.Models
 {
     public abstract class CustomOutboundShowingDto : OutboundShowingDto
     {

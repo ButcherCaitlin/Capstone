@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using Capstone.API.Entities;
 using Capstone.API.Models;
-using Capstone.API.Models.Showing;
 using Capstone.API.ResourceParameters;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver.Core.Operations;
 using System;
 using System.Collections.Generic;
 
@@ -45,8 +46,8 @@ namespace Capstone.API.Controllers
         /// </summary>
         /// <param name="propertyId">The ID of the showing to be found. Provided in the route.</param>
         /// <returns>The showing object.</returns>
-        [HttpGet("{showingId}", Name = "GetShowingById")]
-        [HttpHead("{showingId}")]
+        [HttpGet("{showingId:length(24)}", Name = "GetShowingById")]
+        [HttpHead("{showingId:length(24)}")]
         public ActionResult<CustomOutboundShowingDto> GetShowingById(string showingId,
             [FromHeader] string userId = null)
         {
@@ -64,6 +65,28 @@ namespace Capstone.API.Controllers
             else
             {
                 return Ok(_mapper.Map<UnformattedShowingDto>(showingFromRepo));
+            }
+        }
+
+        [HttpPut("{showingId:length(24)}")]
+        public IActionResult UpdateShowing(string showingId, UpdateShowingDto showing,
+            [FromHeader] string userId = null)
+        {
+            if (userId == null) return BadRequest("A UserID is required to Modify showing records.");
+
+            var showingFromRepo = _showingService.Get(showingId);
+            if (showingFromRepo == null) return NotFound();
+
+            if (showingFromRepo.ProspectID == userId ||
+                showingFromRepo.RealtorID == userId)
+            {
+                _mapper.Map(showing, showingFromRepo);
+                _showingService.Update(showingFromRepo.Id, showingFromRepo);
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("You can only modify showing records if you are a participant.");
             }
         }
 

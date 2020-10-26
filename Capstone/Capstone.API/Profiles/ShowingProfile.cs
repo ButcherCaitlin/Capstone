@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Reflection.Metadata;
 
 namespace Capstone.API.Profiles
 {
@@ -16,6 +17,7 @@ namespace Capstone.API.Profiles
                 .ForMember(
                     dest => dest.CounterpartID,
                     opt => opt.MapFrom(src => src.RealtorID));
+            CreateMap<Models.UpdateShowingDto, Entities.Showing>();
         }
     }
 }
