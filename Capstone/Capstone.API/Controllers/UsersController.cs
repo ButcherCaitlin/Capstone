@@ -32,6 +32,7 @@ namespace Capstone.API.Controllers
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
+
         //This will get all users
         [HttpGet]
         [HttpHead]
@@ -40,6 +41,7 @@ namespace Capstone.API.Controllers
             var usersFromRepo = _userService.Get();
             return Ok(_mapper.Map<IEnumerable<OutboundUserDto>>(usersFromRepo));
         }
+
         //this will get a specific user
         [HttpGet("{userId:length(24)}", Name = "GetUserById")]
         [HttpHead("{userId:length(24)}")]
@@ -49,12 +51,13 @@ namespace Capstone.API.Controllers
             if (user == null) return NotFound();
             return Ok(_mapper.Map<OutboundUserDto>(user));
         }
+
         //this will create a single user and return the correct locaiton
         [HttpPost]
         public ActionResult<OutboundUserDto> Create(CreateUserDto user)
         {
             var createdUser = _userService.Create(_mapper.Map<User>(user));
-            return CreatedAtRoute("GetUser", new { userId = createdUser.Id.ToString() }, _mapper.Map<OutboundUserDto>(createdUser));
+            return CreatedAtRoute("GetUserById", new { userId = createdUser.Id.ToString() }, _mapper.Map<OutboundUserDto>(createdUser));
         }
 
         [HttpPut("{userId:length(24)}")]
