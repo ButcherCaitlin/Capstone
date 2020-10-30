@@ -32,7 +32,7 @@ using Android.App;
 //// Fake icon just for now
 //[assembly: Application(Icon = "@drawable/fallbackimage")]
 
-// Used for release to help protect the app
+//Used for release to help protect the app
 #if DEBUG
 [assembly: Application(Debuggable = true)]
 #else
