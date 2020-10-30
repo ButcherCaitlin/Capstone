@@ -116,6 +116,22 @@ namespace Capstone.API.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{showingId}")]
+        public IActionResult DeleteShowing(string showingId,
+            [FromHeader] string userId = null)
+        {
+            if (userId == null) return BadRequest(new { message = "A UserID is required to delete showing records." });
+            var showingToDelete = _showingService.Get(showingId);
+            if (showingToDelete == null) return NotFound();
+            if (showingToDelete.ProspectID != userId &&
+                showingToDelete.RealtorID != userId)
+            {
+                return BadRequest(new { message = "You can only delete showing records if you are a participant." });
+            }
+            _showingService.Remove(showingToDelete.Id);
+            return NoContent();
+        }
+
         [HttpOptions]
         public IActionResult GetShowingsOptions()
         {

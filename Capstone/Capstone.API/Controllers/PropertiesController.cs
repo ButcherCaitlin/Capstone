@@ -68,7 +68,7 @@ namespace Capstone.API.Controllers
             propertyToAdd.OwnerID = userId;
 
             var createdProperty = _propertyService.Create(propertyToAdd);
-            return CreatedAtRoute("GetPropertyById", 
+            return CreatedAtRoute("GetPropertyById",
                 new { propertyId = createdProperty.Id.ToString() },
                 _mapper.Map<OutboundPropertyDto>(createdProperty));
         }
@@ -116,7 +116,7 @@ namespace Capstone.API.Controllers
 
             if (propertyToPatch.OwnerID != userId)
             {
-                return BadRequest( new { message = "Only the owner of a property is allowed to modify its fields. " });
+                return BadRequest(new { message = "Only the owner of a property is allowed to modify its fields. " });
             }
 
             var propertyDtoToPatch = _mapper.Map<UpdatePropertyDto>(propertyToPatch);
@@ -127,6 +127,24 @@ namespace Capstone.API.Controllers
             _mapper.Map(propertyDtoToPatch, propertyToPatch);
             _propertyService.Update(propertyToPatch.Id, propertyToPatch);
 
+            return NoContent();
+        }
+
+        [HttpDelete("{propertyId}")]
+        public IActionResult DeleteProperty(string propertyId,
+            [FromHeader] string userId = null)
+        {
+            if (userId == null) return BadRequest(new { message = "A UserID is required to delete property records." });
+
+            var propertyToDelete = _propertyService.Get(propertyId);
+            if (propertyToDelete == null) return NotFound();
+
+            if (propertyToDelete.OwnerID != userId)
+            {
+                return BadRequest(new { message = "Only the owner of a property is allowed to delete its fields. " });
+            }
+
+            _propertyService.Remove(propertyToDelete.Id);
             return NoContent();
         }
 

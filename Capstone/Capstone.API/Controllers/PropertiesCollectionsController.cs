@@ -29,11 +29,7 @@ namespace Capstone.API.Controllers
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
-        /// <summary>
-        /// Returns a collection of properties specified by an array of their ids in the route.
-        /// </summary>
-        /// <param name="propertyIdsCollection">The ids to get the properties.</param>
-        /// <returns>A collection of property objects.</returns>
+
         [HttpGet("({propertyIdsCollection})", Name = "GetPropertiesCollection")]
         [HttpHead("({propertyIdsCollection})")]
         public ActionResult<IEnumerable<OutboundPropertyDto>> GetPropertyCollection(
@@ -45,12 +41,7 @@ namespace Capstone.API.Controllers
             if (propertyIdsCollection.Count() != propertyEntities.Count()) return NotFound();
             return Ok(_mapper.Map<IEnumerable<OutboundPropertyDto>>(propertyEntities));
         }
-        /// <summary>
-        /// Creates multiple properties as a collection and returns the route to the collection
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="propertiesToAdd"></param>
-        /// <returns></returns>
+
         [HttpPost]
         public ActionResult<IEnumerable<OutboundPropertyDto>> CreatePropertyCollection(
             [FromHeader]string userId, IEnumerable<CreatePropertyDto> propertiesToAdd)
@@ -66,6 +57,9 @@ namespace Capstone.API.Controllers
                 new { userId = userId, propertyIdCollection = idsAsString },
                 propertiesToReturn);
         }
+
+        [HttpDelete("({propertyIdsCollection})")]
+        public IActionResult DeletePropertyCollection()
 
         [HttpOptions]
         public IActionResult GetPropertiesCollectionsOptions()

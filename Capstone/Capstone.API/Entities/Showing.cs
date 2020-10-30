@@ -5,11 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Capstone.API.Entities
 {
-    public class Showing
+    public class Showing : MongoEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
         [Required]
         public string PropertyID { get; set; }
         [Required]

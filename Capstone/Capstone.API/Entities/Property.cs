@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Capstone.API.Entities
 {
-    public class Property
+    public class Property : MongoEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string Address { get; set; }

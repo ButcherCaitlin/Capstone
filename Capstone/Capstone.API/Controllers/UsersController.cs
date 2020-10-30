@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Capstone.API.Controllers
 {
@@ -92,7 +93,7 @@ namespace Capstone.API.Controllers
             JsonPatchDocument<UpdateUserDto> patchDocument)
         {
             var userToPatch = _userService.Get(userId);
-            if (userToPatch == null) return NotFound( new { message = "If you are trying to upsert a resource use PUT" });
+            if (userToPatch == null) return NotFound(new { message = "If you are trying to upsert a resource use PUT" });
 
             var userDtoToPatch = _mapper.Map<UpdateUserDto>(userToPatch);
             patchDocument.ApplyTo(userDtoToPatch, ModelState); //add validation
@@ -105,6 +106,15 @@ namespace Capstone.API.Controllers
             _mapper.Map(userDtoToPatch, userToPatch);
             _userService.Update(userToPatch.Id, userToPatch);
 
+            return NoContent();
+        }
+
+        [HttpDelete("{userId}")]
+        public IActionResult DeleteUser(string userId)
+        {
+            var userToDelete = _userService.Get(userId);
+            if (userToDelete == null) return NotFound();
+            _userService.Remove(userToDelete.Id);
             return NoContent();
         }
 

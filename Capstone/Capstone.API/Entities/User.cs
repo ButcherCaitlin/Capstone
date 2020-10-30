@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Capstone.API.Entities
 {
-    public class User
+    public class User : MongoEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }

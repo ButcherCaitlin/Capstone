@@ -99,7 +99,7 @@ namespace Capstone.API.Services
         }
         public void Remove(string id)
         {
-            _showings.DeleteOne(showing => showing.Id == id);
+            var result = _showings.DeleteOne(showing => showing.Id == id);
         }
     }
 }
