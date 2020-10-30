@@ -15,17 +15,17 @@ namespace Capstone.API.Controllers
     public class PropertiesCollectionsController : ControllerBase
     {
         private readonly PropertyService _propertyService;
-        private readonly UserService _userService;
+        private readonly DatabaseService<User> _userService;
         private readonly IMapper _mapper;
 
         public PropertiesCollectionsController(PropertyService propertyService,
-            UserService userService,
+            DatabaseService<User> userService,
             IMapper mapper)
         {
             _propertyService = propertyService ??
                 throw new ArgumentNullException(nameof(propertyService));
             _userService = userService ??
-                throw new ArgumentNullException(nameof(UserService));
+                throw new ArgumentNullException(nameof(userService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -60,6 +60,9 @@ namespace Capstone.API.Controllers
 
         [HttpDelete("({propertyIdsCollection})")]
         public IActionResult DeletePropertyCollection()
+        {
+            return NotFound("THIS METHOD IS NOT CURRENTLY IMPLIMENTED");
+        }
 
         [HttpOptions]
         public IActionResult GetPropertiesCollectionsOptions()

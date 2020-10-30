@@ -23,10 +23,7 @@ namespace Capstone.API.Services
             _properties = _context.GetCollection<Property>(settings.CapstonePropertyCollection);
         }
 
-        public IEnumerable<Property> GetAll()
-        {
-            return _properties.Find(property => true).ToEnumerable<Property>();
-        }
+
         public IEnumerable<Property> Get(PropertiesResourceParameters parameters)
         {
             if (parameters == null) throw new ArgumentNullException(nameof(parameters));
@@ -60,6 +57,12 @@ namespace Capstone.API.Services
             }
 
             return collection.ToList();
+        }
+
+        #region Implimented in Generic
+        public IEnumerable<Property> GetAll()
+        {
+            return _properties.Find(property => true).ToEnumerable<Property>();
         }
         public IEnumerable<Property> Get(IEnumerable<string> propertyIdCollection)
         {
@@ -97,5 +100,6 @@ namespace Capstone.API.Services
         {
             _properties.DeleteOne(property => property.Id == id);
         }
+        #endregion
     }
 }

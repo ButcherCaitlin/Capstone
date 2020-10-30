@@ -11,12 +11,12 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesShowingsController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly DatabaseService<User> _userService;
         private readonly PropertyService _propertyService;
         private readonly ShowingService _showingService;
         private readonly IMapper _mapper;
 
-        public PropertiesShowingsController(UserService userService,
+        public PropertiesShowingsController(DatabaseService<User> userService,
             PropertyService propertyService,
             ShowingService showingService,
             IMapper mapper)

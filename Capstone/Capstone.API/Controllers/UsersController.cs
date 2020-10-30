@@ -19,22 +19,14 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
-        private readonly PropertyService _propertyService;
-        private readonly ShowingService _showingService;
+        private readonly DatabaseService<User> _userService;
         private readonly IMapper _mapper;
 
-        public UsersController(UserService userService,
-            PropertyService propertyService,
-            ShowingService showingService,
+        public UsersController(DatabaseService<User> userService,
             IMapper mapper)
         {
             _userService = userService ??
                 throw new ArgumentNullException(nameof(userService));
-            _propertyService = propertyService ??
-                throw new ArgumentNullException(nameof(propertyService));
-            _showingService = showingService ??
-                throw new ArgumentNullException(nameof(showingService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -83,7 +75,7 @@ namespace Capstone.API.Controllers
 
             _mapper.Map(user, userFromRepo);
 
-            _userService.Update(userFromRepo.Id, userFromRepo);
+            _userService.Update(userFromRepo);
 
             return NoContent();
         }
@@ -104,7 +96,7 @@ namespace Capstone.API.Controllers
             }
 
             _mapper.Map(userDtoToPatch, userToPatch);
-            _userService.Update(userToPatch.Id, userToPatch);
+            _userService.Update(userToPatch);
 
             return NoContent();
         }
