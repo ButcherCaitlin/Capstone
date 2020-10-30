@@ -18,6 +18,7 @@ namespace Capstone.API.Profiles
                     dest => dest.CounterpartID,
                     opt => opt.MapFrom(src => src.RealtorID));
             CreateMap<Models.UpdateShowingDto, Entities.Showing>();
+            CreateMap<Entities.Showing, Models.UpdateShowingDto>();
         }
     }
 }

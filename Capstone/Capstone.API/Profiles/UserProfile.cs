@@ -9,6 +9,7 @@ namespace Capstone.API.Profiles
             CreateMap<Models.CreateUserDto, Entities.User>();
             CreateMap<Models.UpdateUserDto, Entities.User>();
             CreateMap<Entities.User, Models.OutboundUserDto>();
+            CreateMap<Entities.User, Models.UpdateUserDto>();
         }
     }
 }

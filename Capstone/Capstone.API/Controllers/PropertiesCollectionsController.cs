@@ -55,7 +55,7 @@ namespace Capstone.API.Controllers
         public ActionResult<IEnumerable<OutboundPropertyDto>> CreatePropertyCollection(
             [FromHeader]string userId, IEnumerable<CreatePropertyDto> propertiesToAdd)
         {
-            if (userId == null) return BadRequest("A UserID is required to create property records.");
+            if (userId == null) return BadRequest(new { message = "A UserID is required to create property records." });
 
             IEnumerable<Property> propertiesAsEntity = _mapper.Map<IEnumerable<Property>>(propertiesToAdd);
             foreach (var property in propertiesAsEntity) property.OwnerID = userId;

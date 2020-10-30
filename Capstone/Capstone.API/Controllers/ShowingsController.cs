@@ -3,6 +3,7 @@ using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
 using Capstone.API.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver.Core.Operations;
 using System;
@@ -72,22 +73,47 @@ namespace Capstone.API.Controllers
         public IActionResult UpdateShowing(string showingId, UpdateShowingDto showing,
             [FromHeader] string userId = null)
         {
-            if (userId == null) return BadRequest("A UserID is required to Modify showing records.");
+            if (userId == null) return BadRequest(new { message = "A UserID is required to Modify showing records." });
 
             var showingFromRepo = _showingService.Get(showingId);
             if (showingFromRepo == null) return NotFound();
 
-            if (showingFromRepo.ProspectID == userId ||
-                showingFromRepo.RealtorID == userId)
+            if (showingFromRepo.ProspectID != userId ||
+                showingFromRepo.RealtorID != userId)
             {
-                _mapper.Map(showing, showingFromRepo);
-                _showingService.Update(showingFromRepo.Id, showingFromRepo);
-                return NoContent();
+                return BadRequest(new { message = "You can only modify showing records if you are a participant." });
             }
-            else
+            _mapper.Map(showing, showingFromRepo);
+            _showingService.Update(showingFromRepo.Id, showingFromRepo);
+            return NoContent();
+        }
+
+        [HttpPatch("{showingId:length(24)}")]
+        public IActionResult PartiallyUpdateShowing(string showingId,
+            JsonPatchDocument<UpdateShowingDto> patchDocument,
+            [FromHeader] string userId = null)
+        {
+            if (userId == null) return BadRequest(new { message = "A UserID is required to Modify showing records." });
+
+            var showingToPatch = _showingService.Get(showingId);
+            if (showingToPatch == null) return NotFound(new { message = "If you are trying to upsert a resource use PUT" });
+
+
+            if (showingToPatch.ProspectID != userId &&
+                showingToPatch.RealtorID != userId)
             {
-                return BadRequest("You can only modify showing records if you are a participant.");
+                return BadRequest(new { message = "You can only modify showing records if you are a participant." });
             }
+
+            var showingDtoToPatch = _mapper.Map<UpdateShowingDto>(showingToPatch);
+            patchDocument.ApplyTo(showingDtoToPatch, ModelState);
+
+            if (!TryValidateModel(showingDtoToPatch)) return ValidationProblem(ModelState);
+
+            _mapper.Map(showingDtoToPatch, showingToPatch);
+            _showingService.Update(showingToPatch.Id, showingToPatch);
+
+            return NoContent();
         }
 
         [HttpOptions]

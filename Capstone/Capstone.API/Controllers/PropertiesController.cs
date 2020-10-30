@@ -5,6 +5,7 @@ using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
 using Capstone.API.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Capstone.API.Controllers
@@ -61,7 +62,7 @@ namespace Capstone.API.Controllers
         public ActionResult<OutboundPropertyDto> CreateProperty(CreatePropertyDto property,
             [FromHeader] string userId = null)
         {
-            if (userId == null) return BadRequest("A UserID is required to create property records.");
+            if (userId == null) return BadRequest(new { message = "A UserID is required to create property records." });
 
             var propertyToAdd = _mapper.Map<Property>(property);
             propertyToAdd.OwnerID = userId;
@@ -76,7 +77,7 @@ namespace Capstone.API.Controllers
         public IActionResult UpdateProperty(string propertyId, UpdatePropertyDto property,
             [FromHeader] string userId = null)
         {
-            if (userId == null) return BadRequest("A UserID is required to Modify property records.");
+            if (userId == null) return BadRequest(new { message = "A UserID is required to Modify property records." });
 
             var propertyFromRepo = _propertyService.Get(propertyId);
             if (propertyFromRepo == null)
@@ -91,10 +92,40 @@ namespace Capstone.API.Controllers
                     _mapper.Map<OutboundPropertyDto>(propertyToAdd));
             }
 
+            if (propertyFromRepo.OwnerID != userId) return BadRequest(new { message = "Only the owner of a property is allowed to modify its fields. " });
+
             _mapper.Map(property, propertyFromRepo);
             propertyFromRepo.OwnerID = userId;
 
             _propertyService.Update(propertyFromRepo.Id, propertyFromRepo);
+
+            return NoContent();
+        }
+
+
+        [HttpPatch("{propertyId:length(24)}")]
+        public IActionResult PartiallyUpdateProperty(string propertyId,
+            JsonPatchDocument<UpdatePropertyDto> patchDocument,
+            [FromHeader] string userId = null)
+        {
+            if (userId == null) return BadRequest(new { message = "A UserID is required to Modify property records." });
+
+            var propertyToPatch = _propertyService.Get(propertyId);
+            if (propertyToPatch == null) return NotFound(new { message = "If you are trying to upsert a resource use PUT" });
+
+
+            if (propertyToPatch.OwnerID != userId)
+            {
+                return BadRequest( new { message = "Only the owner of a property is allowed to modify its fields. " });
+            }
+
+            var propertyDtoToPatch = _mapper.Map<UpdatePropertyDto>(propertyToPatch);
+            patchDocument.ApplyTo(propertyDtoToPatch, ModelState);
+
+            if (!TryValidateModel(propertyDtoToPatch)) return ValidationProblem(ModelState);
+
+            _mapper.Map(propertyDtoToPatch, propertyToPatch);
+            _propertyService.Update(propertyToPatch.Id, propertyToPatch);
 
             return NoContent();
         }

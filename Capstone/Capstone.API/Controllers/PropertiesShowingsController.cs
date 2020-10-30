@@ -37,7 +37,7 @@ namespace Capstone.API.Controllers
             CreateShowingDto showing,
             [FromHeader] string userId = null)
         {
-            if (userId == null) return BadRequest("A UserID is required to create Showing records.");
+            if (userId == null) return BadRequest(new { message = "A UserID is required to create Showing records." });
 
             var propertyFromRepo = _propertyService.Get(propertyId);
             if (propertyFromRepo == null) return NotFound();

@@ -9,6 +9,7 @@ namespace Capstone.API.Profiles
             CreateMap<Models.CreatePropertyDto, Entities.Property>();
             CreateMap<Models.UpdatePropertyDto, Entities.Property>();
             CreateMap<Entities.Property, Models.OutboundPropertyDto>();
+            CreateMap<Entities.Property, Models.UpdatePropertyDto>();
         }
     }
 }

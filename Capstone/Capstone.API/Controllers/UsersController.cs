@@ -2,7 +2,12 @@
 using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
@@ -82,11 +87,39 @@ namespace Capstone.API.Controllers
             return NoContent();
         }
 
+        [HttpPatch("{userId:length(24)}")]
+        public IActionResult PartiallyUpdateUser(string userId,
+            JsonPatchDocument<UpdateUserDto> patchDocument)
+        {
+            var userToPatch = _userService.Get(userId);
+            if (userToPatch == null) return NotFound( new { message = "If you are trying to upsert a resource use PUT" });
+
+            var userDtoToPatch = _mapper.Map<UpdateUserDto>(userToPatch);
+            patchDocument.ApplyTo(userDtoToPatch, ModelState); //add validation
+
+            if (!TryValidateModel(userDtoToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(userDtoToPatch, userToPatch);
+            _userService.Update(userToPatch.Id, userToPatch);
+
+            return NoContent();
+        }
+
         [HttpOptions]
         public IActionResult GetUsersOptions()
         {
             Response.Headers.Add("Allow", "GET,POST,OPTIONS,HEAD");
             return Ok();
+        }
+
+        public override ActionResult ValidationProblem(
+            [ActionResultObjectValue] ModelStateDictionary modelStateDictionary)
+        {
+            var options = HttpContext.RequestServices.GetRequiredService<IOptions<ApiBehaviorOptions>>();
+            return (ActionResult)options.Value.InvalidModelStateResponseFactory(ControllerContext);
         }
     }
 }
