@@ -65,6 +65,7 @@ namespace Capstone.ViewModels
         public async void OnAddCommand()
         {
             App.NavigationService.NavigateTo(ViewNames.IndividualPropertyView);
+            //this needs to navigate to an edit page not the property view.
         }
 
         public async void OnPropertySelectedCommand(Property selected)
