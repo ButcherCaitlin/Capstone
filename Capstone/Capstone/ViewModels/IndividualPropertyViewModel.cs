@@ -25,7 +25,7 @@ namespace Capstone.ViewModels
         public IndividualPropertyViewModel()
         {
             Title = "Property";
-            property = new Property();
+            Property = new Property();
 
             SeeHomeClicked = new Command(OnSeeHomeClickedCommand);
             //commands and initializers in here.
@@ -38,7 +38,10 @@ namespace Capstone.ViewModels
 
         public override void Initialize(object parameter)
         {
-            property = parameter as Property;
+            if (parameter == null)
+                Property = new Property();
+            else
+                Property = parameter as Property;
         }
     }
 }

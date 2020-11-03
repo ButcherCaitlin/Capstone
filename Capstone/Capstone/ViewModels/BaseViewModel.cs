@@ -1,4 +1,4 @@
-﻿using Capstone.Services;
+﻿using Capstone.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,8 +11,8 @@ namespace Capstone.ViewModels
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         //dependencies
-        public MockPropertDataStore dataStore =>
-            DependencyService.Get<MockPropertDataStore>() ?? new MockPropertDataStore();
+        //public MockPropertDataStore dataStore =>
+        //    DependencyService.Get<MockPropertDataStore>() ?? new MockPropertDataStore();
 
         //global viewmodel properties
 

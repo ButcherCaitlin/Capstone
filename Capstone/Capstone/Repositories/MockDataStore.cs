@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Capstone.Models;
 
-namespace Capstone.Services
+namespace Capstone.Repositories
 {
     class MockDataStore<T> : IDataStore<T>
     {

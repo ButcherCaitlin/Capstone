@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Capstone.Models;
 
-namespace Capstone.Services
+namespace Capstone.Repositories
 {
-    public class MockPropertDataStore
+    public static class MockPropertDataStore
     {
-        private static readonly List<String> mockUsernames;
-        private static readonly List<Property> mockProperties;
+        public static readonly List<String> mockUsernames;
+        public static readonly List<Property> mockProperties;
         private static int nextPropertyID;
 
         static MockPropertDataStore()
@@ -91,23 +91,17 @@ namespace Capstone.Services
             nextPropertyID = mockProperties.Count;
         }
 
-        public MockPropertDataStore()
+        public static async Task<String> AddPropertyAsync(Property toBeAdded)
         {
-
-        }
-
-        public async Task<String> AddPropertyAsync(Property toBeAdded)
-        {
-            lock (this)
-            {
-                toBeAdded.ID = nextPropertyID;
-                mockProperties.Add(toBeAdded);
-                nextPropertyID++;
-            }
+        
+            toBeAdded.ID = nextPropertyID;
+            mockProperties.Add(toBeAdded);
+            nextPropertyID++;
+            
             return await Task.FromResult(toBeAdded.ID.ToString());
         }
 
-        public async Task<bool> UpdatePropertyAsync(Property toBeUpdated)
+        public static async Task<bool> UpdatePropertyAsync(Property toBeUpdated)
         {
             int index = mockProperties.FindIndex((Property toBeFound) => toBeFound.ID == toBeUpdated.ID);
             bool propertyFound = (index != -1);
@@ -124,7 +118,7 @@ namespace Capstone.Services
             return await Task.FromResult(propertyFound);
         }
 
-        public async Task<Property> GetPropertyAsync(string id)
+        public static async Task<Property> GetPropertyAsync(string id)
         {
 
             Property toBeFound = mockProperties.FirstOrDefault(property => property.ID.ToString() == id);
@@ -134,7 +128,7 @@ namespace Capstone.Services
             return await Task.FromResult(toBeReturned);
         }
 
-        public async Task<IList<Property>> GetPropertiesAsync()
+        public static async Task<IList<Property>> GetPropertiesAsync()
         {
             // Make a copy of the notes to simulate reading from an external datastore
             List<Property> toBeReturned = new List<Property>();
@@ -143,7 +137,7 @@ namespace Capstone.Services
             return await Task.FromResult(toBeReturned);
         }
 
-        public async Task<IList<String>> GetUsernamesAsync()
+        public static async Task<IList<String>> GetUsernamesAsync()
         {
             return await Task.FromResult(mockUsernames);
         }

@@ -11,6 +11,7 @@ namespace Capstone
     public partial class App : Application
     {
         public static NavigationService NavigationService { get; } = new NavigationService();
+        public static DataService DataService { get; } = new DataService();
         public App()
         {
             InitializeComponent();
