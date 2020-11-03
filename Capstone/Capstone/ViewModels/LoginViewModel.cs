@@ -39,10 +39,6 @@ namespace Capstone.ViewModels
         }
         public void OnSubmit()
         {
-            //if (email != "macoratti@yahoo.com" || password != "secret")
-            //{
-            //    DisplayInvalidLoginPrompt();
-            //}
             App.NavigationService.NavigateTo(ViewNames.PropertyExplorerView);
         }
 

@@ -33,9 +33,9 @@ using Android.App;
 //[assembly: Application(Icon = "@drawable/fallbackimage")]
 
 //Used for release to help protect the app
-#if DEBUG
-[assembly: Application(Debuggable = true)]
-#else
-[assembly: Application(Debuggable = false)]
-#endif
+//#if DEBUG
+//[assembly: Application(Debuggable = true)]
+//#else
+//[assembly: Application(Debuggable = false)]
+//#endif
 
