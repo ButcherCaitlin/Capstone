@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Capstone.Views.EditPropertyView">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+            
+                <Entry Placeholder="Street"/>
+                <Entry Placeholder="City"/>
+                <Entry Placeholder="State" /><!--this should be a picklist.-->
+                <Entry Placeholder="Zip Code" Keyboard="Numeric"/>
+
+                <Entry Placeholder="Price" Keyboard="Numeric"/>
+                <Entry Placeholder="Bathrooms" Keyboard="Numeric"/>
+                <Entry Placeholder="Acres" Keyboard="Numeric"/>
+                <Entry Placeholder="Bedrooms" Keyboard="Numeric"/>
+                <Entry Placeholder="Sq. Footage" Keyboard="Numeric"/>
+                <Entry Placeholder="Year Built" Keyboard="Numeric"/>
+                <Editor Placeholder="Description" AutoSize="TextChanges" 
+                        BackgroundColor="{StaticResource PrimaryItem}"
+                        TextColor="{StaticResource TextPrimary}"
+                        PlaceholderColor="{StaticResource TextPrimary}"/>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
