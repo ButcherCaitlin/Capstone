@@ -10,7 +10,7 @@ namespace Capstone.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ItemTappedEventArgs eventArgs)
+            if (value is Xamarin.Forms.ItemTappedEventArgs eventArgs)
                 return eventArgs.Item;
             return null;
         }
