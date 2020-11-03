@@ -11,12 +11,11 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesShowingsController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly DatabaseService<User> _userService;
         private readonly PropertyService _propertyService;
         private readonly ShowingService _showingService;
         private readonly IMapper _mapper;
-
-        public PropertiesShowingsController(UserService userService,
+        public PropertiesShowingsController(DatabaseService<User> userService,
             PropertyService propertyService,
             ShowingService showingService,
             IMapper mapper)
@@ -30,14 +29,19 @@ namespace Capstone.API.Controllers
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
-
-        //create a showing for a user and property
+        /// <summary>
+        /// Creates a new Showing record in the database.
+        /// </summary>
+        /// <param name="propertyId">The property ID to associate the showing with. Provided in the route.</param>
+        /// <param name="showing">The CreateShwoingDto used to create the entity. Provided in the body.</param>
+        /// <param name="userId">The ID of the user making the API calls. Provided in the header.</param>
+        /// <returns>The newly created Showing from the databse as an OutboundShowingDto, and its location.</returns>
         [HttpPost]
         public ActionResult<CustomOutboundShowingDto> CreateShowingForPropertyAndUser(string propertyId,
             CreateShowingDto showing,
             [FromHeader] string userId = null)
         {
-            if (userId == null) return BadRequest("A UserID is required to create Showing records.");
+            if (userId == null) return BadRequest(new { message = "A UserID is required to create Showing records." });
 
             var propertyFromRepo = _propertyService.Get(propertyId);
             if (propertyFromRepo == null) return NotFound();
@@ -53,7 +57,10 @@ namespace Capstone.API.Controllers
                 new { showingId = showingToReturnEntity.Id },
                 _mapper.Map<ProspectShowingDto>(showingToReturnEntity));
         }
-
+        /// <summary>
+        /// Returns the methods supported at the resource endpoint.
+        /// </summary>
+        /// <returns>Returns an OK with the allowed request methods in the header.</returns>
         [HttpOptions]
         public IActionResult GetShowingsOptions()
         {

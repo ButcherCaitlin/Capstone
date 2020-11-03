@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Capstone.API.Converters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
+using Capstone.API.Entities;
 
 namespace Capstone.API
 {
@@ -36,12 +38,17 @@ namespace Capstone.API
 
             //you need to add a service here for each additional collection.
             services.AddSingleton<PropertyService>();
-            services.AddSingleton<UserService>();
             services.AddSingleton<ShowingService>();
+            services.AddSingleton<DatabaseService<User>>();
 
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
+            })
+            .AddNewtonsoftJson( setupAction =>
+            {
+                setupAction.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
             })
             .AddXmlDataContractSerializerFormatters()
             .AddJsonOptions(options =>
