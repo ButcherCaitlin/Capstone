@@ -15,7 +15,6 @@ namespace Capstone.API.Controllers
         private readonly PropertyService _propertyService;
         private readonly ShowingService _showingService;
         private readonly IMapper _mapper;
-
         public PropertiesShowingsController(DatabaseService<User> userService,
             PropertyService propertyService,
             ShowingService showingService,
@@ -30,8 +29,13 @@ namespace Capstone.API.Controllers
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
-
-        //create a showing for a user and property
+        /// <summary>
+        /// Creates a new Showing record in the database.
+        /// </summary>
+        /// <param name="propertyId">The property ID to associate the showing with. Provided in the route.</param>
+        /// <param name="showing">The CreateShwoingDto used to create the entity. Provided in the body.</param>
+        /// <param name="userId">The ID of the user making the API calls. Provided in the header.</param>
+        /// <returns>The newly created Showing from the databse as an OutboundShowingDto, and its location.</returns>
         [HttpPost]
         public ActionResult<CustomOutboundShowingDto> CreateShowingForPropertyAndUser(string propertyId,
             CreateShowingDto showing,
@@ -53,7 +57,10 @@ namespace Capstone.API.Controllers
                 new { showingId = showingToReturnEntity.Id },
                 _mapper.Map<ProspectShowingDto>(showingToReturnEntity));
         }
-
+        /// <summary>
+        /// Returns the methods supported at the resource endpoint.
+        /// </summary>
+        /// <returns>Returns an OK with the allowed request methods in the header.</returns>
         [HttpOptions]
         public IActionResult GetShowingsOptions()
         {

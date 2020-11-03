@@ -8,18 +8,10 @@ using System.Collections.Generic;
 
 namespace Capstone.API.Services
 {
-    public class ShowingService
+    public class ShowingService : DatabaseService<Showing>
     {
-        //This class could become a generic classs.
-        private readonly IMongoCollection<Showing> _showings;
-
-        public ShowingService(ICapstoneDatabaseSettings settings)
-        {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-
-            _showings = database.GetCollection<Showing>(settings.CapstoneShowingCollection);
-        }
+        public ShowingService(ICapstoneDatabaseSettings settings):
+            base(settings){ }
 
         public IEnumerable<Showing> Get(ShowingsResourceParameters parameters)
         {
@@ -30,10 +22,10 @@ namespace Capstone.API.Services
                 && string.IsNullOrWhiteSpace(parameters.ProspectID)
                 && string.IsNullOrWhiteSpace(parameters.SearchPhrase))
             {
-                return GetAll();
+                return Get();
             }
 
-            var collection = _showings.AsQueryable();
+            var collection = _recordCollection.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(parameters.PropertyID))
             {
@@ -60,37 +52,5 @@ namespace Capstone.API.Services
 
             return collection.ToList();
         }
-
-        #region implimented in generic
-
-        //Get all properties from the database.
-        public IEnumerable<Showing> GetAll()
-        {
-            return _showings.Find(showing => true).ToEnumerable<Showing>();
-        }
-
-        //Get a single property with an ID.
-        public Showing Get(string id)
-        {
-            return _showings.Find<Showing>(showing => showing.Id == id).FirstOrDefault();
-        }
-        //Create a new property in the database and gives it an ID. The property and new ID are returned.
-        public Showing Create(Showing showing)
-        {
-            _showings.InsertOne(showing);
-            return showing;
-        }
-        //Update a property in the database with a new property object.
-        public void Update(string id, Showing showingIn)
-        {
-            _showings.ReplaceOne(showing => showing.Id == id, showingIn);
-        }
-
-        public void Remove(string id)
-        {
-            var result = _showings.DeleteOne(showing => showing.Id == id);
-        }
-
-        #endregion
     }
 }

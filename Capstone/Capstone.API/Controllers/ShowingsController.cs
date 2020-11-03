@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver.Core.Operations;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +15,6 @@ namespace Capstone.API.Controllers
     {
         private readonly ShowingService _showingService;
         private readonly IMapper _mapper;
-
         public ShowingsController(ShowingService showingService,
             IMapper mapper)
         {
@@ -26,12 +23,11 @@ namespace Capstone.API.Controllers
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
-
         /// <summary>
-        /// Returns a set of showings based on a set of filtering and search parameters sepecified in the query string.
+        /// Queries Showing records from the database based off of a set of query parameters.
         /// </summary>
-        /// <param name="parameters">The the filtering and searching parameters.</param>
-        /// <returns>The set of showings specified by the parameters.</returns>
+        /// <param name="parameters">The filter and Search parameters. Found in the query string.</param>
+        /// <returns>The records to be returned as UnformattedShowingDto's.</returns>
         [HttpGet]
         [HttpHead]
         public ActionResult<IEnumerable<OutboundShowingDto>> GetShowings(
@@ -43,10 +39,11 @@ namespace Capstone.API.Controllers
             return Ok(_mapper.Map<IEnumerable<UnformattedShowingDto>>(showingsFromRepo));
         }
         /// <summary>
-        /// Returns a showing with the ID provided in the route.
+        /// Queries a single Showing from the database with the specified ID.
         /// </summary>
-        /// <param name="propertyId">The ID of the showing to be found. Provided in the route.</param>
-        /// <returns>The showing object.</returns>
+        /// <param name="showingId">The ID of the Showing to be returned. Provided in the request route.</param>
+        /// <param name="userId">The ID of the user making the API calls. Provided in the header.</param>
+        /// <returns>The record with the specified id as an OutboundShowingDto.</returns>
         [HttpGet("{showingId:length(24)}", Name = "GetShowingById")]
         [HttpHead("{showingId:length(24)}")]
         public ActionResult<CustomOutboundShowingDto> GetShowingById(string showingId,
@@ -68,7 +65,13 @@ namespace Capstone.API.Controllers
                 return Ok(_mapper.Map<UnformattedShowingDto>(showingFromRepo));
             }
         }
-
+        /// <summary>
+        /// Updates a Showing record in the database. Neglected fields are set to their default value (Null).
+        /// </summary>
+        /// <param name="showingId">The ID of the Showing to update. Provided in the Route.</param>
+        /// <param name="showing">The UpdateShowingDto that holds the new field values. Provided in the body.</param>
+        /// <param name="userId">The ID of the user making the api request. Provided in the Headers.</param>
+        /// <returns>If the User or Showing are not found BadRequest is returned. If successful NoContent is returned.</returns>
         [HttpPut("{showingId:length(24)}")]
         public IActionResult UpdateShowing(string showingId, UpdateShowingDto showing,
             [FromHeader] string userId = null)
@@ -84,10 +87,18 @@ namespace Capstone.API.Controllers
                 return BadRequest(new { message = "You can only modify showing records if you are a participant." });
             }
             _mapper.Map(showing, showingFromRepo);
-            _showingService.Update(showingFromRepo.Id, showingFromRepo);
+
+            _showingService.Update(showingFromRepo);
+
             return NoContent();
         }
-
+        /// <summary>
+        /// Updates a Showing record in the database using a JSON patch document.
+        /// </summary>
+        /// <param name="showingId">The ID of the record to be updated. Provided in the route.</param>
+        /// <param name="patchDocument">The JSON patch document. Provided in the body.</param>
+        /// <param name="userId">The ID of the user making the api calls. Provided in the header.</param>
+        /// <returns>BadRequest if the record or user is not found. No content if successful.</returns>
         [HttpPatch("{showingId:length(24)}")]
         public IActionResult PartiallyUpdateShowing(string showingId,
             JsonPatchDocument<UpdateShowingDto> patchDocument,
@@ -98,7 +109,6 @@ namespace Capstone.API.Controllers
             var showingToPatch = _showingService.Get(showingId);
             if (showingToPatch == null) return NotFound(new { message = "If you are trying to upsert a resource use PUT" });
 
-
             if (showingToPatch.ProspectID != userId &&
                 showingToPatch.RealtorID != userId)
             {
@@ -107,35 +117,56 @@ namespace Capstone.API.Controllers
 
             var showingDtoToPatch = _mapper.Map<UpdateShowingDto>(showingToPatch);
             patchDocument.ApplyTo(showingDtoToPatch, ModelState);
-
             if (!TryValidateModel(showingDtoToPatch)) return ValidationProblem(ModelState);
 
             _mapper.Map(showingDtoToPatch, showingToPatch);
-            _showingService.Update(showingToPatch.Id, showingToPatch);
+            _showingService.Update(showingToPatch);
 
             return NoContent();
         }
-
-        [HttpDelete("{showingId}")]
+        /// <summary>
+        /// Removes a specific Showing from the database.
+        /// </summary>
+        /// <param name="showingId">The ID of the Showing to be deleted. Provided in the routed.</param>
+        /// <param name="userId">The Id of the User making the API call. Provided in the header.</param>
+        /// <returns>BadRequest if the record or user is not found. No content if successful.</returns>
+        [HttpDelete("{showingId:length(24)}")]
         public IActionResult DeleteShowing(string showingId,
             [FromHeader] string userId = null)
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to delete showing records." });
+
             var showingToDelete = _showingService.Get(showingId);
             if (showingToDelete == null) return NotFound();
+
             if (showingToDelete.ProspectID != userId &&
                 showingToDelete.RealtorID != userId)
             {
                 return BadRequest(new { message = "You can only delete showing records if you are a participant." });
             }
+
             _showingService.Remove(showingToDelete.Id);
+
             return NoContent();
         }
-
+        /// <summary>
+        /// Returns the methods supported at the resource endpoint.
+        /// </summary>
+        /// <returns>Returns an OK with the allowed request methods in the header.</returns>
         [HttpOptions]
-        public IActionResult GetShowingsOptions()
+        public IActionResult GetShowingsResourceOptions()
         {
             Response.Headers.Add("Allow", "GET,OPTIONS,HEAD");
+            return Ok();
+        }
+        /// <summary>
+        /// Returns the methods supported at a unique record endpoint.
+        /// </summary>
+        /// <returns>Returns an OK with the allowed request methods in the header.</returns>
+        [HttpOptions("{propertyId:length(24)}")]
+        public IActionResult GetShowingsRecordOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PUT,PATCH,DELETE");
             return Ok();
         }
     }
