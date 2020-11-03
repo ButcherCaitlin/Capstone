@@ -63,7 +63,7 @@ namespace Capstone.API.Controllers
             IEnumerable<OutboundPropertyDto> propertiesToReturn = _mapper.Map<IEnumerable<OutboundPropertyDto>>(propertiesFromRepo);
             var idsAsString = string.Join(",", propertiesToReturn.Select(a => a.Id));
             return CreatedAtRoute("GetPropertiesCollection",
-                new { userId = userId, propertyIdCollection = idsAsString },
+                new { propertyIdsCollection = idsAsString },
                 propertiesToReturn);
         }
         /// <summary>

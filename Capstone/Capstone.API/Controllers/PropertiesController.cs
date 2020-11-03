@@ -148,7 +148,7 @@ namespace Capstone.API.Controllers
         /// <param name="propertyId">The ID of the Property to be deleted. Provided in the route.</param>
         /// <param name="userId">The Id of the User making the API call. Provided in the header.</param>
         /// <returns>BadRequest if the record or user is not found. No content if successful.</returns>
-        [HttpDelete("{propertyId:length(24)}}")]
+        [HttpDelete("{propertyId:length(24)}")]
         public IActionResult DeleteProperty(string propertyId,
             [FromHeader] string userId = null)
         {

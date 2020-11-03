@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Capstone.API.Controllers
 {
@@ -31,12 +32,26 @@ namespace Capstone.API.Controllers
         [HttpGet]
         [HttpHead]
         public ActionResult<IEnumerable<OutboundShowingDto>> GetShowings(
-            [FromQuery] ShowingsResourceParameters parameters = null)
+            [FromQuery] ShowingsResourceParameters parameters = null,
+            [FromHeader] string userId = null)
         {
             var showingsFromRepo = _showingService.Get(parameters);
             if (showingsFromRepo == null) return NotFound();
 
-            return Ok(_mapper.Map<IEnumerable<UnformattedShowingDto>>(showingsFromRepo));
+            List<OutboundShowingDto> showingsToReturn = new List<OutboundShowingDto>();
+
+            showingsToReturn.AddRange(
+                _mapper.Map<IEnumerable<ProspectShowingDto>>(
+                    showingsFromRepo.Where(a => a.ProspectID == userId)));
+            showingsToReturn.AddRange(
+                _mapper.Map<IEnumerable<RealtorShowingDto>>(
+                    showingsFromRepo.Where(a => a.RealtorID == userId)));
+            showingsToReturn.AddRange(
+                _mapper.Map<IEnumerable<UnformattedShowingDto>>(
+                    showingsFromRepo.Where(a => a.RealtorID != userId &&
+                                                a.ProspectID != userId)));
+
+            return Ok(showingsToReturn);
         }
         /// <summary>
         /// Queries a single Showing from the database with the specified ID.
