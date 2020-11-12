@@ -20,7 +20,6 @@
         <Style TargetType="Entry">
             <Setter Property="PlaceholderColor" Value="{StaticResource TextPrimary}"/>
             <Setter Property="TextColor" Value="{StaticResource TextPrimary}"/>
-            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryItem}"/>
         </Style>
         
         <Style TargetType="Button">

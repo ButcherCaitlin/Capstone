@@ -5,18 +5,28 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-            
-                <Entry Placeholder="Street"/>
-                <Entry Placeholder="City"/>
-                <Entry Placeholder="State" /><!--this should be a picklist.-->
-                <Entry Placeholder="Zip Code" Keyboard="Numeric"/>
 
-                <Entry Placeholder="Price" Keyboard="Numeric"/>
-                <Entry Placeholder="Bathrooms" Keyboard="Numeric"/>
-                <Entry Placeholder="Acres" Keyboard="Numeric"/>
-                <Entry Placeholder="Bedrooms" Keyboard="Numeric"/>
-                <Entry Placeholder="Sq. Footage" Keyboard="Numeric"/>
-                <Entry Placeholder="Year Built" Keyboard="Numeric"/>
+                <Entry Placeholder="Street"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="City"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="State" 
+                       PlaceholderColor="Black" TextColor="Black"/><!--this should be a picklist.-->
+                <Entry Placeholder="Zip Code" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
+
+                <Entry Placeholder="Price" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="Bathrooms" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="Acres" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="Bedrooms" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="Sq. Footage" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
+                <Entry Placeholder="Year Built" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>
                 <Editor Placeholder="Description" AutoSize="TextChanges" 
                         BackgroundColor="{StaticResource PrimaryItem}"
                         TextColor="{StaticResource TextPrimary}"
