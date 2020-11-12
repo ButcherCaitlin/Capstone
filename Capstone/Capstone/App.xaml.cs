@@ -5,13 +5,14 @@ using Capstone.Services;
 
 using Capstone.Views;
 using Capstone.Utility;
+using Capstone.Repositories;
 
 namespace Capstone
 {
     public partial class App : Application
     {
         public static NavigationService NavigationService { get; } = new NavigationService();
-        public static DataService DataService { get; } = new DataService();
+        public static DataService DataService { get; } = new DataService(new PropertyDataStore(), new UserDataStore());
         public App()
         {
             InitializeComponent();

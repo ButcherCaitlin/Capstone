@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capstone.iOS", "Capstone.iO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Capstone", "Capstone\Capstone.csproj", "{29FA2373-0568-4CD4-9CDD-2110DA092DDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capstone.API", "Capstone.API\Capstone.API.csproj", "{9F96206F-0DB0-4BE9-B607-C151A27A7934}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Capstone.API", "Capstone.API\Capstone.API.csproj", "{9F96206F-0DB0-4BE9-B607-C151A27A7934}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{CD55319A-49B3-4A24-83DE-9A0F25417FF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +92,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4741233F-1E72-42E6-87D3-8A526025A616} = {CD55319A-49B3-4A24-83DE-9A0F25417FF5}
+		{3BEEEB1A-2A2A-4D7A-9BFC-64148CEBE0AE} = {CD55319A-49B3-4A24-83DE-9A0F25417FF5}
+		{29FA2373-0568-4CD4-9CDD-2110DA092DDC} = {CD55319A-49B3-4A24-83DE-9A0F25417FF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {250EB4E4-0A71-487F-A614-AEFDD6FA55F2}

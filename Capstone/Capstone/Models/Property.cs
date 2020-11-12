@@ -6,26 +6,12 @@ using System.Text;
 
 namespace Capstone.Models
 {
-    public class Property : INotifyPropertyChanged
+    public class Property : Storable, INotifyPropertyChanged
     {
-        /* What data values do we need for this listing
-         * Listing Onwer,
-         * Listing Sellers,
-         * Address,
-         * Description,
-         * Type,
-         * Square Footage,
-         * Acres,
-         * Bedrooms,
-         * Bathrooms,
-         * Asking Price,
-         * Floors,
-         * Build Date,
-         */
-        private string address;
+        private string address, ownerId;
         private double price, bathrooms, acres;
-        private int id, bedrooms, sqFootage, buildYear;
-        private string description;
+        private int bedrooms, sqFootage, buildYear;
+        private string description, type;
 
         public string Address { 
             get => address;
@@ -58,14 +44,6 @@ namespace Capstone.Models
             set
             {
                 acres = value;
-                RaisePropertyChanged();
-            }
-        }
-        public int ID {
-            get => id;
-            set
-            {
-                id = value;
                 RaisePropertyChanged();
             }
         }
@@ -105,8 +83,24 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-
-
+        public string OwnerID
+        {
+            get => ownerId;
+            set
+            {
+                ownerId = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Type
+        {
+            get => type;
+            set
+            {
+                type = value;
+                RaisePropertyChanged();
+            }
+        }
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
