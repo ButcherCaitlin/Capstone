@@ -10,11 +10,13 @@ namespace Capstone.Services
     {
         private readonly IDataStore<Property> _propertyDataStore;
         private readonly IDataStore<User> _userDataStore;
+        private readonly IDataStore<Showing> _showingDataStore;
 
-        public DataService(IDataStore<Property> propertyDataStore, IDataStore<User> userDataStore)
+        public DataService(IDataStore<Property> propertyDataStore, IDataStore<User> userDataStore, IDataStore<Showing> showingDataStore)
         {
             _propertyDataStore = propertyDataStore;
             _userDataStore = userDataStore;
+            _showingDataStore = showingDataStore;
         }
 
         public async Task<bool> AddItemAsync(Property item)

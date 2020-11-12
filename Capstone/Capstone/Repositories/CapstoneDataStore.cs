@@ -10,8 +10,6 @@ namespace Capstone.Repositories
 {
     public abstract class CapstoneDataStore<T> : IDataStore<T> where T : Storable
     {
-        //private const string baseUri = "http://localhost:51044/api/properties";
-
         protected HttpClient _httpClient;
         protected string baseUri;
         public async Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false)
@@ -40,7 +38,7 @@ namespace Capstone.Repositories
             }
             return null;
         }
-        public async Task<bool> AddItemAsync(T item)
+        public virtual async Task<bool> AddItemAsync(T item)
         {
             var uri = new Uri(baseUri);
             var json = JsonConvert.SerializeObject(item);

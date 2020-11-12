@@ -12,7 +12,7 @@ namespace Capstone
     public partial class App : Application
     {
         public static NavigationService NavigationService { get; } = new NavigationService();
-        public static DataService DataService { get; } = new DataService(new PropertyDataStore(), new UserDataStore());
+        public static DataService DataService { get; } = new DataService(new PropertyDataStore(), new UserDataStore(), new ShowingDataStore());
         public App()
         {
             InitializeComponent();
