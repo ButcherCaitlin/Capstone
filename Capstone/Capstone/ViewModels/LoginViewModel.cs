@@ -31,7 +31,7 @@ namespace Capstone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ICommand SubmitCommand { protected set; get; }
+        public ICommand SubmitCommand { get; }
         public LoginViewModel()
         {
             SubmitCommand = new Command(OnSubmit);

@@ -12,7 +12,8 @@ namespace Capstone.Repositories
             //_httpClient = new HttpClient();
             _httpClient = new HttpClient(DependencyService.Get<IHttpClientHandlerService>().GetInsecureHandler());
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                baseUri = Device.RuntimePlatform == Device.Android ?
+            _httpClient.DefaultRequestHeaders.Add("userId", "5fa0af488c2c57009df03d1c");
+            baseUri = Device.RuntimePlatform == Device.Android ?
                     "http://10.0.2.2:51044/api/users" :
                     "http://localhost:51044/api/users";
 

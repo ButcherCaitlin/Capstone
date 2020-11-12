@@ -6,31 +6,36 @@
         <ScrollView>
             <StackLayout>
 
-                <Entry Placeholder="Street"
+                <!--<Entry Placeholder="Street" 
                        PlaceholderColor="Black" TextColor="Black"/>
                 <Entry Placeholder="City"
                        PlaceholderColor="Black" TextColor="Black"/>
                 <Entry Placeholder="State" 
-                       PlaceholderColor="Black" TextColor="Black"/><!--this should be a picklist.-->
+                       PlaceholderColor="Black" TextColor="Black"/>--><!--this should be a picklist.--><!--
                 <Entry Placeholder="Zip Code" Keyboard="Numeric"
+                       PlaceholderColor="Black" TextColor="Black"/>-->
+                <Entry Placeholder="Address" Text="{Binding Property.Address, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
 
-                <Entry Placeholder="Price" Keyboard="Numeric"
+                <Entry Placeholder="Price" Keyboard="Numeric" Text="{Binding Property.Price, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Entry Placeholder="Bathrooms" Keyboard="Numeric"
+                <Entry Placeholder="Bathrooms" Keyboard="Numeric" Text="{Binding Property.Bathrooms, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Entry Placeholder="Acres" Keyboard="Numeric"
+                <Entry Placeholder="Acres" Keyboard="Numeric" Text="{Binding Property.Acres, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Entry Placeholder="Bedrooms" Keyboard="Numeric"
+                <Entry Placeholder="Bedrooms" Keyboard="Numeric" Text="{Binding Property.Bedrooms, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Entry Placeholder="Sq. Footage" Keyboard="Numeric"
+                <Entry Placeholder="Sq. Footage" Keyboard="Numeric" Text="{Binding Property.SqFootage, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Entry Placeholder="Year Built" Keyboard="Numeric"
+                <Entry Placeholder="Year Built" Keyboard="Numeric" Text="{Binding Property.BuildYear, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Editor Placeholder="Description" AutoSize="TextChanges" 
+                <Editor Placeholder="Description" AutoSize="TextChanges" Text="{Binding Property.Description, Mode=TwoWay}"
                         BackgroundColor="{StaticResource PrimaryItem}"
                         TextColor="{StaticResource TextPrimary}"
                         PlaceholderColor="{StaticResource TextPrimary}"/>
+
+                <Button Command="{Binding SaveCommand}" Text="Save"  
+                    FontAttributes="Bold" FontSize="Large"/>
 
             </StackLayout>
         </ScrollView>
