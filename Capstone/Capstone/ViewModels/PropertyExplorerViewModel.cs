@@ -46,29 +46,28 @@ namespace Capstone.ViewModels
             AddCommand = new Command(OnAddCommand);
             PropertySelected = new Command<Property>(OnPropertySelectedCommand);
 
-            //MessagingCenter.Subscribe<CaitlinsViewModel, Property>
-            //    (this, MessageNames.PropertyChangedMessage, MessagePropertyChanged);
+            MessagingCenter.Subscribe<EditPropertyViewModel, Property>
+                (this, MessageNames.PropertyChangedMessage, MessagePropertyChanged);
 
             ExecuteLoadData();
         }
 
-        //public void MessagePropertyChanged(CaitlinsViewModel sender, Property property)
-        //{
-        //    ExecuteLoadData();
-        //}
-
-        public void OnRefreshListCommand()
+        public async void MessagePropertyChanged(EditPropertyViewModel sender, Property property)
         {
-            ExecuteLoadData();
+            await ExecuteLoadData();
         }
 
-        public async void OnAddCommand()
+        public async void OnRefreshListCommand()
+        {
+             await ExecuteLoadData();
+        }
+
+        public void OnAddCommand()
         {
             App.NavigationService.NavigateToModal(ViewNames.EditPropertyView);
-            //this needs to navigate to an edit page not the property view.
         }
 
-        public async void OnPropertySelectedCommand(Property selected)
+        public void OnPropertySelectedCommand(Property selected)
         {
             App.NavigationService.NavigateTo(ViewNames.IndividualPropertyView, selected);
         }

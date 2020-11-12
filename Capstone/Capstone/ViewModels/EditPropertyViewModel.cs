@@ -1,6 +1,8 @@
 ﻿using Capstone.Models;
+using Capstone.Utility;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -27,9 +29,16 @@ namespace Capstone.ViewModels
         }
         public async void OnSaveCommand()
         {
-            var propertyToBeSaved = Property;
+
             if(await App.DataService.AddItemAsync(Property))
+            {
+                MessagingCenter.Send<EditPropertyViewModel, Property>(this, MessageNames.PropertyChangedMessage, Property);
                 App.NavigationService.GoBackModal();
+            } 
+            else
+            {
+                //print an error to the user that the save failed.
+            }
         }
         public override void Initialize(object parameter)
         {
