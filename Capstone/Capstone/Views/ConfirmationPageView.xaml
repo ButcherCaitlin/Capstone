@@ -8,22 +8,18 @@
                    TextColor="Black" 
                    FontSize="Medium"
                    HorizontalTextAlignment="Center"/>
-            <DatePicker x:Name="tourHomeDatePicker"
+            <DatePicker Date="{Binding Date}"
                         Format="D"
                         HorizontalOptions="Center"
-                        TextColor="{StaticResource AccentItem}"
-                        
-                        />
+                        TextColor="{StaticResource AccentItem}"/>
 
             <Label Text="Pick a Time:"
                    TextColor="Black"
                    FontSize="Medium"
                    HorizontalTextAlignment="Center"/>
-            <TimePicker x:Name="tourHomeTimePicker"
-                        Format="T"
+            <TimePicker Time="{Binding Time}"
                         HorizontalOptions="Center"
-                        TextColor="{StaticResource AccentItem}"
-                       />
+                        TextColor="{StaticResource AccentItem}"/>
             
             <Button 
                 Command="{Binding ConfirmClicked}" Text="Confirm Tour"/>

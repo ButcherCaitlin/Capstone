@@ -24,6 +24,12 @@ namespace Capstone.Services
             return await _propertyDataStore.AddItemAsync(item);
         }
 
+        public async Task<bool> ScheduleShowingAsync(Showing item)
+        {
+            var pds = _propertyDataStore as PropertyDataStore;
+            return await pds.AddRelatedItemAsync(item);
+        }
+
         public async Task<bool> DeleteItemAsync(string id)
         {
             return await _propertyDataStore.DeleteItemAsync(id);

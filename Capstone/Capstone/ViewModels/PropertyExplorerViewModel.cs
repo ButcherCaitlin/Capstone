@@ -70,6 +70,7 @@ namespace Capstone.ViewModels
         public void OnPropertySelectedCommand(Property selected)
         {
             App.NavigationService.NavigateTo(ViewNames.IndividualPropertyView, selected);
+            
         }
 
         async Task ExecuteLoadData()

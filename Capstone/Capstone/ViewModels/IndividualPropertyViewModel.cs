@@ -33,7 +33,7 @@ namespace Capstone.ViewModels
 
         public void OnSeeHomeClickedCommand()
         {
-            App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView);
+            App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView, Property);
         }
 
         public override void Initialize(object parameter)

@@ -8,6 +8,11 @@ namespace Capstone.Models
 {
     public class Property : Storable, INotifyPropertyChanged
     {
+
+        public Property()
+        {
+        }
+
         private string address, ownerId;
         private double price, bathrooms, acres;
         private int bedrooms, sqFootage, buildYear;
