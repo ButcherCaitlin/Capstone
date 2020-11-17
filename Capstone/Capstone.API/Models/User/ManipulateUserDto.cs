@@ -15,9 +15,13 @@ namespace Capstone.API.Models
         [MaxLength(50)]
         public string Email { get; set; }
         [MaxLength(50)]
+        [MinLength(8)]
         public string Password { get; set; }
         [Phone]
         [MaxLength(50)]
         public string Phone { get; set; }
+        [Required]
+        public string UserType { get; set; }
+
     }
 }

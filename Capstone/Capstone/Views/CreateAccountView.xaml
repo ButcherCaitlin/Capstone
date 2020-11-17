@@ -1,10 +1,43 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Capstone.Views.CreateAccountView">
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentView.Content>
-</ContentView>
+    <ContentPage.Content>
+
+        <StackLayout>
+            <Label Text="Create an Account"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                   FontSize="Large"/>
+
+            <Label Text="First Name"/>
+            <Entry Text="{Binding FirstName}" Placeholder="First Name" PlaceholderColor="Gray" TextColor="Black" />
+
+            <Label Text="Last Name"/>
+            <Entry Text="{Binding LastName}"  Placeholder="Last Name" PlaceholderColor="Gray" TextColor="Black" />
+
+            <!--For now Email is the username. This can be changed later-->
+            <Label Text="Email"/>
+            <Entry Text="{Binding Email}" x:Name="email" Placeholder="Email" Keyboard="Email" PlaceholderColor="Gray" TextColor="Black"/>
+
+            <Label Text="Password"/>
+            <Entry Text="{Binding Password}" x:Name="password" Placeholder="Password" IsPassword="true" PlaceholderColor="Gray" TextColor="Black"/>
+
+            <Label Text="Confirm Password"/>
+            <Entry Text="{Binding ConfirmPassword}" x:Name="passwordConfirm" Placeholder="Confirm Password" IsPassword="true" PlaceholderColor="Gray" TextColor="Black"/>
+
+
+
+            <Picker x:Name="userTypePicker" SelectedIndex="{Binding UserType}" Title="Are you a Realtor, Private Seller, or Buyer?">
+                <Picker.Items>
+                    <x:String>Realtor</x:String>
+                    <x:String>Seller</x:String>
+                    <x:String>Buyer</x:String>
+                </Picker.Items>
+            </Picker>
+            <Label Text="Choose the one that fits best. This can always be changed later." FontSize="Small"/>
+
+            <Button Text="Create Account" Command="{Binding CreateUserClicked}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

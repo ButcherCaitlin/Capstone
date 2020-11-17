@@ -39,7 +39,7 @@ namespace Capstone.API
             //you need to add a service here for each additional collection.
             services.AddSingleton<PropertyService>();
             services.AddSingleton<ShowingService>();
-            services.AddSingleton<DatabaseService<User>>();
+            services.AddSingleton<UserService>();
 
             services.AddControllers(setupAction =>
             {

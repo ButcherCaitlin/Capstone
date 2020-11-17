@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Capstone.API.Authentication;
 using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.Services;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Capstone.API.Controllers
 {
@@ -17,15 +19,18 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly DatabaseService<User> _userService;
+        private readonly UserService _userService;
         private readonly IMapper _mapper;
-        public UsersController(DatabaseService<User> userService,
-            IMapper mapper)
+        private readonly IOptions<JwtAuthentication> _jwtAuthentication;
+        public UsersController(UserService userService,
+            IMapper mapper, IOptions<JwtAuthentication> jwtAuthentication)
         {
             _userService = userService ??
                 throw new ArgumentNullException(nameof(userService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
+            _jwtAuthentication = jwtAuthentication ??
+                throw new ArgumentNullException(nameof(jwtAuthentication));
         }
         /// <summary>
         /// Queries all User records from the database.
@@ -54,6 +59,18 @@ namespace Capstone.API.Controllers
 
             return Ok(_mapper.Map<OutboundUserDto>(user));
         }
+
+        [HttpGet]
+        [HttpHead]
+        public async Task<ActionResult<OutboundUserDto>> GetUserByEmail([FromQuery] string email)
+        {
+            var user = await _userService.GetUserAsync(email);
+            if (user == null) return NotFound();
+            user.AuthToken = _jwtAuthentication.Value.GenerateToken(user);
+            var outboundUser = _mapper.Map<OutboundUserDto>(user);
+            return Ok(outboundUser);
+        }
+
         /// <summary>
         /// Creates a new User record in the database.
         /// </summary>
@@ -61,12 +78,20 @@ namespace Capstone.API.Controllers
         /// body.</param>
         /// <returns>The newly created User from the databse as an OutboundUserDto, and its location.</returns>
         [HttpPost]
-        public ActionResult<OutboundUserDto> Create(CreateUserDto user)
+        public async Task<ActionResult<OutboundUserDto>> Create(CreateUserDto user)
         {
-            var createdUser = _userService.Create(_mapper.Map<User>(user));
+            var createUserResponse = await _userService.AddUserAsync(_mapper.Map<User>(user));
+            if (createUserResponse.User != null) createUserResponse.User.AuthToken = _jwtAuthentication.Value.GenerateToken(createUserResponse.User);
 
-            return CreatedAtRoute("GetUserById", new { userId = createdUser.Id.ToString() }, _mapper.Map<OutboundUserDto>(createdUser));
+
+            if (!createUserResponse.Success)
+            {
+                return BadRequest(new { error = createUserResponse.ErrorMessage });
+            }
+            return CreatedAtRoute("GetUserById", new { userId = createUserResponse.User.Id.ToString() },
+                _mapper.Map<OutboundUserDto>(createUserResponse.User));
         }
+
         /// <summary>
         /// Upserts a User record in the database. If updating, neglected fields are set to their default value (Null).
         /// </summary>
@@ -131,6 +156,24 @@ namespace Capstone.API.Controllers
             _userService.Remove(userToDelete.Id);
 
             return NoContent();
+
+
+            /////[HttpDelete("api/user/delete")]
+            /////[Authorize(AuthenticationSchemes = "Bearer")]
+
+            //public async Task<ActionResult> Delete([FromBody] PasswordObject content)
+            //{
+            //    var email = GetUserEmailFromToken(Request);
+            //    if (email.StartsWith("Error")) return BadRequest(email);
+
+            //    var user = await userRepository.GetUserAsync(email);
+            //    if (!HashPassword.Verify(content.Password, user.HashedPassword))
+            //    {
+            //        return BadRequest("Provided password does not match user password.");
+            //    }
+
+            //    return Ok(await userRepository.DeleteUserAsync(email));
+            //}
         }
         /// <summary>
         /// Returns the methods supported at the resource endpoint.
@@ -163,5 +206,24 @@ namespace Capstone.API.Controllers
             var options = HttpContext.RequestServices.GetRequiredService<IOptions<ApiBehaviorOptions>>();
             return (ActionResult)options.Value.InvalidModelStateResponseFactory(ControllerContext);
         }
+
+        /////[HttpPost("api/user/login")]
+        //public async Task<ActionResult> Login([FromBody] Users user)
+        //{
+        //    user.AuthToken = jwtAuthentication.Value.GenerateToken(user);
+        //    var result = await userRepository.LoginUserAsync(user);
+        //    return result.Users != null ? Ok(new UserResponses(result.Users)) : Ok(result);
+        //}
+
+        /////[HttpPost("api/user/logout")]
+        /////[Authorize(AuthenticanSchemes = "Bearer")]
+        //public async Task<ActionResult> Logout()
+        //{
+        //    var email = GetUserEmailFromToken(Request);
+        //    if (email.StartsWith("Error")) return BadRequest(email);
+
+        //    var result = await userRepository.LogoutUserAsync(email);
+        //    return Ok(result);
+        //}
     }
 }
