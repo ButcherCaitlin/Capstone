@@ -22,6 +22,7 @@ namespace Capstone
             NavigationService.Configure(ViewNames.IndividualPropertyView, typeof(IndividualPropertyView));
             NavigationService.Configure(ViewNames.ConfirmationPageView, typeof(ConfirmationPageView));
             NavigationService.Configure(ViewNames.EditPropertyView, typeof(EditPropertyView));
+            NavigationService.Configure(ViewNames.CreateAccountView, typeof(CreateAccountView));
 
 
             MainPage = new NavigationPage(new LoginView());

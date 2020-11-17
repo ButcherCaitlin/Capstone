@@ -11,5 +11,6 @@ namespace Capstone.Utility
         public const string IndividualPropertyView = "IndividualPropertyView";
         public const string ConfirmationPageView = "ConfirmationPageView";
         public const string EditPropertyView = "EditPropertyView";
+        public const string CreateAccountView = "CreateAccountView";
     }
 }
