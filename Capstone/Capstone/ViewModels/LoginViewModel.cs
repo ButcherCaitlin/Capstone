@@ -31,17 +31,22 @@ namespace Capstone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ICommand SubmitCommand { get; }
+        public ICommand SubmitCommand { protected set; get; }
+        public ICommand TapCreateCommand { get; set; }
         public LoginViewModel()
         {
             SubmitCommand = new Command(OnSubmit);
             DisplayInvalidLoginPrompt += () => Application.Current.MainPage.DisplayAlert("Error", "Invalid Login, try again", "OK");
+            TapCreateCommand = new Command(OnTapCreateCommand);
         }
         public void OnSubmit()
         {
             App.NavigationService.NavigateTo(ViewNames.PropertyExplorerView);
         }
-
+        public void OnTapCreateCommand()
+        {
+            App.NavigationService.NavigateTo(ViewNames.CreateAccountView);
+        }
         public override void Initialize(object parameter)
         {
         }
