@@ -1,23 +1,16 @@
 ﻿using Capstone.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Capstone.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    //public partial class CreateAccountView : ContentPage
-    public partial class CreateAccountView : ContentView
+    public partial class CreateAccountView : ContentPage
     {
         public CreateAccountView()
         {
-            //BindingContext = ViewModelLocator.CreateAccountViewModel;
-            //InitializeComponent();
+            InitializeComponent();
+            BindingContext = ViewModelLocator.CreateAccountViewModel;
 
             //Email.Completed += (object sender, EventArgs e) =>
             //{
@@ -32,8 +25,9 @@ namespace Capstone.Views
             //ConfirmPassword.Completed += (object sender, EventArgs e) =>
             //{
             //    ViewModelLocator.LoginViewModel.SubmitCommand.Execute(null);
-
-          }
-
+        }
     }
 }
+
+
+

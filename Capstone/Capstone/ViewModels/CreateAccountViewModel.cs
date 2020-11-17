@@ -12,14 +12,14 @@ namespace Capstone.ViewModels
 {
     public class CreateAccountViewModel : BaseViewModel
     {
-        private Users user;
+        private User user;
         string firstName;
         string lastName;
         string email;
         string password;
         string confirmPassword;
         string userType;
-        public Users Users
+        public User Users
         {
             get => user;
             set
@@ -92,7 +92,7 @@ namespace Capstone.ViewModels
         public CreateAccountViewModel()
         {
             Title = "Create User";
-            user = new Users();
+            user = new User();
 
             CreateUserClicked = new Command(OnCreateUserClickedCommand);
         }
