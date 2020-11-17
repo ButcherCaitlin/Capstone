@@ -10,7 +10,7 @@ namespace Capstone.API.Services
 {
     public class ShowingService : DatabaseService<Showing>
     {
-        public ShowingService(ICapstoneDatabaseSettings settings):
+        public ShowingService(ICapstoneDatabaseSettings settings) :
             base(settings){ }
 
         public IEnumerable<Showing> Get(ShowingsResourceParameters parameters)

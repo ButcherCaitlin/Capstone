@@ -1,11 +1,18 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace Capstone.API.Entities
 {
     public class User : MongoEntity
     {
+        [JsonProperty("auth_token")]
+        [BsonIgnore]
+        public string AuthToken { get; set; }
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
@@ -19,5 +26,12 @@ namespace Capstone.API.Entities
         public string Password { get; set; }
         [MaxLength(20)]
         public string Phone { get; set; }
+
+        // field: type
+        // can be removed or modified later. mainly adding in case need to know if realtor/seller/other
+        public string UserType { get; set; }
+
+        [JsonIgnore]
+        public string HashedPassword { get; set; }
     }
 }
