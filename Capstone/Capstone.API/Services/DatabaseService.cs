@@ -12,7 +12,7 @@ namespace Capstone.API.Services
     {
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _databaseContext;
-        protected readonly MongoCollectionBase<T> _recordCollection;
+        protected readonly IMongoCollection<T> _recordCollection;
         public DatabaseService(ICapstoneDatabaseSettings settings){
             _client = new MongoClient(settings?.ConnectionString);
             _databaseContext = _client.GetDatabase(settings?.DatabaseName);

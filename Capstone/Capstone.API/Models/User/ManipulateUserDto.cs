@@ -23,5 +23,9 @@ namespace Capstone.API.Models
         [Required]
         public string UserType { get; set; }
 
+        public string AuthToken { get; set; }
+        public string Id { get; set; }
+        public string HashedPassword { get; set; }
+
     }
 }

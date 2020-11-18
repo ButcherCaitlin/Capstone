@@ -13,26 +13,21 @@ using MongoDB.Driver;
 // IServiceCollection with servicesBuilder and singletons for the mongoclient
 namespace Capstone.API.Services
 {
-    public class UserService : DatabaseService<User>
+    public class AuthenticationService
     {
         private readonly IMongoCollection<Session> _sessionCollection;
-        public UserService(ICapstoneDatabaseSettings settings) :
-            base(settings){
+        private readonly IMongoCollection<User> _userCollection;
+
+        public AuthenticationService(ICapstoneDatabaseSettings settings){
             _sessionCollection = new MongoClient(settings.ConnectionString)
                 .GetDatabase(settings?.DatabaseName)
                 .GetCollection<Session>(CollectionUtility.ServiceString(typeof(Session)));
+            _userCollection = new MongoClient(settings.ConnectionString)
+                .GetDatabase(settings?.DatabaseName)
+                .GetCollection<User>(CollectionUtility.ServiceString(typeof(User)));
         }
 
-        //private readonly IMongoCollection<Users> userCollection;
-        //private readonly IMongoCollection<Session> sessionCollection;
-
-        //public UserService(IMongoClient mongoClient)
-        //{
-        //    userCollection = mongoClient.GetDatabase("Users").GetCollection<Users>("users");
-        //    sessionCollection = mongoClient.GetDatabase("Sessions").GetCollection<Session>("session");
-        //}
-
-
+        //api/users GET
         /// <summary>
         ///     Finds a user in the `users` collection
         /// </summary>
@@ -41,10 +36,11 @@ namespace Capstone.API.Services
         /// <returns>A User or null</returns>
         public async Task<User> GetUserAsync(string email, CancellationToken cancellationToken = default)
         {
-            return await _recordCollection.Find(new BsonDocument("email", email))
+            return await _userCollection.Find(new BsonDocument("email", email))
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
+        //api/users POST
         /// <summary>
         ///     Adds a user to the `users` collection
         /// </summary>
@@ -54,8 +50,7 @@ namespace Capstone.API.Services
         /// <param name="usertype">The type of user, realtor, seller. other</param>
         /// <param name="cancellationToken">Allows the UI to cancel an asynchronous request. Optional.</param>
         /// <returns></returns>
-        public async Task<UserResponses> AddUserAsync(User user,
-            CancellationToken cancellationToken = default)
+        public async Task<UserResponses> AddUserAsync(User user, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -68,7 +63,7 @@ namespace Capstone.API.Services
                     UserType = user.UserType
                 };
 
-                await _recordCollection
+                await _userCollection
                     .WithWriteConcern(WriteConcern.WMajority)
                     .InsertOneAsync(user, cancellationToken: cancellationToken);
 
@@ -83,6 +78,7 @@ namespace Capstone.API.Services
             }
         }
 
+        //api/users/Authenticate POST
         /// <summary>
         ///     Adds a user to the `sessions` collection
         /// </summary>
@@ -121,6 +117,7 @@ namespace Capstone.API.Services
             }
         }
 
+        //api/users/authenticate DELETE
         // removes a user from the sessions collection, essentially logging them out
         /// <param name="email">The Email of the User to log out.</param>
         /// <param name="cancellationToken">Allows the UI to cancel an asynchronous request. Optional.</param>
@@ -132,6 +129,7 @@ namespace Capstone.API.Services
             return new UserResponses(true, "User has been logged out.");
         }
 
+        //api/users/authenticate GET
         // get a user from the sessions collection
         /// <param name="email">The Email of the User to fetch.</param>
         /// <param name="cancellationToken">Allows the UI to cancel an asynchronous request. Optional.</param>
@@ -142,6 +140,7 @@ namespace Capstone.API.Services
             return await _sessionCollection.Find(new BsonDocument("user_id", email)).FirstOrDefaultAsync();
         }
 
+
         // removes user from sessions and users collections
         /// <param name="email">The Email of the User to delete.</param>
         /// <param name="cancellationToken">Allows the UI to cancel an asynchronous request. Optional.</param>
@@ -150,10 +149,10 @@ namespace Capstone.API.Services
         {
             try
             {
-                await _recordCollection.DeleteOneAsync(new BsonDocument("user_id", email), cancellationToken);
+                await _userCollection.DeleteOneAsync(new BsonDocument("user_id", email), cancellationToken);
                 await _sessionCollection.DeleteOneAsync(new BsonDocument("user_id", email), cancellationToken);
 
-                var deletedUser = await _recordCollection.FindAsync<User>(new BsonDocument("user_id", email), cancellationToken: cancellationToken);
+                var deletedUser = await _userCollection.FindAsync<User>(new BsonDocument("user_id", email), cancellationToken: cancellationToken);
 
                 var deletedSession = await _sessionCollection.FindAsync<Session>(new BsonDocument("user_id", email), cancellationToken: cancellationToken);
 
