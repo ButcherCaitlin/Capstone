@@ -2,6 +2,7 @@
 using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.Repositories;
+using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -11,21 +12,12 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesShowingsController : ControllerBase
     {
-        private readonly RepositoryBase<User> _userService;
-        private readonly PropertyRepository _propertyService;
-        private readonly ShowingRepository _showingService;
+        private readonly DataService _dataService;
         private readonly IMapper _mapper;
-        public PropertiesShowingsController(RepositoryBase<User> userService,
-            PropertyRepository propertyService,
-            ShowingRepository showingService,
-            IMapper mapper)
+        public PropertiesShowingsController(DataService dataService, IMapper mapper)
         {
-            _userService = userService ??
-                throw new ArgumentNullException(nameof(userService));
-            _propertyService = propertyService ??
-                throw new ArgumentNullException(nameof(propertyService));
-            _showingService = showingService ??
-                throw new ArgumentNullException(nameof(showingService));
+            _dataService = dataService ??
+                throw new ArgumentNullException(nameof(dataService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -43,7 +35,7 @@ namespace Capstone.API.Controllers
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to create Showing records." });
 
-            var propertyFromRepo = _propertyService.Get(propertyId);
+            var propertyFromRepo = _dataService.GetProperty(propertyId);
             if (propertyFromRepo == null) return NotFound();
 
             var entityToAdd = _mapper.Map<Showing>(showing);
@@ -51,7 +43,7 @@ namespace Capstone.API.Controllers
             entityToAdd.RealtorID = propertyFromRepo.OwnerID;
             entityToAdd.ProspectID = userId;
 
-            var showingToReturnEntity = _showingService.Create(entityToAdd);
+            var showingToReturnEntity = _dataService.Create(entityToAdd);
 
             return CreatedAtRoute("GetShowingById",
                 new { showingId = showingToReturnEntity.Id },

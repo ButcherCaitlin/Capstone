@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Capstone.API.Services;
 
 namespace Capstone.API.Controllers
 {
@@ -14,13 +15,12 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class ShowingsController : ControllerBase
     {
-        private readonly ShowingRepository _showingService;
+        private readonly DataService _dataService;
         private readonly IMapper _mapper;
-        public ShowingsController(ShowingRepository showingService,
-            IMapper mapper)
+        public ShowingsController(DataService dataService, IMapper mapper)
         {
-            _showingService = showingService ??
-                throw new ArgumentNullException(nameof(showingService));
+            _dataService = dataService ??
+                throw new ArgumentNullException(nameof(dataService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -35,7 +35,7 @@ namespace Capstone.API.Controllers
             [FromQuery] ShowingsResourceParameters parameters = null,
             [FromHeader] string userId = null)
         {
-            var showingsFromRepo = _showingService.Get(parameters);
+            var showingsFromRepo = _dataService.Get(parameters);
             if (showingsFromRepo == null) return NotFound();
 
             List<OutboundShowingDto> showingsToReturn = new List<OutboundShowingDto>();
@@ -64,7 +64,7 @@ namespace Capstone.API.Controllers
         public ActionResult<CustomOutboundShowingDto> GetShowingById(string showingId,
             [FromHeader] string userId = null)
         {
-            var showingFromRepo = _showingService.Get(showingId);
+            var showingFromRepo = _dataService.GetShowing(showingId);
             if (showingFromRepo == null) return NotFound();
 
             if (showingFromRepo.ProspectID == userId)
@@ -93,7 +93,7 @@ namespace Capstone.API.Controllers
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to Modify showing records." });
 
-            var showingFromRepo = _showingService.Get(showingId);
+            var showingFromRepo = _dataService.GetShowing(showingId);
             if (showingFromRepo == null) return NotFound();
 
             if (showingFromRepo.ProspectID != userId ||
@@ -103,7 +103,7 @@ namespace Capstone.API.Controllers
             }
             _mapper.Map(showing, showingFromRepo);
 
-            _showingService.Update(showingFromRepo);
+            _dataService.Update(showingFromRepo);
 
             return NoContent();
         }
@@ -121,7 +121,7 @@ namespace Capstone.API.Controllers
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to Modify showing records." });
 
-            var showingToPatch = _showingService.Get(showingId);
+            var showingToPatch = _dataService.GetShowing(showingId);
             if (showingToPatch == null) return NotFound(new { message = "If you are trying to upsert a resource use PUT" });
 
             if (showingToPatch.ProspectID != userId &&
@@ -135,7 +135,7 @@ namespace Capstone.API.Controllers
             if (!TryValidateModel(showingDtoToPatch)) return ValidationProblem(ModelState);
 
             _mapper.Map(showingDtoToPatch, showingToPatch);
-            _showingService.Update(showingToPatch);
+            _dataService.Update(showingToPatch);
 
             return NoContent();
         }
@@ -151,7 +151,7 @@ namespace Capstone.API.Controllers
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to delete showing records." });
 
-            var showingToDelete = _showingService.Get(showingId);
+            var showingToDelete = _dataService.GetShowing(showingId);
             if (showingToDelete == null) return NotFound();
 
             if (showingToDelete.ProspectID != userId &&
@@ -160,7 +160,7 @@ namespace Capstone.API.Controllers
                 return BadRequest(new { message = "You can only delete showing records if you are a participant." });
             }
 
-            _showingService.Remove(showingToDelete.Id);
+            _dataService.RemoveShowing(showingToDelete.Id);
 
             return NoContent();
         }

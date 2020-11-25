@@ -1,4 +1,8 @@
-﻿namespace Capstone.API.Models
+﻿using Capstone.API.Entities;
+using System;
+using System.Collections.Generic;
+
+namespace Capstone.API.Models
 {
     public class OutboundUserDto
     {
@@ -11,5 +15,6 @@
         public string Phone { get; set; }
         public string UserType { get; set; }
         public string HashedPassword { get; set; }
+        public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
     }
 }

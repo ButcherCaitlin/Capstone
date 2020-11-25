@@ -4,9 +4,9 @@ using AutoMapper;
 using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
-using Capstone.API.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Capstone.API.Services;
 
 namespace Capstone.API.Controllers
 {
@@ -14,13 +14,13 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesController : ControllerBase
     {
-        private readonly PropertyRepository _propertyService;
+        private readonly DataService _dataService;
         private readonly IMapper _mapper;
-        public PropertiesController(PropertyRepository propertyService,
+        public PropertiesController(DataService dataService,
             IMapper mapper)
         {
-            _propertyService = propertyService ??
-                throw new ArgumentNullException(nameof(propertyService));
+            _dataService = dataService ??
+                throw new ArgumentNullException(nameof(dataService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -34,7 +34,7 @@ namespace Capstone.API.Controllers
         public ActionResult<IEnumerable<OutboundPropertyDto>> GetProperties(
             [FromQuery] PropertiesResourceParameters parameters = null)
         {
-            var propertiesFromRepo = _propertyService.Get(parameters);
+            var propertiesFromRepo = _dataService.Get(parameters);
 
             return Ok(_mapper.Map<IEnumerable<OutboundPropertyDto>>(propertiesFromRepo));
         }
@@ -48,7 +48,7 @@ namespace Capstone.API.Controllers
         [HttpHead("{propertyId:length(24)}")]
         public ActionResult<OutboundPropertyDto> GetPropertyById(string propertyId)
         {
-            var propertyFromRepo = _propertyService.Get(propertyId);
+            var propertyFromRepo = _dataService.GetProperty(propertyId);
             if (propertyFromRepo == null) return NotFound();
 
             return Ok(_mapper.Map<OutboundPropertyDto>(propertyFromRepo));
@@ -68,7 +68,7 @@ namespace Capstone.API.Controllers
             var propertyToAdd = _mapper.Map<Property>(property);
             propertyToAdd.OwnerID = userId;
 
-            var createdProperty = _propertyService.Create(propertyToAdd);
+            var createdProperty = _dataService.Create(propertyToAdd);
 
             return CreatedAtRoute("GetPropertyById",
                 new { propertyId = createdProperty.Id.ToString() },
@@ -88,14 +88,14 @@ namespace Capstone.API.Controllers
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to Modify property records." });
 
-            var propertyFromRepo = _propertyService.Get(propertyId);
+            var propertyFromRepo = _dataService.GetProperty(propertyId);
             if (propertyFromRepo == null)
             {
                 var propertyToAdd = _mapper.Map<Property>(property);
                 propertyToAdd.Id = propertyId;
                 propertyToAdd.OwnerID = userId;
 
-                _propertyService.Create(propertyToAdd);
+                _dataService.Create(propertyToAdd);
 
                 return CreatedAtRoute("GetPropertyById",
                     new { propertyId },
@@ -106,7 +106,7 @@ namespace Capstone.API.Controllers
             _mapper.Map(property, propertyFromRepo);
             propertyFromRepo.OwnerID = userId;
 
-            _propertyService.Update(propertyFromRepo);
+            _dataService.Update(propertyFromRepo);
 
             return NoContent();
         }
@@ -124,7 +124,7 @@ namespace Capstone.API.Controllers
         {
             if (userId == null) return BadRequest(new { message = "A UserID is required to Modify property records." });
 
-            var propertyToPatch = _propertyService.Get(propertyId);
+            var propertyToPatch = _dataService.GetProperty(propertyId);
             if (propertyToPatch == null) return NotFound(new { message = "If you are trying to upsert a resource use PUT" });
 
             if (propertyToPatch.OwnerID != userId)
@@ -138,7 +138,7 @@ namespace Capstone.API.Controllers
             if (!TryValidateModel(propertyDtoToPatch)) return ValidationProblem(ModelState);
 
             _mapper.Map(propertyDtoToPatch, propertyToPatch);
-            _propertyService.Update(propertyToPatch);
+            _dataService.Update(propertyToPatch);
 
             return NoContent();
         }
@@ -155,12 +155,12 @@ namespace Capstone.API.Controllers
             //this should also delete/cancel a properties showings.
             if (userId == null) return BadRequest(new { message = "A UserID is required to delete property records." });
 
-            var propertyToDelete = _propertyService.Get(propertyId);
+            var propertyToDelete = _dataService.GetProperty(propertyId);
             if (propertyToDelete == null) return NotFound();
 
             if (propertyToDelete.OwnerID != userId) return BadRequest(new { message = "Only the owner of a property is allowed to delete its fields. " });
-            
-            _propertyService.Remove(propertyToDelete.Id);
+
+            _dataService.RemoveProperty(propertyToDelete.Id);
 
             return NoContent();
         }

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Capstone.API.Entities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Capstone.API.Models
 {
@@ -26,6 +29,6 @@ namespace Capstone.API.Models
         public string AuthToken { get; set; }
         public string Id { get; set; }
         public string HashedPassword { get; set; }
-
+        public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
     }
 }

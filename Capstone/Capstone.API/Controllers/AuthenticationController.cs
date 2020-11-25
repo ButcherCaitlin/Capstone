@@ -6,20 +6,24 @@ using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Capstone.API.Controllers
 {
-    [Route("api/users")]
+    [Route("api/authenticate")]
     [ApiController]
-    public class UserAuthenticationController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly AuthenticationService _authService;
+        private readonly DataService _dataService;
         private readonly IMapper _mapper;
         private readonly IOptions<JwtAuthentication> _jwtAuthentication;
-        public UserAuthenticationController(AuthenticationService authService,
+        public AuthenticationController(AuthenticationService authService, DataService dataService,
             IMapper mapper, IOptions<JwtAuthentication> jwtAuthentication)
         {
+            _dataService = dataService ??
+                throw new ArgumentNullException(nameof(dataService));
             _authService = authService ??
                 throw new ArgumentNullException(nameof(authService));
             _mapper = mapper ??
@@ -29,21 +33,24 @@ namespace Capstone.API.Controllers
         }
 
         //get a specific user.
-        [HttpGet]
-        [HttpHead]
+        [HttpGet("users")]
+        [HttpHead("users")]
         public async Task<ActionResult<OutboundUserDto>> GetUser([FromQuery] string email)
         {
             //get the user from repo using the email.
             var user = await _authService.GetUserAsync(email);
+
             //get the users a new token that will not be authenticated.
             user.AuthToken = _jwtAuthentication.Value.GenerateToken(user);
+
             //not sure how IOPTIONS works...
             return Ok(_mapper.Map<OutboundUserDto>(user));
+
             //maybe redefine and map the outbound user dto?
         }
 
         //add and login a user
-        [HttpPost]
+        [HttpPost("users")]
         public async Task<ActionResult<OutboundUserDto>> CreateAndAuthenticateUser(CreateUserDto user)
         {
             //map the dto to a user entity 
@@ -75,7 +82,7 @@ namespace Capstone.API.Controllers
         //}
 
         //login an already existing user
-        [HttpPost("authenticate")]
+        [HttpPost]
         public async Task<ActionResult<OutboundUserDto>> LogIn(CreateUserDto user)
         {
             //map to a user entity

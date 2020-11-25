@@ -46,10 +46,6 @@ namespace Capstone.API.Repositories
         {
             _recordCollection.ReplaceOne(record => record.Id == updateRecord.Id, updateRecord);
         }
-        public void Remove(T removeRecord)
-        {
-            _recordCollection.DeleteOne(record => record.Id == removeRecord.Id);
-        }
         public void Remove(string id)
         {
             _recordCollection.DeleteOne(record => record.Id == id);

@@ -38,9 +38,10 @@ namespace Capstone.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //you need to add a service here for each additional collection.
-            services.AddSingleton<PropertyRepository>();
-            services.AddSingleton<ShowingRepository>();
-            services.AddSingleton<RepositoryBase<User>>();
+            //services.AddSingleton<PropertyRepository>();
+            //services.AddSingleton<ShowingRepository>();
+            //services.AddSingleton<RepositoryBase<User>>();
+            services.AddSingleton<DataService>();
             services.AddSingleton<AuthenticationService>();
 
             services.AddControllers(setupAction =>

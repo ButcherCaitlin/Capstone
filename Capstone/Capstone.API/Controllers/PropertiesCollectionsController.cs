@@ -3,6 +3,7 @@ using Capstone.API.Entities;
 using Capstone.API.Helpers;
 using Capstone.API.Models;
 using Capstone.API.Repositories;
+using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,12 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesCollectionsController : ControllerBase
     {
-        private readonly PropertyRepository _propertyService;
-        private readonly RepositoryBase<User> _userService;
+        private readonly DataService _dataService;
         private readonly IMapper _mapper;
-        public PropertiesCollectionsController(PropertyRepository propertyService,
-            RepositoryBase<User> userService,
-            IMapper mapper)
+        public PropertiesCollectionsController(DataService dataService, IMapper mapper)
         {
-            _propertyService = propertyService ??
-                throw new ArgumentNullException(nameof(propertyService));
-            _userService = userService ??
-                throw new ArgumentNullException(nameof(userService));
+            _dataService = dataService ??
+                throw new ArgumentNullException(nameof(dataService));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -40,7 +36,7 @@ namespace Capstone.API.Controllers
         [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<string> propertyIdsCollection)
         {
             if (propertyIdsCollection == null) return BadRequest();
-            var propertyEntities = _propertyService.Get(propertyIdsCollection);
+            var propertyEntities = _dataService.GetProperties(propertyIdsCollection);
             if (propertyIdsCollection.Count() != propertyEntities.Count()) return NotFound();
             return Ok(_mapper.Map<IEnumerable<OutboundPropertyDto>>(propertyEntities));
         }
@@ -59,7 +55,7 @@ namespace Capstone.API.Controllers
 
             IEnumerable<Property> propertiesAsEntity = _mapper.Map<IEnumerable<Property>>(propertiesToAdd);
             foreach (var property in propertiesAsEntity) property.OwnerID = userId;
-            var propertiesFromRepo = _propertyService.Create(propertiesAsEntity);
+            var propertiesFromRepo = _dataService.Create(propertiesAsEntity);
             IEnumerable<OutboundPropertyDto> propertiesToReturn = _mapper.Map<IEnumerable<OutboundPropertyDto>>(propertiesFromRepo);
             var idsAsString = string.Join(",", propertiesToReturn.Select(a => a.Id));
             return CreatedAtRoute("GetPropertiesCollection",

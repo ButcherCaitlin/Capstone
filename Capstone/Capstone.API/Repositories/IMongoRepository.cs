@@ -12,7 +12,7 @@ namespace Capstone.API.Repositories
         public T Create(T record);
         public IEnumerable<T> Create(IEnumerable<T> records);
         public void Update(T updateRecord);
-        public void Remove(T record);
+        //public void Remove(T record);
         public void Remove(string id);
     }
 }

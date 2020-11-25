@@ -33,5 +33,6 @@ namespace Capstone.API.Entities
 
         [JsonIgnore]
         public string HashedPassword { get; set; }
+        public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
     }
 }
