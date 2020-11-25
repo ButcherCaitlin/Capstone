@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Capstone.API.Services
+namespace Capstone.API.Repositories
 {
-    public interface IDatabaseService<T>
+    public interface IMongoRepository<T>
     {
         public IEnumerable<T> Get();
         public T Get(string id);

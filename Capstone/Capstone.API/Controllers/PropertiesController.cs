@@ -4,7 +4,7 @@ using AutoMapper;
 using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
-using Capstone.API.Services;
+using Capstone.API.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,9 +14,9 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesController : ControllerBase
     {
-        private readonly PropertyService _propertyService;
+        private readonly PropertyRepository _propertyService;
         private readonly IMapper _mapper;
-        public PropertiesController(PropertyService propertyService,
+        public PropertiesController(PropertyRepository propertyService,
             IMapper mapper)
         {
             _propertyService = propertyService ??

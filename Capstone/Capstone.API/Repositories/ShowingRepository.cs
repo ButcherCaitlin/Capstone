@@ -6,11 +6,11 @@ using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 
-namespace Capstone.API.Services
+namespace Capstone.API.Repositories
 {
-    public class ShowingService : DatabaseService<Showing>
+    public class ShowingRepository : RepositoryBase<Showing>
     {
-        public ShowingService(ICapstoneDatabaseSettings settings) :
+        public ShowingRepository(ICapstoneDatabaseSettings settings) :
             base(settings){ }
 
         public IEnumerable<Showing> Get(ShowingsResourceParameters parameters)

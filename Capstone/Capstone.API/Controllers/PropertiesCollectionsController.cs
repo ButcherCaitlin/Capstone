@@ -2,7 +2,7 @@
 using Capstone.API.Entities;
 using Capstone.API.Helpers;
 using Capstone.API.Models;
-using Capstone.API.Services;
+using Capstone.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,11 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesCollectionsController : ControllerBase
     {
-        private readonly PropertyService _propertyService;
-        private readonly DatabaseService<User> _userService;
+        private readonly PropertyRepository _propertyService;
+        private readonly RepositoryBase<User> _userService;
         private readonly IMapper _mapper;
-        public PropertiesCollectionsController(PropertyService propertyService,
-            DatabaseService<User> userService,
+        public PropertiesCollectionsController(PropertyRepository propertyService,
+            RepositoryBase<User> userService,
             IMapper mapper)
         {
             _propertyService = propertyService ??

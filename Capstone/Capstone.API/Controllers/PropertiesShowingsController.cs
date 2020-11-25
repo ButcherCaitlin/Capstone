@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Capstone.API.Entities;
 using Capstone.API.Models;
-using Capstone.API.Services;
+using Capstone.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -11,13 +11,13 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class PropertiesShowingsController : ControllerBase
     {
-        private readonly DatabaseService<User> _userService;
-        private readonly PropertyService _propertyService;
-        private readonly ShowingService _showingService;
+        private readonly RepositoryBase<User> _userService;
+        private readonly PropertyRepository _propertyService;
+        private readonly ShowingRepository _showingService;
         private readonly IMapper _mapper;
-        public PropertiesShowingsController(DatabaseService<User> userService,
-            PropertyService propertyService,
-            ShowingService showingService,
+        public PropertiesShowingsController(RepositoryBase<User> userService,
+            PropertyRepository propertyService,
+            ShowingRepository showingService,
             IMapper mapper)
         {
             _userService = userService ??

@@ -7,12 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Capstone.API.Services
+namespace Capstone.API.Repositories
 {
-    public class PropertyService : DatabaseService<Property>
+    public class PropertyRepository : RepositoryBase<Property>
     {
 
-        public PropertyService(ICapstoneDatabaseSettings settings):
+        public PropertyRepository(ICapstoneDatabaseSettings settings):
             base(settings){ }
 
         public IEnumerable<Property> Get(PropertiesResourceParameters parameters)

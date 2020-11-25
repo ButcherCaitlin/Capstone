@@ -6,14 +6,14 @@ using System.Linq;
 using Capstone.API.Utility;
 using Capstone.API.Entities;
 
-namespace Capstone.API.Services
+namespace Capstone.API.Repositories
 {
-    public class DatabaseService<T> : IDatabaseService<T> where T : MongoEntity 
+    public class RepositoryBase<T> : IMongoRepository<T> where T : MongoEntity 
     {
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _databaseContext;
         protected readonly IMongoCollection<T> _recordCollection;
-        public DatabaseService(ICapstoneDatabaseSettings settings){
+        public RepositoryBase(ICapstoneDatabaseSettings settings){
             _client = new MongoClient(settings?.ConnectionString);
             _databaseContext = _client.GetDatabase(settings?.DatabaseName);
             _recordCollection = _databaseContext.GetCollection<T>(CollectionUtility.ServiceString(typeof(T))) as MongoCollectionBase<T>;

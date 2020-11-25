@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
-using Capstone.API.Services;
+using Capstone.API.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,9 +14,9 @@ namespace Capstone.API.Controllers
     [ApiController]
     public class ShowingsController : ControllerBase
     {
-        private readonly ShowingService _showingService;
+        private readonly ShowingRepository _showingService;
         private readonly IMapper _mapper;
-        public ShowingsController(ShowingService showingService,
+        public ShowingsController(ShowingRepository showingService,
             IMapper mapper)
         {
             _showingService = showingService ??

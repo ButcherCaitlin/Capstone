@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Capstone.API.Configuration;
+using Capstone.API.Repositories;
 using Capstone.API.Services;
 using AutoMapper;
 using System;
@@ -37,8 +38,9 @@ namespace Capstone.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //you need to add a service here for each additional collection.
-            services.AddSingleton<PropertyService>();
-            services.AddSingleton<ShowingService>();
+            services.AddSingleton<PropertyRepository>();
+            services.AddSingleton<ShowingRepository>();
+            services.AddSingleton<RepositoryBase<User>>();
             services.AddSingleton<AuthenticationService>();
 
             services.AddControllers(setupAction =>
