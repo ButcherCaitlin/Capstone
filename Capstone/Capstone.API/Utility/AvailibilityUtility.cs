@@ -11,11 +11,11 @@ namespace Capstone.API.Utility
         public static Task<Dictionary<DayOfWeek, TimeBlock>> CreateDefaultAvailibility()
         {
             Dictionary<DayOfWeek, TimeBlock> handmade = new Dictionary<DayOfWeek, TimeBlock>();
-            handmade.Add(DayOfWeek.Monday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0) });
-            handmade.Add(DayOfWeek.Tuesday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0) });
-            handmade.Add(DayOfWeek.Wednesday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0) });
-            handmade.Add(DayOfWeek.Thursday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0) });
-            handmade.Add(DayOfWeek.Friday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0) });
+            handmade.Add(DayOfWeek.Monday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0), Available = true });
+            handmade.Add(DayOfWeek.Tuesday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0), Available = true });
+            handmade.Add(DayOfWeek.Wednesday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0), Available = true });
+            handmade.Add(DayOfWeek.Thursday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0), Available = true });
+            handmade.Add(DayOfWeek.Friday, new TimeBlock { Start = new TimeSpan(9, 0, 0), End = new TimeSpan(17, 0, 0), Available = true });
             return Task.FromResult(handmade);
         }
     }

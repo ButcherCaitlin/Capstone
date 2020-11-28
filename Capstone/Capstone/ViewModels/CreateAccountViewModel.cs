@@ -102,7 +102,7 @@ namespace Capstone.ViewModels
             FirstName = user.FirstName;
             LastName = user.LastName;
             Email = user.Email;
-            UserType = user.UserType;
+            //UserType = user.UserType;
             if (Password == ConfirmPassword)
             {
                 Password = user.Password;

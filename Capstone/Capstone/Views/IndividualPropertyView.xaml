@@ -120,7 +120,7 @@
                 </Frame>
                 <!--buttons for show now or appt-->
 
-                <Button Text="Schedule Showing" Command="{Binding SeeHomeClicked}"/>
+            <Button Text="{Binding ScheduleText}" Command="{Binding SeeHomeClicked}"/>
 
 
                 <!--visual states make the buttons smaller when clicked, can be removed-->

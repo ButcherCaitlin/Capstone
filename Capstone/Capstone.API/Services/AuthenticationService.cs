@@ -60,7 +60,7 @@ namespace Capstone.API.Services
                     LastName = user.LastName,
                     Email = user.Email,
                     HashedPassword = HashPassword.Hash(user.Password),
-                    UserType = user.UserType
+                    //UserType = user.UserType
                 };
 
                 await _userCollection

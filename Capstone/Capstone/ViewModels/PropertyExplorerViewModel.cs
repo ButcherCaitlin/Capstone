@@ -77,7 +77,7 @@ namespace Capstone.ViewModels
         {
             IsBusy = true;
             Properties.Clear();
-            var toBeAdded = await App.DataService.GetItemsAsync();
+            var toBeAdded = await App.DataService.GetPropertiesAsync();
             foreach (var property in toBeAdded)
             {
                 Properties.Add(property);

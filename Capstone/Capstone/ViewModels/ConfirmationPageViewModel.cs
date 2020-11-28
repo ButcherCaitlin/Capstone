@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace Capstone.ViewModels
 {
@@ -30,14 +31,16 @@ namespace Capstone.ViewModels
         }
         public override void Initialize(object parameter)
         {
-            if (parameter is Property property)
+            if (parameter is List<object> parameters)
             {
+                Property property = (Property)parameters.Where(o => o is Property).First();
+                TimeSpan suggestedTime = (TimeSpan)parameters.Where(o => o is TimeSpan).First();
                 Showing.PropertyID = property.Id;
                 Showing.RealtorID = property.OwnerID;
-                Showing.Duration = new TimeSpan(1, 30, 0); //one hour 30 minutes.
+                Showing.Duration = new TimeSpan(1, 15, 0); //one hour
+                Date = DateTime.Now;
+                Time = suggestedTime;
             }
-            Date = DateTime.Now;
-            Time = DateTime.Now.TimeOfDay;
         }
 
         public ICommand ConfirmClicked { get; set; }
@@ -51,7 +54,7 @@ namespace Capstone.ViewModels
         public async void OnConfirmClickedCommand()
         {
             Showing.StartTime = new DateTimeOffset(Date.Add(Time));
-            if (!await App.DataService.ScheduleShowingAsync(Showing))
+            if (!await App.DataService.AddItemAsync(Showing))
             {
                 await Application.Current.MainPage.DisplayAlert("Alert", "Appointment Confirmation Failed.", "OK");
             }

@@ -23,12 +23,13 @@ namespace Capstone.API.Models
         [Phone]
         [MaxLength(50)]
         public string Phone { get; set; }
-        [Required]
-        public string UserType { get; set; }
+        //[Required]
+        //public string UserType { get; set; }
 
         public string AuthToken { get; set; }
         public string Id { get; set; }
         public string HashedPassword { get; set; }
+        public bool CustomAvailability { get; set; }
         public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
     }
 }

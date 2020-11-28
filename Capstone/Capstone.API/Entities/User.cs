@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using Newtonsoft.Json;
 
 namespace Capstone.API.Entities
@@ -29,10 +30,12 @@ namespace Capstone.API.Entities
 
         // field: type
         // can be removed or modified later. mainly adding in case need to know if realtor/seller/other
-        public string UserType { get; set; }
+        //public string UserType { get; set; }
 
         [JsonIgnore]
         public string HashedPassword { get; set; }
+        public bool CustomAvailability { get; set; }
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
     }
 }

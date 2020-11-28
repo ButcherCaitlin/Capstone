@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Capstone.API.Services;
 using Capstone.API.Utility;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Capstone.API.Controllers
 {
@@ -33,10 +34,11 @@ namespace Capstone.API.Controllers
             var usersFromRepo = _dataService.GetUsers();
             var usersOutbound = _mapper.Map<IEnumerable<OutboundUserDto>>(usersFromRepo);
 
-            foreach (OutboundUserDto user in usersOutbound)
+            var usersWithoutCustomAvailibility = usersOutbound.Where(u => u.CustomAvailability == false);
+
+            foreach (OutboundUserDto user in usersWithoutCustomAvailibility)
             {
-                if(user.Availability.Count == 0)
-                    user.Availability = await AvailibilityUtility.CreateDefaultAvailibility();
+                user.Availability = await AvailibilityUtility.CreateDefaultAvailibility();
             }
 
             return Ok(usersOutbound);
@@ -52,7 +54,8 @@ namespace Capstone.API.Controllers
 
             var userOutbound = _mapper.Map<OutboundUserDto>(userFromRepo);
 
-            userOutbound.Availability = await AvailibilityUtility.CreateDefaultAvailibility();
+            if (userOutbound.CustomAvailability == false)
+                userOutbound.Availability = await AvailibilityUtility.CreateDefaultAvailibility();
 
             return Ok(userOutbound);
         }
@@ -63,6 +66,8 @@ namespace Capstone.API.Controllers
             if (userId == null) return BadRequest(new { message = "A UserID is required to create records." });
 
             var userToAdd = _mapper.Map<User>(user);
+
+            if (userToAdd.Availability.Count == 0) userToAdd.CustomAvailability = false;
 
             var createdUser = _dataService.Create(userToAdd);
 

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Capstone.API.Entities
+namespace Capstone.Models
 {
     public class TimeBlock
     {
