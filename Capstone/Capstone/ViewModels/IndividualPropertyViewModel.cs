@@ -12,9 +12,10 @@ namespace Capstone.ViewModels
     public class IndividualPropertyViewModel : BaseViewModel
     {
         private Property property;
-        private string scheduleText;
+        private string buttonText;
         private bool canSchedule;
         private TimeSpan proposedShowtime;
+        private bool ownerView;
         public Property Property
         {
             get => property;
@@ -24,28 +25,36 @@ namespace Capstone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string ScheduleText
+        public string ButtonText
         {
-            get => scheduleText;
+            get => buttonText;
             set
             {
-                scheduleText = value;
+                buttonText = value;
                 OnPropertyChanged();
             }
         }
-        public ICommand SeeHomeClicked { get; }
+        public ICommand ButtonClicked { get; }
         public IndividualPropertyViewModel()
         {
             Title = "Property";
             Property = new Property();
 
-            SeeHomeClicked = new Command(OnSeeHomeClickedCommand);
+            ButtonClicked = new Command(OnSeeHomeClickedCommand);
             //commands and initializers in here.
+            MessagingCenter.Subscribe<EditPropertyViewModel, Property>
+                (this, MessageNames.PropertyUpdatedMessage, MessagePropertyUpdated);
+        }
+
+        private void MessagePropertyUpdated(EditPropertyViewModel sender, Property property)
+        {
+            Property = property;
         }
 
         public void OnSeeHomeClickedCommand()
         {
-            if(canSchedule) App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView, new List<object>(){ property, proposedShowtime });
+            if (!ownerView && canSchedule) App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView, new List<object>() { property, proposedShowtime });
+            else if (ownerView) App.NavigationService.NavigateToModal(ViewNames.EditPropertyView, property);
         }
 
         public async override void Initialize(object parameter)
@@ -55,11 +64,21 @@ namespace Capstone.ViewModels
             else
                 Property = parameter as Property;
 
-            PopulateNextShowtime(await App.DataService.GetUserAsync(property.OwnerID));
+            if (Property.OwnerID == App.User)
+                PopulateEditButton();
+            else
+                PopulateNextShowtime(await App.DataService.GetUserAsync(property.OwnerID));
+        }
+
+        private void PopulateEditButton()
+        {
+            ownerView = true;
+            ButtonText = "Edit Property";
         }
 
         public void PopulateNextShowtime(User user)
         {
+            ownerView = false;
             TimeBlock todaysAvailability;
             if(user.Availability.TryGetValue(DateTimeOffset.Now.DayOfWeek, out todaysAvailability))
             {
@@ -73,29 +92,25 @@ namespace Capstone.ViewModels
                     {
                         //display a time 15 minutes from now.
                         proposedShowtime = now.Add(new TimeSpan(0, 15, 0));
-                        ScheduleText = "See at: " + TimeFormatter(now.Add(new TimeSpan(0, 15, 0)));
+                        ButtonText = "See at: " + TimeFormatter(now.Add(new TimeSpan(0, 15, 0)));
                         canSchedule = true;
                     }
                     else
                     {
                         proposedShowtime = todaysAvailability.Start;
-                        ScheduleText = "See at: " + TimeFormatter(todaysAvailability.Start);
+                        ButtonText = "See at: " + TimeFormatter(todaysAvailability.Start);
                         canSchedule = true;
                     }
                 }
                 else
                 {
-                    ScheduleText = "Not Available";
+                    ButtonText = "Not Available";
                     canSchedule = false;
-                    //THIS CODE NEEDS TO BE REMOVED IT WAS ADDED FOR TESTING>>
-                    proposedShowtime = todaysAvailability.Start;
-                    ScheduleText = "See at: " + TimeFormatter(todaysAvailability.Start);
-                    canSchedule = true;
                 }
             }
             else
             {
-                ScheduleText = "Not Available";
+                ButtonText = "Not Available";
                 canSchedule = false;
             }
         }

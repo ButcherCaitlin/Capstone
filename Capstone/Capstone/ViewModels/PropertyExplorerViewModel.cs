@@ -47,7 +47,7 @@ namespace Capstone.ViewModels
             PropertySelected = new Command<Property>(OnPropertySelectedCommand);
 
             MessagingCenter.Subscribe<EditPropertyViewModel, Property>
-                (this, MessageNames.PropertyChangedMessage, MessagePropertyChanged);
+                (this, MessageNames.PropertyCreatedMessage, MessagePropertyChanged);
 
             ExecuteLoadData();
         }

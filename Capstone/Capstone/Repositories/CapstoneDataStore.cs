@@ -67,7 +67,7 @@ namespace Capstone.Repositories
         {
             var uri = new Uri($"{baseUri}/{item.Id}");
             var json = JsonConvert.SerializeObject(item);
-            var content = new StringContent(json, Encoding.UTF8, "application.json");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await _httpClient.PutAsync(uri, content);
 

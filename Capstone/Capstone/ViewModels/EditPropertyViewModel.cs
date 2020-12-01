@@ -12,6 +12,7 @@ namespace Capstone.ViewModels
     public class EditPropertyViewModel : BaseViewModel
     {
         private Property property;
+        private bool creatingNew;
         public Property Property
         {
             get => property;
@@ -24,25 +25,47 @@ namespace Capstone.ViewModels
         public ICommand SaveCommand { get; }
         public EditPropertyViewModel()
         {
-            Property = new Property();
             SaveCommand = new Command(OnSaveCommand);
         }
         public async void OnSaveCommand()
         {
-
-            if(await App.DataService.AddItemAsync(Property))
+            if (creatingNew)
             {
-                MessagingCenter.Send<EditPropertyViewModel, Property>(this, MessageNames.PropertyChangedMessage, Property);
-                App.NavigationService.GoBackModal();
-            } 
+                if (await App.DataService.AddItemAsync(Property))
+                {
+                    MessagingCenter.Send<EditPropertyViewModel, Property>(this, MessageNames.PropertyCreatedMessage, Property);
+                    App.NavigationService.GoBackModal();
+                }
+                else
+                {
+                    //the save failed.
+                }
+            }
             else
             {
-                //print an error to the user that the save failed.
+                if(await App.DataService.UpsertItemAsync(Property))
+                {
+                    MessagingCenter.Send<EditPropertyViewModel, Property>(this, MessageNames.PropertyUpdatedMessage, Property);
+                    App.NavigationService.GoBackModal();
+                }
+                else
+                {
+                    //the update failed.
+                }
             }
         }
         public override void Initialize(object parameter)
         {
-            if (parameter != null) Property = parameter as Property;
+            if (parameter != null)
+            {
+                Property = parameter as Property;
+                creatingNew = false;
+            }
+            else
+            {
+                Property = new Property();
+                creatingNew = true;
+            }
         }
     }
 }

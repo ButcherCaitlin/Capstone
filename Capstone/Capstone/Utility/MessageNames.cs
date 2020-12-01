@@ -6,6 +6,7 @@ namespace Capstone.Utility
 {
     public class MessageNames
     {
-        public const string PropertyChangedMessage = "PropertyChanged";
+        public const string PropertyCreatedMessage = "PropertyCreated";
+        public const string PropertyUpdatedMessage = "PropertyUpdated";
     }
 }
