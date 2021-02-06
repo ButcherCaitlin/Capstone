@@ -1,6 +1,8 @@
 ﻿using Capstone.Models;
 using Capstone.Utility;
+using Capstone.Services;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -23,9 +25,11 @@ namespace Capstone.ViewModels
             }
         }
         public ICommand SaveCommand { get; }
+        public ICommand AddImageCommand { get; }
         public EditPropertyViewModel()
         {
             SaveCommand = new Command(OnSaveCommand);
+            AddImageCommand = new Command(OnAddImageCommand());
         }
         public async void OnSaveCommand()
         {
@@ -53,6 +57,17 @@ namespace Capstone.ViewModels
                     //the update failed.
                 }
             }
+        }
+        public async void OnAddImageCommand(object sender, EventArgs e)
+        {
+            (sender as Button).IsEnabled = false;
+
+            Stream stream await DependencyService.Get<IPhotoPickerService>().GetImageStreamAsync();
+            if (stream != null)
+            {
+                image.SourceProperty = ImageSource.FromStream(() => stream);
+            }
+            (sender as Button).IsEnabled = true;
         }
         public override void Initialize(object parameter)
         {
