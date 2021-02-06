@@ -12,8 +12,9 @@ using System.Linq;
 using System.Text;
 using Capstone.Services;
 using Xamarin.Forms;
+using Capstone.Droid;
 
-//[assembly: Dependency(typeof(PhotoPickerService))]
+[assembly: Dependency(typeof(PhotoPickerService))]
 namespace Capstone.Droid
 {
     public class PhotoPickerService : IPhotoPickerService

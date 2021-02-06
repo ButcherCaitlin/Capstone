@@ -29,7 +29,9 @@
                        PlaceholderColor="Black" TextColor="Black"/>
                 <Entry Placeholder="Year Built" Keyboard="Numeric" Text="{Binding Property.BuildYear, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
-                <Button Command="{Binding AddImageCommand}" Text="Add Images" FontSize="Medium"/>
+                
+                <Button Clicked="AddImageCommand" Text="Add Images" FontSize="Medium"/>
+                <Image x:Name="image"/>
                 <Editor Placeholder="Description" AutoSize="TextChanges" Text="{Binding Property.Description, Mode=TwoWay}"
                         BackgroundColor="{StaticResource PrimaryItem}"
                         TextColor="{StaticResource TextPrimary}"

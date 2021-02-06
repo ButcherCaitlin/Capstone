@@ -29,7 +29,7 @@ namespace Capstone.ViewModels
         public EditPropertyViewModel()
         {
             SaveCommand = new Command(OnSaveCommand);
-            AddImageCommand = new Command(OnAddImageCommand());
+            //AddImageCommand = new Command(OnAddImageCommand());
         }
         public async void OnSaveCommand()
         {
@@ -58,7 +58,7 @@ namespace Capstone.ViewModels
                 }
             }
         }
-        public async void OnAddImageCommand(object sender, EventArgs e)
+       /* public async void OnAddImageCommand(object sender, EventArgs e)
         {
             (sender as Button).IsEnabled = false;
 
@@ -68,7 +68,7 @@ namespace Capstone.ViewModels
                 image.SourceProperty = ImageSource.FromStream(() => stream);
             }
             (sender as Button).IsEnabled = true;
-        }
+        }*/
         public override void Initialize(object parameter)
         {
             if (parameter != null)
