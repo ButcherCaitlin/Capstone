@@ -9,6 +9,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using System.Collections.Generic;
 
 namespace Capstone.Droid
 {
@@ -31,7 +32,7 @@ namespace Capstone.Droid
         }
         // Field, property, and method for picture picker
         public static readonly int PickImageId = 1000;
-        public TaskCompletionSource<Stream> PickImageTaskCompletionSource { set; get; }
+        public TaskCompletionSource<Dictionary<string,Stream>> PickImageTaskCompletionSource { set; get; }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
         {
             base.OnActivityResult(requestCode, resultCode, intent);
@@ -42,8 +43,10 @@ namespace Capstone.Droid
                     Android.Net.Uri uri = intent.Data;
                     Stream stream = ContentResolver.OpenInputStream(uri);
 
+                    Dictionary<string, Stream> dic = new Dictionary<string, Stream>();
+                    dic.Add(uri.ToString(), stream);
                     // Set the Stream as the completion of the Task
-                    PickImageTaskCompletionSource.SetResult(stream);
+                    PickImageTaskCompletionSource.SetResult(dic);
                 }
                 else
                 {

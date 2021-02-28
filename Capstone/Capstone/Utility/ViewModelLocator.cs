@@ -1,10 +1,12 @@
 ﻿using Capstone.ViewModels;
+using Capstone.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Capstone.Utility
 {
+    
     public static class ViewModelLocator
     {
         public static PropertyExplorerViewModel PropertyExplorerViewModel { get; set; }

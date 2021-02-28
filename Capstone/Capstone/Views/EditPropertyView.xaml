@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Capstone.Views.EditPropertyView">
+             x:Class="Capstone.Views.EditPropertyView"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -30,8 +32,33 @@
                 <Entry Placeholder="Year Built" Keyboard="Numeric" Text="{Binding Property.BuildYear, Mode=TwoWay}"
                        PlaceholderColor="Black" TextColor="Black"/>
                 
-                <Button Clicked="AddImageCommand" Text="Add Images" FontSize="Medium"/>
-                <Image x:Name="image"/>
+                <!--<Button x:Name ="btn" Clicked="AddImageCommand" Text="Add Images" FontSize="Medium"/>-->
+
+                <Button TextColor="White" BackgroundColor="Blue" Text="Select images from gallery" Command="{Binding SelectImagesCommand}"/>
+                <Button TextColor="White" BackgroundColor="Blue" Text="Select videos from gallery" Command="{Binding SelectVideosCommand}"/>
+
+                <flv:FlowListView FlowColumnCount="3" x:Name="listItems" FlowItemsSource="{Binding Media}"
+                        SeparatorVisibility="None"
+                        HasUnevenRows="false" RowHeight="100" >
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate >
+                            <Grid>
+                                <ffimageloading:CachedImage  DownsampleToViewSize="true" HeightRequest="100"  Source="{Binding PreviewPath}"  Aspect="AspectFill" HorizontalOptions="FillAndExpand">
+                                </ffimageloading:CachedImage>
+                                <Image Source="play" IsVisible="false" HorizontalOptions="End" VerticalOptions="End">
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Video">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                            </Grid>
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+                </flv:FlowListView>
+                <!--<Image  x:Name="image" />-->
+                            
+
                 <Editor Placeholder="Description" AutoSize="TextChanges" Text="{Binding Property.Description, Mode=TwoWay}"
                         BackgroundColor="{StaticResource PrimaryItem}"
                         TextColor="{StaticResource TextPrimary}"
