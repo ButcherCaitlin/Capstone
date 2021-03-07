@@ -1,28 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Capstone.Views.ConfirmationPageView">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Pick a Date:"
+             x:Class="Capstone.Views.ConfirmationPageView"
+             xmlns:behaviors="clr-namespace:Capstone.Behaviors"
+             Title="{Binding Title}">
+
+    <StackLayout>
+        <Label Text="Pick a Date:"
                    TextColor="Black" 
                    FontSize="Medium"
                    HorizontalTextAlignment="Center"/>
-            <DatePicker Date="{Binding Date}"
+        <DatePicker Date="{Binding Date}"
                         Format="D"
                         HorizontalOptions="Center"
                         TextColor="{StaticResource AccentItem}"/>
 
-            <Label Text="Pick a Time:"
+        <Label Text="Pick a Time:"
                    TextColor="Black"
                    FontSize="Medium"
                    HorizontalTextAlignment="Center"/>
-            <TimePicker Time="{Binding Time}"
+        <TimePicker Time="{Binding Time}"
                         HorizontalOptions="Center"
                         TextColor="{StaticResource AccentItem}"/>
-            
-            <Button 
-                Command="{Binding ConfirmClicked}" Text="Confirm Tour"/>
-        </StackLayout>
-    </ContentPage.Content>
+
+        <ListView x:Name="TimeSlotListView" CachingStrategy="RecycleElement" ItemsSource="{Binding Showtimes}"
+                  SelectedItem="{Binding }"
+                  RefreshCommand="{Binding RefreshList}" IsPullToRefreshEnabled="True" 
+                  IsRefreshing="{Binding IsBusy, Mode=OneWay}" HasUnevenRows="True">
+
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior
+                        EventName="ItemTapped"
+                        Command="{Binding ShowtimeSelected}"
+                        EventArgsConverter="{StaticResource LocalItemTappedConverter}"/>
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="50">
+                        <StackLayout BackgroundColor="LightCoral">
+                            <Label HeightRequest="50" VerticalTextAlignment="Center" Margin="10" HorizontalTextAlignment="Center"
+                                   Text="{Binding DisplayInfo}" TextColor="LightCyan" FontSize="Large"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        
+        <Button Command="{Binding ConfirmClicked}" Text="Confirm Tour"/>
+    </StackLayout>
 </ContentPage>

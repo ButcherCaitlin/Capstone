@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Capstone.API.Entities;
 using Capstone.API.Models;
-using Capstone.API.Repositories;
 using Capstone.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Capstone.API.Utility;
+using System.Collections.Generic;
 
 namespace Capstone.API.Controllers
 {
@@ -33,21 +34,61 @@ namespace Capstone.API.Controllers
             CreateShowingDto showing,
             [FromHeader] string userId = null)
         {
+            //first make sure that the showing, user, and property exist by getting them from the DB.
             if (userId == null) return BadRequest(new { message = "A UserID is required to create Showing records." });
 
+            List<object> participants = new List<object>();
             var propertyFromRepo = _dataService.GetProperty(propertyId);
-            if (propertyFromRepo == null) return NotFound();
+            if (propertyFromRepo == null) return NotFound("The property ID provided could not be found.");
+            participants.Add(propertyFromRepo);
+            var userFromRepo = _dataService.GetUser(userId);
+            if (userFromRepo == null) return NotFound("The User ID provided could not be found.");
+            participants.Add(userFromRepo);
+            var hostFromRepo = _dataService.GetUser(propertyFromRepo.OwnerID);
+            if (hostFromRepo == null) return NotFound("The Owner ID provided could not be found.");
+            participants.Add(hostFromRepo);
 
             var entityToAdd = _mapper.Map<Showing>(showing);
             entityToAdd.PropertyID = propertyId;
             entityToAdd.RealtorID = propertyFromRepo.OwnerID;
             entityToAdd.ProspectID = userId;
 
-            var showingToReturnEntity = _dataService.Create(entityToAdd);
+            foreach (var p in participants)
+            {
+                if (p is Property property && property.CustomAvailability == false)
+                    property.Availability = AvailibilityUtility.CreateDefaultAvailibility().Result;
+                if (p is User user && user.CustomAvailability == false)
+                    user.Availability = AvailibilityUtility.CreateDefaultAvailibility().Result;
+            }
 
-            return CreatedAtRoute("GetShowingById",
-                new { showingId = showingToReturnEntity.Id },
-                _mapper.Map<ProspectShowingDto>(showingToReturnEntity));
+
+            //then make sure that each of the entities are available at that time, and add the event to each objects availability.
+            bool success = AvailibilityUtility.NoConflict(participants, entityToAdd).Result;
+
+            //if each entity is available at that time create the showing object, and add update the avail on each 
+            //entity.
+
+            if (success)
+            {
+                //create the new showing object and push it to the database.
+                var showingToReturnEntity = _dataService.Create(entityToAdd);
+
+                //update the objects with the new availability
+                _dataService.Update(propertyFromRepo);
+                _dataService.Update(userFromRepo);
+                _dataService.Update(hostFromRepo);
+
+                //return the route
+                return CreatedAtRoute("GetShowingById",
+                    new { showingId = showingToReturnEntity.Id },
+                    _mapper.Map<ProspectShowingDto>(showingToReturnEntity));
+            } 
+            else
+            {
+                return Conflict("The showing time selected was not available.");
+            }
+
+            //if each entity is not available return a failed response.
         }
         /// <summary>
         /// Returns the methods supported at the resource endpoint.

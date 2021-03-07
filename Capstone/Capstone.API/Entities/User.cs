@@ -35,7 +35,7 @@ namespace Capstone.API.Entities
         [JsonIgnore]
         public string HashedPassword { get; set; }
         public bool CustomAvailability { get; set; }
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
+        //[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        public Availability Availability { get; set; }
     }
 }
