@@ -20,6 +20,9 @@ namespace Capstone.API
 {
     public class Startup
     {
+        // Docker command for rebuilding the docker image: 
+        // docker build -t aspnetapp .
+        // docker run -d -p 8080:80 --name myapp aspnetapp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
