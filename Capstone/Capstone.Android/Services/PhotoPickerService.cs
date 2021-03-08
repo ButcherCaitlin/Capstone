@@ -20,6 +20,7 @@ using Capstone.Helpers;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Plugin.CurrentActivity;
+using System.Linq;
 
 [assembly: Dependency(typeof(PhotoPickerService))]
 namespace Capstone.Droid
@@ -52,7 +53,7 @@ namespace Capstone.Droid
         int PhotoPickerResultCode = 9793;
         const string TemporalDirectoryName = "TmpMedia";
 
-        PhotoPickerService()
+        public PhotoPickerService()
         {
         }
 
@@ -61,7 +62,7 @@ namespace Capstone.Droid
 
         TaskCompletionSource<IList<MediaFile>> mediaPickedTcs;
 
-        public void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        public void OnActivityResult(int requestCode, Result resultCode, Intent intent)
         {
             ObservableCollection<MediaFile> mediaPicked = null;
 
@@ -70,9 +71,9 @@ namespace Capstone.Droid
                 if (resultCode == Result.Ok)
                 {
                     mediaPicked = new ObservableCollection<MediaFile>();
-                    if (data != null)
+                    if (intent != null)
                     {
-                        ClipData clipData = data.ClipData;
+                        ClipData clipData = intent.ClipData;
                         if (clipData != null)
                         {
                             for (int i = 0; i < clipData.ItemCount; i++)
@@ -83,23 +84,24 @@ namespace Capstone.Droid
                                 if (media != null)
                                 {
                                     mediaPicked.Add(media);
-                                    OnMediaPicked?.Invoke(this, media);
+                                    //OnMediaPicked?.Invoke(this, media);
                                 }
 
                             }
                         }
                         else
                         {
-                            Android.Net.Uri uri = data.Data;
+                            Android.Net.Uri uri = intent.Data;
                             var media = CreateMediaFileFromUri(uri);
                             if (media != null)
                             {
                                 mediaPicked.Add(media);
-                                OnMediaPicked?.Invoke(this, media);
+                                //OnMediaPicked?.Invoke(this, media);
                             }
                         }
 
-                        OnMediaPickedCompleted?.Invoke(this, mediaPicked);
+                        //OnMediaPickedCompleted?.Invoke(this, mediaPicked);
+                        MessagingCenter.Send<Object, Object>(this, "Multiplesel", mediaPicked.ToList());
                     }
                 }
 

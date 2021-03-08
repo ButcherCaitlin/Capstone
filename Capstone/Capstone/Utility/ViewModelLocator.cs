@@ -1,4 +1,5 @@
 ﻿using Capstone.ViewModels;
+using Capstone.Models;
 using Capstone.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Capstone.Utility
     
     public static class ViewModelLocator
     {
+        public static IPhotoPickerService photoPickerService;
         public static PropertyExplorerViewModel PropertyExplorerViewModel { get; set; }
         = new PropertyExplorerViewModel();
         public static LoginViewModel LoginViewModel { get; set; }
@@ -21,5 +23,7 @@ namespace Capstone.Utility
         = new CreateAccountViewModel();
         public static EditPropertyViewModel EditPropertyViewModel { get; set; }
         = new EditPropertyViewModel();
+
+        public static MediaViewModel MediaViewModel { get; set; } = new MediaViewModel(photoPickerService);
     }
 }

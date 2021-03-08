@@ -19,9 +19,6 @@ namespace Capstone.ViewModels
 {
     public class EditPropertyViewModel : BaseViewModel
     {
-        IPhotoPickerService _photoPickerService;
-
-        public ObservableCollection<MediaFile> Media { get; set; }
         
 
         private Property property;
@@ -37,59 +34,16 @@ namespace Capstone.ViewModels
         }
         public ICommand SaveCommand { get; }
 
-        public ICommand SelectImagesCommand { get; set; }
-        public ICommand SelectVideosCommand { get;}
+        
 
         public EditPropertyViewModel()
         {
             SaveCommand = new Command(OnSaveCommand);
-            SelectImagesCommand = new Command(SelectImageCommand);
-            SelectVideosCommand = new Command(SelectVideoCommand);
+            //SelectImagesCommand = new Command(SelectImageCommand);
+            //SelectVideosCommand = new Command(SelectVideoCommand);
         }
        
-        public async void SelectImageCommand()
-        {
-            
-            Console.WriteLine("Iam in the selectimages function");
-                var hasPermission = await CheckPermissionsAsync();
-                if (hasPermission)
-                {
-                    Media = new ObservableCollection<MediaFile>();
-                    await _photoPickerService.PickPhotosAsync();
-                }
-            
-            _photoPickerService.OnMediaPicked += (s, a) =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Media.Add(a);
-
-                });
-
-            };
-        }
-        public async void SelectVideoCommand()
-        {
-            
-            var hasPermission = await CheckPermissionsAsync();
-            if (hasPermission)
-            {
-
-                Media = new ObservableCollection<MediaFile>();
-
-                await _photoPickerService.PickVideosAsync();
-
-            }
-            _photoPickerService.OnMediaPicked += (s, a) =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Media.Add(a);
-
-                });
-
-            };
-        }
+        
         public async void OnSaveCommand()
         {
             if (creatingNew)
@@ -118,43 +72,43 @@ namespace Capstone.ViewModels
             }
         }
 
-        async Task<bool> CheckPermissionsAsync()
-        {
-            var retVal = false;
-            try
-            {
-                PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<StoragePermission>();
-                if (status != PermissionStatus.Granted)
-                {
-                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.Storage))
-                    {
-                        await App.Current.MainPage.DisplayAlert("Alert", "Need Storage permission to access to your photos.", "Ok");
-                    }
+        //async Task<bool> CheckPermissionsAsync()
+        //{
+        //    var retVal = false;
+        //    try
+        //    {
+        //        PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<StoragePermission>();
+        //        if (status != PermissionStatus.Granted)
+        //        {
+        //            if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.Storage))
+        //            {
+        //                await App.Current.MainPage.DisplayAlert("Alert", "Need Storage permission to access to your photos.", "Ok");
+        //            }
 
-                    PermissionStatus results = await CrossPermissions.Current.RequestPermissionAsync<StoragePermission>();
-                    status = results;
-                }
+        //            PermissionStatus results = await CrossPermissions.Current.RequestPermissionAsync<StoragePermission>();
+        //            status = results;
+        //        }
 
-                if (status == PermissionStatus.Granted)
-                {
-                    retVal = true;
+        //        if (status == PermissionStatus.Granted)
+        //        {
+        //            retVal = true;
 
-                }
-                else if (status != PermissionStatus.Unknown)
-                {
-                    await App.Current.MainPage.DisplayAlert("Alert", "Permission Denied. Can not continue, try again.", "Ok");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                await App.Current.MainPage.DisplayAlert("Alert", "Error. Can not continue, try again.", "Ok");
-            }
+        //        }
+        //        else if (status != PermissionStatus.Unknown)
+        //        {
+        //            await App.Current.MainPage.DisplayAlert("Alert", "Permission Denied. Can not continue, try again.", "Ok");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.ToString());
+        //        await App.Current.MainPage.DisplayAlert("Alert", "Error. Can not continue, try again.", "Ok");
+        //    }
 
-            return retVal;
+        //    return retVal;
 
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
+        //}
+        //public event PropertyChangedEventHandler PropertyChanged;
         public override void Initialize(object parameter)
         {
             if (parameter != null)

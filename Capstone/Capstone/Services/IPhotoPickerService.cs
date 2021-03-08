@@ -9,11 +9,12 @@ namespace Capstone.Services
 {
     public interface IPhotoPickerService
     {
-        //Task<Dictionary<string, Stream>> GetImageStreamAsync();
+        
         event EventHandler<MediaFile> OnMediaPicked;
         event EventHandler<IList<MediaFile>> OnMediaPickedCompleted;
         Task<IList<MediaFile>> PickPhotosAsync();
         Task<IList<MediaFile>> PickVideosAsync();
         void Clean();
+        
     }
 }

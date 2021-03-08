@@ -16,41 +16,59 @@ namespace Capstone.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditPropertyView : ContentPage
     {
-       
-       
+
+      
         public EditPropertyView()
         {
             InitializeComponent();
-            BindingContext = ViewModelLocator.EditPropertyViewModel;
+           // BindingContext = ViewModelLocator.EditPropertyViewModel;
+            BindingContext = ViewModelLocator.MediaViewModel;
 
             
         }
-        
-       
-      /*  async void AddImageCommand(object sender, EventArgs e)
+
+        private async void Gallery_Tapped(object sender, EventArgs e)
         {
-            
-            Stream stream;
-            string path;
-            (sender as Button).IsEnabled = false;
+            try
+            {
 
-            Dictionary<string, Stream> dic = await DependencyService.Get<IPhotoPickerService>().GetImageStreamAsync();
-
-            
-          
-                foreach(KeyValuePair<string, Stream> currentImage in dic)
+                MessagingCenter.Unsubscribe<Object, Object>(this, "Multiplesel");
+                MessagingCenter.Subscribe<Object, Object>(this, "Multiplesel", (sender1, arg) =>
                 {
-                    
-                    stream = currentImage.Value;
-                    imageCollection.Add(stream);
-                    listItemsImage.FlowItemsSource = imageCollection;
-                    
-                    //image.Source = ImageSource.FromStream(() => stream);
-                }
-                
+                    //manipulate the args
+                });
+
+                await DependencyService.Get<IPhotoPickerService>().PickPhotosAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+            /* async void AddImageCommand(object sender, EventArgs e)
+             {
+
+                 Stream stream;
+                 string path;
+                 (sender as Button).IsEnabled = false;
+
+                 Dictionary<string, Stream> dic = await DependencyService.Get<IPhotoPickerService>().GetImageStreamAsync();
 
 
-            //(sender as Button).IsEnabled = true;
-        }*/
-    }
+
+                     foreach(KeyValuePair<string, Stream> currentImage in dic)
+                     {
+
+                         stream = currentImage.Value;
+                         imageCollection.Add(stream);
+
+
+                         var source = ImageSource.FromStream(() => stream);
+                     }
+
+
+
+                 (sender as Button).IsEnabled = true;
+             }*/
+        }
 }

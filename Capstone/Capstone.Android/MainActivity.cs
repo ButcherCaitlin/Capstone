@@ -9,7 +9,13 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using Android.Database;
 using System.Collections.Generic;
+using Plugin.Permissions;
+using Plugin.CurrentActivity;
+using Capstone.Services;
+using DLToolkit.Forms.Controls;
+using FFImageLoading.Forms;
 
 namespace Capstone.Droid
 {
@@ -24,39 +30,32 @@ namespace Capstone.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App(PhotoPickerService.SharedInstance));
             Instance = this;
         }
         // Field, property, and method for picture picker
         public static readonly int PickImageId = 1000;
-        public TaskCompletionSource<Dictionary<string,Stream>> PickImageTaskCompletionSource { set; get; }
+        
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
         {
+            byte[] array = null;
             base.OnActivityResult(requestCode, resultCode, intent);
-            if(requestCode == PickImageId)
+            if (resultCode == Result.Ok)
             {
-                if((resultCode == Result.Ok) && (intent != null))
+                if (requestCode == 9793)
                 {
-                    Android.Net.Uri uri = intent.Data;
-                    Stream stream = ContentResolver.OpenInputStream(uri);
-
-                    Dictionary<string, Stream> dic = new Dictionary<string, Stream>();
-                    dic.Add(uri.ToString(), stream);
-                    // Set the Stream as the completion of the Task
-                    PickImageTaskCompletionSource.SetResult(dic);
-                }
-                else
-                {
-                    PickImageTaskCompletionSource.SetResult(null);
+                    PhotoPickerService photoPickerService = new PhotoPickerService();
+                    photoPickerService.OnActivityResult(requestCode, resultCode, intent);
                 }
             }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
