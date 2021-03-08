@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Capstone.API.Entities
@@ -20,5 +21,8 @@ namespace Capstone.API.Entities
         [Required]
         public int BuildYear { get; set; }
         public string Type { get; set; }
+        public TimeSpan ShowingDuraiton { get; set; }
+        public bool CustomAvailability { get; set; }
+        public Availability Availability { get; set; }
     }
 }

@@ -67,7 +67,7 @@ namespace Capstone.API.Controllers
 
             var userToAdd = _mapper.Map<User>(user);
 
-            if (userToAdd.Availability.Count == 0) userToAdd.CustomAvailability = false;
+            if (userToAdd.Availability == null) userToAdd.CustomAvailability = false;
 
             var createdUser = _dataService.Create(userToAdd);
 

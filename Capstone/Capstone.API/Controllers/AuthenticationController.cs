@@ -37,6 +37,7 @@ namespace Capstone.API.Controllers
         [HttpHead("users")]
         public async Task<ActionResult<OutboundUserDto>> GetUser([FromQuery] string email)
         {
+            if (email == null) return BadRequest();
             //get the user from repo using the email.
             var user = await _authService.GetUserAsync(email);
 
@@ -66,7 +67,7 @@ namespace Capstone.API.Controllers
         }
 
         //delete an existing user
-        //[HttpDelete]
+        //[HttpDelete("users")]
         //public async Task<IActionResult> DeleteUser(PasswordObject content)
         //{
         //    var email = GetUserEmailFromToken(Request);
@@ -99,7 +100,7 @@ namespace Capstone.API.Controllers
         }
 
         //logout an existing user
-        //[HttpDelete("authenticate")]
+        //[HttpDelete]
         //public async Task<IActionResult> LogOut()
         //{
         //    var email = GetUserEmailFromToken(Request);

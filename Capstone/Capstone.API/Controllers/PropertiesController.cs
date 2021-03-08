@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutoMapper;
 using Capstone.API.Entities;
 using Capstone.API.Models;
 using Capstone.API.ResourceParameters;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Capstone.API.Services;
+using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Capstone.API.Controllers
 {

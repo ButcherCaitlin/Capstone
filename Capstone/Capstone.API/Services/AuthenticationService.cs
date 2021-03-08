@@ -36,8 +36,7 @@ namespace Capstone.API.Services
         /// <returns>A User or null</returns>
         public async Task<User> GetUserAsync(string email, CancellationToken cancellationToken = default)
         {
-            return await _userCollection.Find(new BsonDocument("email", email))
-                .FirstOrDefaultAsync(cancellationToken);
+            return await _userCollection.Find(u => u.Email == email).FirstOrDefaultAsync(cancellationToken);
         }
 
         //api/users POST

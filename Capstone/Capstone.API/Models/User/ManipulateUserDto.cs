@@ -30,6 +30,6 @@ namespace Capstone.API.Models
         public string Id { get; set; }
         public string HashedPassword { get; set; }
         public bool CustomAvailability { get; set; }
-        public Dictionary<DayOfWeek, TimeBlock> Availability { get; set; }
+        public Availability Availability { get; set; }
     }
 }
