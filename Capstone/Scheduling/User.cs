@@ -1,21 +1,24 @@
-﻿using Capstone.API.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Capstone.API.Models
+namespace Scheduling
 {
-    public class OutboundUserDto
+    public class User
     {
-        public string AuthToken { get; set; }
-        public string Id { get; set; }
+        User()
+        {
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
-        //public string UserType { get; set; }
-        public string HashedPassword { get; set; }
         public bool CustomAvailability { get; set; }
         public Availability Availability { get; set; }
+        public bool ScheduleShowing(DateTime start, TimeSpan duraiton)
+        {
+            return Availability.ScheduleEvent(new Showing(start, duraiton));
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace Capstone.API.Models
     {
         public string Id { get; set; }
         public string PropertyID { get; set; }
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset Start { get; set; }
         public TimeSpan Duration { get; set; }
     }
 }

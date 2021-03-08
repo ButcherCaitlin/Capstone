@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <ListView x:Name="PropertiesListView" CachingStrategy="RecycleElement" ItemsSource="{Binding Properties}"
-                  RefreshCommand="{Binding RefreshList}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                  RefreshCommand="{Binding RefreshList}" IsPullToRefreshEnabled="True" IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                   HasUnevenRows="True">
 
             <ListView.Behaviors>

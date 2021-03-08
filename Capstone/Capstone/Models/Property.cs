@@ -34,7 +34,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public double Bathrooms
+        public double Bathrooms 
         {
             get => bathrooms;
             set
@@ -43,7 +43,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public double Acres
+        public double Acres 
         {
             get => acres;
             set
@@ -52,7 +52,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public int Bedrooms
+        public int Bedrooms 
         {
             get => bedrooms;
             set
@@ -61,7 +61,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public int SqFootage
+        public int SqFootage 
         {
             get => sqFootage;
             set
@@ -70,7 +70,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public int BuildYear
+        public int BuildYear 
         {
             get => buildYear;
             set
@@ -79,7 +79,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public string Description
+        public string Description 
         {
             get => description;
             set
@@ -88,7 +88,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public string OwnerID
+        public string OwnerID 
         {
             get => ownerId;
             set
@@ -97,7 +97,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public string Type
+        public string Type 
         {
             get => type;
             set
@@ -106,6 +106,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
