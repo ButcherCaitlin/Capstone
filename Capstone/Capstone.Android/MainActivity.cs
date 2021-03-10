@@ -34,7 +34,7 @@ namespace Capstone.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App(PhotoPickerService.SharedInstance));
+            LoadApplication(new App());
             Instance = this;
         }
         // Field, property, and method for picture picker

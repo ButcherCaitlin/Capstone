@@ -29,8 +29,8 @@ namespace Capstone.ViewModels
             get => selectedShowing;
             set
             {
-                SelectedShowing = value;
-                OnPropertyChanged();
+               //SelectedShowing = value;
+               OnPropertyChanged();
             }
         }
 

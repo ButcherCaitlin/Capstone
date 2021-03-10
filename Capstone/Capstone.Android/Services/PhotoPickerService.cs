@@ -21,6 +21,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Plugin.CurrentActivity;
 using System.Linq;
+using Xamarin.Essentials;
 
 [assembly: Dependency(typeof(PhotoPickerService))]
 namespace Capstone.Droid
@@ -84,7 +85,7 @@ namespace Capstone.Droid
                                 if (media != null)
                                 {
                                     mediaPicked.Add(media);
-                                    //OnMediaPicked?.Invoke(this, media);
+                                    OnMediaPicked?.Invoke(this, media);
                                 }
 
                             }
@@ -96,12 +97,12 @@ namespace Capstone.Droid
                             if (media != null)
                             {
                                 mediaPicked.Add(media);
-                                //OnMediaPicked?.Invoke(this, media);
+                                OnMediaPicked?.Invoke(this, media);
                             }
                         }
 
-                        //OnMediaPickedCompleted?.Invoke(this, mediaPicked);
-                        MessagingCenter.Send<Object, Object>(this, "Multiplesel", mediaPicked.ToList());
+                        OnMediaPickedCompleted?.Invoke(this, mediaPicked);
+                        //MessagingCenter.Send<Object, Object>(this, "Multiplesel", mediaPicked.ToList());
                     }
                 }
 
@@ -137,18 +138,18 @@ namespace Capstone.Droid
                     File.WriteAllBytes(thumbnailImagePath, thumbImage);
 
                 }
-                else if (type.StartsWith(Enum.GetName(typeof(MediaFileType), MediaFileType.Video), StringComparison.CurrentCultureIgnoreCase))
-                {
-                    fullPath = path;
-                    var bitmap = ThumbnailUtils.CreateVideoThumbnail(path, ThumbnailKind.MiniKind);
+                //else if (type.StartsWith(Enum.GetName(typeof(MediaFileType), MediaFileType.Video), StringComparison.CurrentCultureIgnoreCase))
+                //{
+                //    fullPath = path;
+                //    var bitmap = ThumbnailUtils.CreateAudioThumbnail(path, Size);
 
-                    thumbnailImagePath = FileHelper.GetOutputPath(MediaFileType.Image, TemporalDirectoryName, $"{fileName}-THUMBNAIL{ext}");
-                    var stream = new FileStream(thumbnailImagePath, FileMode.Create);
-                    bitmap?.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
-                    stream.Close();
+                //    thumbnailImagePath = FileHelper.GetOutputPath(MediaFileType.Image, TemporalDirectoryName, $"{fileName}-THUMBNAIL{ext}");
+                //    var stream = new FileStream(thumbnailImagePath, FileMode.Create);
+                //    bitmap?.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+                //    stream.Close();
 
-                    mediaFileType = MediaFileType.Video;
-                }
+                //    mediaFileType = MediaFileType.Video;
+                //}
 
                 if (!string.IsNullOrEmpty(fullPath) && !string.IsNullOrEmpty(thumbnailImagePath))
                 {
@@ -164,7 +165,7 @@ namespace Capstone.Droid
 
             return mediaFile;
         }
-
+       
         public static string GetRealPathFromURI(Android.Net.Uri contentURI)
         {
             ICursor cursor = null;

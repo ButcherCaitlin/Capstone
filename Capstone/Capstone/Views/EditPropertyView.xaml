@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Capstone.Views.EditPropertyView"
              xmlns:vm="clr-namespace:Capstone.ViewModels"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+             >
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -35,10 +34,17 @@
                 
                 <!--<Button x:Name ="btn" Clicked="AddImageCommand" Text="Add Images" FontSize="Medium"/>-->
 
-                <Button TextColor="White" BackgroundColor="Blue" Text="Select images from gallery" Command="{Binding SelectImagesCommand}"/>
+                <Button TextColor="White" BackgroundColor="Blue" Text="Select images from gallery" Clicked="PickandShow"/>
+                <CollectionView x:Name="collectionView">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding .}"></Image>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
                 <Button TextColor="White" BackgroundColor="Blue" Text="Select videos from gallery" Command="{Binding SelectVideosCommand}"/>
 
-                <flv:FlowListView FlowColumnCount="3" x:Name="listItems" FlowItemsSource="{Binding Media}"
+                <!--<flv:FlowListView FlowColumnCount="3" x:Name="listItems" FlowItemsSource="{Binding Media}"
                         SeparatorVisibility="None"
                         HasUnevenRows="false" RowHeight="100" >
                     <flv:FlowListView.FlowColumnTemplate>
@@ -56,9 +62,9 @@
                             </Grid>
                         </DataTemplate>
                     </flv:FlowListView.FlowColumnTemplate>
-                </flv:FlowListView>
-                <!--<Image  x:Name="image" />-->
-                            
+                </flv:FlowListView-->
+                <Image  x:Name="Image" />
+
 
                 <Editor Placeholder="Description" AutoSize="TextChanges" Text="{Binding Property.Description, Mode=TwoWay}"
                         BackgroundColor="{StaticResource PrimaryItem}"

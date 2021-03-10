@@ -16,7 +16,7 @@ namespace Capstone
         public static string User = "5fa0af488c2c57009df03d1c";
         public static NavigationService NavigationService { get; } = new NavigationService();
         public static DataService DataService { get; } = new DataService(new PropertyDataStore(), new UserDataStore(), new ShowingDataStore());
-        public App(IPhotoPickerService photoPickerService)
+        public App()
         {
             InitializeComponent();
             FlowListView.Init();

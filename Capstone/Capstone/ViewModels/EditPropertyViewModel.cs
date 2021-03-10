@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 
@@ -33,17 +34,19 @@ namespace Capstone.ViewModels
             }
         }
         public ICommand SaveCommand { get; }
-
+        
+        
         
 
         public EditPropertyViewModel()
         {
             SaveCommand = new Command(OnSaveCommand);
-            //SelectImagesCommand = new Command(SelectImageCommand);
-            //SelectVideosCommand = new Command(SelectVideoCommand);
+            
+            
         }
+
        
-        
+       
         public async void OnSaveCommand()
         {
             if (creatingNew)
@@ -72,6 +75,7 @@ namespace Capstone.ViewModels
             }
         }
 
+        
         //async Task<bool> CheckPermissionsAsync()
         //{
         //    var retVal = false;
