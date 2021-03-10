@@ -44,14 +44,6 @@ namespace Capstone.Droid
         {
             byte[] array = null;
             base.OnActivityResult(requestCode, resultCode, intent);
-            if (resultCode == Result.Ok)
-            {
-                if (requestCode == 9793)
-                {
-                    PhotoPickerService photoPickerService = new PhotoPickerService();
-                    photoPickerService.OnActivityResult(requestCode, resultCode, intent);
-                }
-            }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
