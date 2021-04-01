@@ -30,7 +30,7 @@ namespace Capstone.API.Controllers
         /// <param name="userId">The ID of the user making the API calls. Provided in the header.</param>
         /// <returns>The newly created Showing from the databse as an OutboundShowingDto, and its location.</returns>
         [HttpPost]
-        public ActionResult<CustomOutboundShowingDto> CreateShowingForPropertyAndUser(string propertyId,
+        public ActionResult<OutboundShowingDto> CreateShowingForPropertyAndUser(string propertyId,
             CreateShowingDto showing,
             [FromHeader] string userId = null)
         {
@@ -81,7 +81,7 @@ namespace Capstone.API.Controllers
                 //return the route
                 return CreatedAtRoute("GetShowingById",
                     new { showingId = showingToReturnEntity.Id },
-                    _mapper.Map<ProspectShowingDto>(showingToReturnEntity));
+                    _mapper.Map<OutboundShowingDto>(showingToReturnEntity));
             } 
             else
             {
