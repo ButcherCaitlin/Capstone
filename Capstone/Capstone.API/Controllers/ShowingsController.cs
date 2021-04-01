@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Capstone.API.Services;
+using Capstone.API.Entities;
 
 namespace Capstone.API.Controllers
 {
@@ -40,16 +41,8 @@ namespace Capstone.API.Controllers
 
             List<OutboundShowingDto> showingsToReturn = new List<OutboundShowingDto>();
 
-            showingsToReturn.AddRange(
-                _mapper.Map<IEnumerable<ProspectShowingDto>>(
-                    showingsFromRepo.Where(a => a.ProspectID == userId)));
-            showingsToReturn.AddRange(
-                _mapper.Map<IEnumerable<RealtorShowingDto>>(
-                    showingsFromRepo.Where(a => a.RealtorID == userId)));
-            showingsToReturn.AddRange(
-                _mapper.Map<IEnumerable<UnformattedShowingDto>>(
-                    showingsFromRepo.Where(a => a.RealtorID != userId &&
-                                                a.ProspectID != userId)));
+            showingsToReturn.AddRange(_mapper.Map<IEnumerable<OutboundShowingDto>>(showingsFromRepo));
+            
 
             return Ok(showingsToReturn);
         }
@@ -61,24 +54,13 @@ namespace Capstone.API.Controllers
         /// <returns>The record with the specified id as an OutboundShowingDto.</returns>
         [HttpGet("{showingId:length(24)}", Name = "GetShowingById")]
         [HttpHead("{showingId:length(24)}")]
-        public ActionResult<CustomOutboundShowingDto> GetShowingById(string showingId,
+        public ActionResult<OutboundShowingDto> GetShowingById(string showingId,
             [FromHeader] string userId = null)
         {
             var showingFromRepo = _dataService.GetShowing(showingId);
             if (showingFromRepo == null) return NotFound();
 
-            if (showingFromRepo.ProspectID == userId)
-            {
-                return Ok(_mapper.Map<ProspectShowingDto>(showingFromRepo));
-            }
-            else if (showingFromRepo.RealtorID == userId)
-            {
-                return Ok(_mapper.Map<RealtorShowingDto>(showingFromRepo));
-            }
-            else
-            {
-                return Ok(_mapper.Map<UnformattedShowingDto>(showingFromRepo));
-            }
+            return Ok(_mapper.Map<OutboundShowingDto>(showingFromRepo));
         }
         /// <summary>
         /// Updates a Showing record in the database. Neglected fields are set to their default value (Null).
@@ -96,11 +78,11 @@ namespace Capstone.API.Controllers
             var showingFromRepo = _dataService.GetShowing(showingId);
             if (showingFromRepo == null) return NotFound();
 
-            if (showingFromRepo.ProspectID != userId ||
-                showingFromRepo.RealtorID != userId)
+            if (showingFromRepo.ProspectID != userId && showingFromRepo.RealtorID != userId)
             {
                 return BadRequest(new { message = "You can only modify showing records if you are a participant." });
             }
+
             _mapper.Map(showing, showingFromRepo);
 
             _dataService.Update(showingFromRepo);
@@ -160,7 +142,30 @@ namespace Capstone.API.Controllers
                 return BadRequest(new { message = "You can only delete showing records if you are a participant." });
             }
 
+            List<object> participantsToUpdate = new List<object>();
+            var prospectToUpdate = _dataService.GetUser(showingToDelete.ProspectID);
+            var realtorToUpdate = _dataService.GetUser(showingToDelete.RealtorID);
+            var propertyToUpdate = _dataService.GetProperty(showingToDelete.PropertyID);
+            participantsToUpdate.Add(prospectToUpdate);
+            participantsToUpdate.Add(realtorToUpdate);
+            participantsToUpdate.Add(propertyToUpdate);
+
+            foreach (var participant in participantsToUpdate)
+            {
+                if (participant is User user)
+                {
+                    user.Availability.Events.RemoveAll(e => e.Id == showingId);
+                } 
+                else if (participant is Property property)
+                {
+                    property.Availability.Events.RemoveAll(e => e.Id == showingId);
+                }
+            }
+
             _dataService.RemoveShowing(showingToDelete.Id);
+            _dataService.Update(prospectToUpdate);
+            _dataService.Update(realtorToUpdate);
+            _dataService.Update(propertyToUpdate);
 
             return NoContent();
         }
