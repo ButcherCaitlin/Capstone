@@ -19,6 +19,7 @@ using FFImageLoading.Forms;
 
 namespace Capstone.Droid
 {
+   
     [Activity(Label = "Capstone", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
@@ -52,4 +53,5 @@ namespace Capstone.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
 }

@@ -16,45 +16,61 @@
                        PlaceholderColor="Black" TextColor="Black"/>--><!--this should be a picklist.--><!--
                 <Entry Placeholder="Zip Code" Keyboard="Numeric"
                        PlaceholderColor="Black" TextColor="Black"/>-->
+                <Label Text="Edit Listing"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                   FontSize="Large" TextColor="{StaticResource TextPrimary}"/>
+
+                <Label Text="Address" TextColor="Black"/>
                 <Entry Placeholder="Address" Text="{Binding Property.Address, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
+                       PlaceholderColor="Gray" TextColor="Black"/>
 
+                <Label Text="Listing Price" TextColor="Black"/>
                 <Entry Placeholder="Price" Keyboard="Numeric" Text="{Binding Property.Price, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
-                <Entry Placeholder="Bathrooms" Keyboard="Numeric" Text="{Binding Property.Bathrooms, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
+                       PlaceholderColor="Gray" TextColor="Gray"/>
+
+                <Label Text="Acres" TextColor="Black"/>
                 <Entry Placeholder="Acres" Keyboard="Numeric" Text="{Binding Property.Acres, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
+                       PlaceholderColor="Gray" TextColor="Gray"/>
+
+                <Label Text="Number of Bathrooms" TextColor="Black"/>
+                <Entry Placeholder="Bathrooms" Keyboard="Numeric" Text="{Binding Property.Bathrooms, Mode=TwoWay}"
+                       PlaceholderColor="Gray" TextColor="Gray"/>
+
+
+
+                <Label Text="Number of Bedrooms." TextColor="Black"/>
                 <Entry Placeholder="Bedrooms" Keyboard="Numeric" Text="{Binding Property.Bedrooms, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
+                       PlaceholderColor="Gray" TextColor="Gray"/>
+
+                <Label Text="Square Footage" TextColor="Black"/>
                 <Entry Placeholder="Sq. Footage" Keyboard="Numeric" Text="{Binding Property.SqFootage, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
+                       PlaceholderColor="Gray" TextColor="Gray"/>
+
+                <Label Text="Build Year" TextColor="Black"/>
                 <Entry Placeholder="Year Built" Keyboard="Numeric" Text="{Binding Property.BuildYear, Mode=TwoWay}"
-                       PlaceholderColor="Black" TextColor="Black"/>
-                
-                
-
-                <Button TextColor="White" BackgroundColor="Blue" Text="Select images from gallery" Clicked="PickandShow"/>
-                <CollectionView x:Name="collectionView">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding .}"></Image>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-               
-
-              
-                <Image  x:Name="Image" />
-
+                       PlaceholderColor="Gray" TextColor="Gray"/>
 
                 <Editor Placeholder="Description" AutoSize="TextChanges" Text="{Binding Property.Description, Mode=TwoWay}"
                         BackgroundColor="{StaticResource PrimaryItem}"
                         TextColor="{StaticResource TextPrimary}"
                         PlaceholderColor="{StaticResource TextPrimary}"/>
 
+                <Button TextColor="White" BackgroundColor="Blue" Text="Select images from gallery" Clicked="PickandShow"/>
+                <CollectionView x:Name="collectionView" ItemsLayout="VerticalGrid, 2" Header="Selected Images:" Margin="0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding .}" Aspect="AspectFill"></Image>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
+
                 <Button Command="{Binding SaveCommand}" Text="Save"  
                     FontAttributes="Bold" FontSize="Large"/>
+
+
+
 
             </StackLayout>
         </ScrollView>
