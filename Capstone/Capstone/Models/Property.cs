@@ -6,17 +6,26 @@ using System.Text;
 
 namespace Capstone.Models
 {
-    public class Property : Storable, INotifyPropertyChanged
+    public class Property : Storable, INotifyPropertyChanged, IScheduleable
     {
 
         public Property()
         {
         }
 
-        private string address, ownerId;
-        private double price, bathrooms, acres;
-        private int bedrooms, sqFootage, buildYear;
-        private string description, type;
+        private string address;
+        private string ownerId;
+        private string description;
+        private double price;
+        private double bathrooms;
+        private double acres;
+        private int bedrooms;
+        private int sqFootage;
+        private int buildYear;
+        private string type;
+        private TimeSpan showingDuraiton;
+        private bool customAvailability;
+        private Availability availability;
 
         public string Address { 
             get => address;
@@ -106,6 +115,36 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
+        public TimeSpan ShowingDuraiton {
+            get => showingDuraiton;
+            set
+            {
+                showingDuraiton = value;
+                RaisePropertyChanged();
+            }
+        }
+        public bool CustomAvailability { 
+            get => customAvailability;
+            set
+            {
+                customAvailability = value;
+                RaisePropertyChanged();
+            }
+        }
+        public Availability Availability { 
+            get => availability; 
+            set
+            {
+                availability = value;
+                RaisePropertyChanged();
+            } 
+        }
+
+        public Dictionary<DayOfWeek, bool> WorkingDays => this.Availability.WorkingDays;
+        public TimeSpan DayStart => this.Availability.DayStart;
+        public TimeSpan DayEnd => this.Availability.DayEnd;
+        public string TimeZone => this.Availability.TimeZone;
+        public List<Showing> Events => this.Availability.Events;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

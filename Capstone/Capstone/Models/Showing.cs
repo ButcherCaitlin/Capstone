@@ -6,14 +6,13 @@ namespace Capstone.Models
 {
     public class Showing : Storable, INotifyPropertyChanged
     {
-        public Showing()
-        {
-
-        }
-
-        private string propertyId, realtorId, prospectId;
-        private DateTimeOffset startTime;
+        private DateTime startTime;
         private TimeSpan duration;
+        private bool available;
+        private string propertyId;
+        private string realtorId;
+        private string prospectId;
+
 
         public string DisplayInfo
         {
@@ -46,7 +45,7 @@ namespace Capstone.Models
                 RaisePropertyChanged();
             }
         }
-        public DateTimeOffset StartTime {
+        public DateTime StartTime {
             get => startTime;
             set {
                 startTime = value;
@@ -58,6 +57,15 @@ namespace Capstone.Models
             set
             {
                 duration = value;
+                RaisePropertyChanged();
+            }
+        }
+        public bool Available
+        {
+            get => available;
+            set
+            {
+                available = value;
                 RaisePropertyChanged();
             }
         }

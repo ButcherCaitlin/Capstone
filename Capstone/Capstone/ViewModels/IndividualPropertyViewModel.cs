@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Capstone.Models;
@@ -14,8 +15,8 @@ namespace Capstone.ViewModels
         private Property property;
         private string buttonText;
         private bool canSchedule;
-        private TimeSpan proposedShowtime;
         private bool ownerView;
+        private List<Showing> possibleShowings;
         public Property Property
         {
             get => property;
@@ -53,7 +54,7 @@ namespace Capstone.ViewModels
 
         public void OnSeeHomeClickedCommand()
         {
-            if (!ownerView && canSchedule) App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView, new List<object>() { property, proposedShowtime });
+            if (!ownerView && canSchedule) App.NavigationService.NavigateToModal(ViewNames.ConfirmationPageView, new List<object>() { property });
             else if (ownerView) App.NavigationService.NavigateToModal(ViewNames.EditPropertyView, property);
         }
 
@@ -67,7 +68,13 @@ namespace Capstone.ViewModels
             if (Property.OwnerID == App.User)
                 PopulateEditButton();
             else
-                PopulateNextShowtime(await App.DataService.GetUserAsync(property.OwnerID));
+            {
+                List<object> participants = new List<object>();
+                participants.Add(await App.DataService.GetUserAsync(property.OwnerID));
+                participants.Add(await App.DataService.GetUserAsync(App.User));
+                participants.Add(property);
+                PopulateNextShowtime(participants);
+            }
         }
 
         private void PopulateEditButton()
@@ -76,40 +83,40 @@ namespace Capstone.ViewModels
             ButtonText = "Edit Property";
         }
 
-        public void PopulateNextShowtime(User user)
+        // Generate the showtimes that the property is available for today, and display the next
+        // available showtime. Create a
+        public void PopulateNextShowtime(List<object> participants)
         {
+            possibleShowings = Availability.GetPossibleShowings(participants);
+
             ownerView = false;
-            TimeBlock todaysAvailability;
-            if(user.Availability.TryGetValue(DateTimeOffset.Now.DayOfWeek, out todaysAvailability))
+            if (possibleShowings.Count > 0)
             {
                 TimeSpan now = new TimeSpan(
                     DateTimeOffset.Now.Hour,
                     DateTimeOffset.Now.Minute,
                     DateTimeOffset.Now.Second);
-                if(now.Add(new TimeSpan(1, 15, 0)) <= todaysAvailability.End)
+
+                Showing next = possibleShowings
+                    .OrderBy(s => s.StartTime)
+                    .Where(s => (s.StartTime.TimeOfDay > now) && (s.Available = true))
+                    .FirstOrDefault();
+
+                if (next != null)
                 {
-                    if (now.Add(new TimeSpan(0, 15, 0)) >= todaysAvailability.Start)
-                    {
-                        //display a time 15 minutes from now.
-                        proposedShowtime = now.Add(new TimeSpan(0, 15, 0));
-                        ButtonText = "See at: " + TimeFormatter(now.Add(new TimeSpan(0, 15, 0)));
-                        canSchedule = true;
-                    }
-                    else
-                    {
-                        proposedShowtime = todaysAvailability.Start;
-                        ButtonText = "See at: " + TimeFormatter(todaysAvailability.Start);
-                        canSchedule = true;
-                    }
+                    ButtonText = "See at: " + TimeFormatter(next.StartTime.TimeOfDay);
+                    canSchedule = true;
                 }
                 else
                 {
+                    // the available showings have passed
                     ButtonText = "Not Available";
                     canSchedule = false;
                 }
             }
             else
             {
+                // no showings were available today
                 ButtonText = "Not Available";
                 canSchedule = false;
             }
