@@ -11,12 +11,14 @@ namespace Capstone.Services
         private readonly IDataStore<Property> _propertyDataStore;
         private readonly IDataStore<User> _userDataStore;
         private readonly IDataStore<Showing> _showingDataStore;
+        private readonly IDataStore<Images> _imageDataStore;
 
-        public DataService(IDataStore<Property> propertyDataStore, IDataStore<User> userDataStore, IDataStore<Showing> showingDataStore)
+        public DataService(IDataStore<Property> propertyDataStore, IDataStore<User> userDataStore, IDataStore<Showing> showingDataStore, IDataStore<Images> imageDataStore)
         {
             _propertyDataStore = propertyDataStore;
             _userDataStore = userDataStore;
             _showingDataStore = showingDataStore;
+            _imageDataStore = imageDataStore;
         }
 
         public async Task<bool> AddItemAsync(Property item)
@@ -32,6 +34,10 @@ namespace Capstone.Services
         {
             return await _userDataStore.AddItemAsync(item);
         }
+        public async Task<bool> AddItemAsync(Images item)
+        {
+            return await _imageDataStore.AddItemAsync(item);
+        }
         public async Task<bool> UpsertItemAsync(Property item)
         {
             return await _propertyDataStore.UpsertItemAsync(item);
@@ -43,6 +49,10 @@ namespace Capstone.Services
         public async Task<bool> UpsertItemAsync(User item)
         {
             return await _userDataStore.UpsertItemAsync(item);
+        }
+        public async Task<bool> UpsertItemAsync(Images item)
+        {
+            return await _imageDataStore.UpsertItemAsync(item);
         }
         public async Task<bool> DeleteItemAsync(Property item)
         {
@@ -56,6 +66,10 @@ namespace Capstone.Services
         {
             return await _userDataStore.DeleteItemAsync(item.Id);
         }
+        public async Task<bool> DeleteItemAsync(Images item)
+        {
+            return await _imageDataStore.DeleteItemAsync(item.Id);
+        }
         public async Task<Property> GetPropertyAsync(string id)
         {
             return await _propertyDataStore.GetItemAsync(id);
@@ -67,6 +81,10 @@ namespace Capstone.Services
         public async Task<Showing> GetShowingAsync(string id)
         {
             return await _showingDataStore.GetItemAsync(id);
+        }
+        public async Task<Images> GetImageAsync(string id)
+        {
+            return await _imageDataStore.GetItemAsync(id);
         }
         public async Task<IEnumerable<Property>> GetPropertiesAsync(bool forceRefresh = false)
         {

@@ -41,8 +41,6 @@ namespace Capstone.ViewModels
         public EditPropertyViewModel()
         {
             SaveCommand = new Command(OnSaveCommand);
-            
-            
         }
 
        

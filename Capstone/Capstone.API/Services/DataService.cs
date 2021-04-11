@@ -14,12 +14,14 @@ namespace Capstone.API.Services
         private readonly PropertyRepository _propertyRepository;
         private readonly ShowingRepository _showingRepository;
         private readonly RepositoryBase<User> _userRepository;
+        private readonly RepositoryBase<Image> _imageRepository;
 
         public DataService(ICapstoneDatabaseSettings settings)
         {
             _propertyRepository = new PropertyRepository(settings);
             _showingRepository = new ShowingRepository(settings);
             _userRepository = new RepositoryBase<User>(settings);
+            _imageRepository = new RepositoryBase<Image>(settings);
         }
 
         public IEnumerable<Property> GetProperties()
@@ -34,6 +36,10 @@ namespace Capstone.API.Services
         {
             return _userRepository.Get();
         }
+        public IEnumerable<Image> GetImages()
+        {
+            return _imageRepository.Get();
+        }
         public Property GetProperty(string id)
         {
             return _propertyRepository.Get(id);
@@ -45,6 +51,10 @@ namespace Capstone.API.Services
         public User GetUser(string id)
         {
             return _userRepository.Get(id);
+        }
+        public Image GetImage(string id)
+        {
+            return _imageRepository.Get(id);
         }
         public IEnumerable<Property> GetProperties(IEnumerable<string> recordIdCollection)
         {
@@ -58,6 +68,10 @@ namespace Capstone.API.Services
         {
             return _userRepository.Get(recordIdCollection);
         }
+        public IEnumerable<Image> GetImages(IEnumerable<string> recordIdCollection)
+        {
+            return _imageRepository.Get(recordIdCollection);
+        }
         public Property Create(Property property)
         {
             return _propertyRepository.Create(property);
@@ -69,6 +83,10 @@ namespace Capstone.API.Services
         public User Create(User user)
         {
             return _userRepository.Create(user);
+        }
+        public Image Create(Image image)
+        {
+            return _imageRepository.Create(image);
         }
         public IEnumerable<Property> Create(IEnumerable<Property> records)
         {
@@ -82,6 +100,10 @@ namespace Capstone.API.Services
         {
             return _userRepository.Create(records);
         }
+        public IEnumerable<Image> Create(IEnumerable<Image> records)
+        {
+            return _imageRepository.Create(records);
+        }
         public void Update(Property property)
         {
             _propertyRepository.Update(property);
@@ -94,6 +116,10 @@ namespace Capstone.API.Services
         {
             _userRepository.Update(user);
         }
+        public void Update(Image image)
+        {
+            _imageRepository.Update(image);
+        }
         public void RemoveProperty(string id)
         {
             _propertyRepository.Remove(id);
@@ -105,6 +131,10 @@ namespace Capstone.API.Services
         public void RemoveUser(string id)
         {
             _userRepository.Remove(id);
+        }
+        public void RemoveImage(string id)
+        {
+            _imageRepository.Remove(id);
         }
 
         //gets with parameters

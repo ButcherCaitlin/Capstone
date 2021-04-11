@@ -13,6 +13,7 @@ namespace Capstone.API.Utility
             if (type == typeof(Entities.User)) return "Users";
             if (type == typeof(Entities.Showing)) return "Showings";
             if (type == typeof(Entities.Session)) return "Sessions";
+            if (type == typeof(Entities.Image)) return "Images";
             return null;
         }
     }
